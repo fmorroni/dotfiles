@@ -1,0 +1,74 @@
+#!/bin/sh
+
+script_name=$(basename $0)
+
+usage() {
+  echo 'Usage:'
+  echo "  $script_name [OPTIONS] <input_file.extension> <output_file.extension>"
+  echo 'Options:'
+  echo '  -h HOURS    (default = 0)'
+  echo '    Start at HOURS hours (+ MINUTES + SECONDS)'
+  echo '  -m MINUTES    (default = 0)'
+  echo '    Start at MINUTES minutes (+ HOURS + SECONDS)'
+  echo '  -s SECONDS    (default = 0)'
+  echo '    Start at SECONDS seconds (+ HOURS + MINUTES)'
+  echo '  -l LENGTH   (default = 5)'
+  echo '    Cut LENGTH seconds of media file starting at HOURS:MINUTES:SECONDS'
+}
+
+error() {
+  echo "$1" >&2
+  echo
+  usage
+  exit 1
+}
+
+is_integer() {
+  [[ $1 =~ ^[0-9]+$ ]]
+}
+
+error_if_not_int() {
+  if ! is_integer "$1"; then
+    error "Argument $1 must be an integer"
+  fi
+}
+
+if [[ $# -eq 0 ]]; then
+  usage
+  exit 1
+fi
+
+hours=0
+minutes=0
+seconds=0
+length=5
+while [ $# -gt 0 ]; do
+  case $1 in
+    -h)
+      error_if_not_int "$2"
+      hours="$2"
+      shift 2
+      ;;
+    -m)
+      error_if_not_int "$2"
+      minutes="$2"
+      shift 2
+      ;;
+    -s)
+      error_if_not_int "$2"
+      seconds="$2"
+      shift 2
+      ;;
+    -l)
+      error_if_not_int "$2"
+      length="$2"
+      shift 2
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+echo $hours $minutes $seconds $length $1 $2
+ffmpeg -ss $((hours*3600 + minutes*60 + seconds)) -i "$1" -t $length -c copy "$2"

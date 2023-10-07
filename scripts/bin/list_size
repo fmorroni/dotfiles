@@ -1,0 +1,26 @@
+#!/bin/sh
+
+shopt -s dotglob # enable dotglob
+if [[ -n $1 ]]; then
+  while [[ $# > 0 ]]; do
+    files=''
+    echo ------------------------------
+      if [[ -d $1 ]]; then
+        files="$1/"*
+      elif [[ -f $1 ]]; then
+        files=$1 
+      else
+        echo "No file or directory: $1" >&2
+      fi
+      if [[ -n $files ]]; then
+        du -sh $files | sort -hr
+      fi
+    shift
+  done
+  echo ------------------------------
+else
+  echo ------------------------------
+  du -sh * | sort -hr
+  echo ------------------------------
+fi
+shopt -u dotglob # enable dotglob

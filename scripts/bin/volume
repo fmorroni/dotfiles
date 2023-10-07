@@ -1,0 +1,18 @@
+#!/bin/sh
+
+up ()
+{
+  exec amixer -D pulse sset Master 5%+
+}
+
+down ()
+{
+  exec amixer -D pulse sset Master 5%-
+}
+
+toggle_mute ()
+{
+  exec amixer -D pulse sset Master toggle
+}
+
+$*

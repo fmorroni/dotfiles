@@ -1,0 +1,50 @@
+#!/bin/sh
+
+function record() {
+  "$HOME/.local/bin/awesome_notification" "Select recording area" "Will record into: $filename" 3
+  # pipe 'y' to autoaccept overwritting file
+  echo y | ffcast -s rec $filename
+  code=$?
+  case "$code" in
+    1) "$HOME/.local/bin/awesome_notification" "Recording failure: $code" "Invalid argument" 3 critical
+    return 1
+    ;;
+    143) "$HOME/.local/bin/awesome_notification" "Recording cancelled" "" 3
+    ;;
+    255) "$HOME/.local/bin/awesome_notification" "Recording successful" "" 3
+    ;;
+    *) "$HOME/.local/bin/awesome_notification" "Recording failure: $code" "Unexpected error" 3 critical
+    return 1
+    ;;
+  esac
+  return 0
+}
+
+process1='(/\S+)*ffmpeg\s.*\sx11grab\s.*'
+process2='ffcast|xrectsel'
+
+if [[ -z $(pgrep -fxn $process1) && -z $(pgrep $process2) ]]; then
+  NEW="new"
+  OVERWRITE="overwrite"
+  output=$(NEW=$NEW OVERWRITE=$OVERWRITE rofi -show record -theme screenrec_filename.rasi 2>&1)
+  operation="${output%% *}"
+  filename="${output#* }"
+  case "$operation" in
+    $NEW) record
+    ;;
+    $OVERWRITE) confirmation=$(echo -en "Yes\nNo" | "$HOME/.config/rofi/scripts/confirmation.sh" "Overwrite '$(basename $filename)'?")
+      case "$confirmation" in
+        "Yes") record
+        ;;
+        "No") exit 1
+        ;;
+      esac
+    ;;
+  esac
+else
+  if [[ -n $(pgrep -fxn $process1) ]]; then
+    pkill -fxn $process1
+  else
+    pkill $process2
+  fi
+fi

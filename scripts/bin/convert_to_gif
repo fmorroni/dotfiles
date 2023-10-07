@@ -1,0 +1,12 @@
+#!/bin/sh
+
+tmp=$(mktemp)
+mv "$tmp" "$tmp.png"
+tmp="$tmp.png"
+
+gif="${1%.*}.gif"
+
+ffmpeg -y -i $1 -vf palettegen "$tmp"
+ffmpeg -y -i $1 -i "$tmp" -filter_complex paletteuse -r 10 "$gif"
+
+rm "$tmp"

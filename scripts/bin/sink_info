@@ -1,0 +1,23 @@
+#!/bin/sh
+
+sinks_info=()
+while IFS= read -r line; do
+  sinks_info+=("$line")
+done < <(pactl list sinks | rg "Sink|Name|Description" | cut -d' ' -f2- | awk 'ORS=NR%3?",":RS' | cut -c 2-)
+for sink in "${sinks_info[@]}"; do
+  echo $sink
+done
+
+# sinks=()
+# while IFS= read -r line; do
+#   sinks+=("$line")
+# done < <(pactl list sinks | rg "Description" | awk -F ': ' '{print $2}')
+# default_sink=$(pactl list sinks | rg -U --multiline-dotall "Name: $(pactl get-default-sink).*?Description" | rg "Description" | awk -F ': ' '{print $2}')
+
+# for sink in "${sinks[@]}"; do
+#   if [[ $sink == $default_sink ]]; then
+#     echo "$sink (•)"
+#   else
+#     echo "$sink"
+#   fi
+# done

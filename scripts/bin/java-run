@@ -1,0 +1,62 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+  echo "Missing argument. Usage: java-run <file.java>"
+  exit 1
+fi
+
+SAVE_FILE=".java_saves.txt"
+OUTPUT_DIR=".classes"
+mapfile -t JAVA_FILES < <(find . -type f -name "*.java")
+
+declare -A LAST_MODIFIED
+for file in "${JAVA_FILES[@]}"; do
+  last_modified=$(stat -c "%Y" "$file")
+  LAST_MODIFIED["$file"]=$last_modified
+done
+
+updateSaveFile() {
+  for file in "${!LAST_MODIFIED[@]}"; do
+    printf '%s,%s\n' "$file" "${LAST_MODIFIED[$file]}"
+  done > "$SAVE_FILE"
+}
+
+# If no save file is found compile everything and create save file.
+if [ ! -f "$SAVE_FILE" ]; then
+  echo "First run detected. Compiling all Java files..."
+  javac "${JAVA_FILES[@]}" -d $OUTPUT_DIR
+  updateSaveFile
+fi
+
+# If save file is found read it into an array.
+declare -A SAVED_FILES
+while read -r line; do
+  file=$(echo "$line" | cut -d ',' -f 1)
+  last_modified=$(echo "$line" | cut -d ',' -f 2-)
+  SAVED_FILES["$file"]=$last_modified
+done < "$SAVE_FILE"
+
+# Recompile if file was modified or if new file found.
+fileModifDetected=0
+for file in "${JAVA_FILES[@]}"; do
+  if [[ ${SAVED_FILES["$file"]} ]]; then
+    if [[ ${LAST_MODIFIED["$file"]} > ${SAVED_FILES["$file"]} ]]; then
+      echo "Recompiling modified file: $file"
+      javac "$file" -d $OUTPUT_DIR
+      fileModifDetected=1
+    fi
+  else
+    echo "New file found: $file"
+    javac "$file" -d $OUTPUT_DIR
+    printf '%s,%s\n' "$file" "${LAST_MODIFIED[$file]}" > "$SAVE_FILE"
+  fi
+done
+
+# Update save file
+if [ "$fileModifDetected" -eq 1 ]; then
+  updateSaveFile
+fi
+
+echo -e "Running $1:"
+echo "----------------------------------------"
+exec java -cp "$OUTPUT_DIR" "$1"
