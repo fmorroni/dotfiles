@@ -1,0 +1,12 @@
+set debuginfod enabled on
+set disassembly-flavor intel
+set print pretty on
+tui new-layout pretty {-horizontal asm 2 regs 1} 2 status 0 cmd 1
+layout pretty
+focus cmd
+
+# set $pos = $esp-8
+# while ($pos < ($ebp+8))
+#   x/wxd $pos
+#   set $pos = $pos + 4
+# end

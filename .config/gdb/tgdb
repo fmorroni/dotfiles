@@ -1,0 +1,16 @@
+#!/bin/bash
+
+base_dir=$(dirname "$0")
+ARGS=
+if [ -f "./gdbinit" ]; then
+	ARGS=$ARGS\ -x\ ./gdbinit
+fi
+
+if [ -z "$TMUX" ]
+then
+  exec_cmd="exec tmux new -n GDB"
+else
+  exec_cmd="exec tmux new-window -n GDB"
+fi
+
+$exec_cmd sh -c "gdb -x '$XDG_CONFIG_HOME/gdb/tgdbinit' $ARGS ${@@Q} ; tmux kill-window -t \$TMUX_PANE"
