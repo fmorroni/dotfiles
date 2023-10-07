@@ -1,0 +1,19 @@
+[user]
+	name = Franco Morroni
+	mail = fmorroni99@gmail.com
+	email = fmorroni99@gmail.com
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[difftool "lvimdiff"]
+	cmd = lvim -f -d \"$LOCAL\" \"$REMOTE\"
+[mergetool "lvimdiff"]
+	cmd = lvim -f -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+[alias]
+	staash = stash --include-untracked
+	rs = restore --staged
+	res = restore
