@@ -378,10 +378,14 @@ local globalkeys = mytable.join(
     { description = ": Dropdown application", group = "launcher" }),
 
   -- Screen brightness
-  awful.key({}, "XF86MonBrightnessUp", runUserScript("brightnessIncBy", { 500 }, beautiful.brightness.update),
-    { description = ": Increase screen brightness", group = "hotkeys" }),
-  awful.key({}, "XF86MonBrightnessDown", runUserScript("brightnessIncBy", { -500 }, beautiful.brightness.update),
-    { description = ": Decrease screen brightness", group = "hotkeys" }),
+  awful.key({}, "XF86MonBrightnessUp", runUserScript("brightnessIncBy", { 1 }, beautiful.brightness.update),
+    { description = ": +1% screen brightness", group = "hotkeys" }),
+  awful.key({}, "XF86MonBrightnessDown", runUserScript("brightnessIncBy", { -1 }, beautiful.brightness.update),
+    { description = ": -1% screen brightness", group = "hotkeys" }),
+  awful.key({shiftKey}, "XF86MonBrightnessUp", runUserScript("brightnessIncBy", { 10 }, beautiful.brightness.update),
+    { description = ": +10% screen brightness", group = "hotkeys" }),
+  awful.key({shiftKey}, "XF86MonBrightnessDown", runUserScript("brightnessIncBy", { -10 }, beautiful.brightness.update),
+    { description = ": -10% screen brightness", group = "hotkeys" }),
   -- awful.key({}, "XF86MonBrightnessDown", function() os.execute("xbacklight -dec 2 -time 20 -steps 10") end,
   --   { description = ": Decrease screen brightness", group = "hotkeys" }),
 
