@@ -1,0 +1,32 @@
+#!/bin/sh
+
+function startup() {
+  if [[ $(pgrep $1 -c) -lt 1 ]]; then
+    $@ &
+  fi
+}
+
+# Environment variables
+export EDITOR=lvim
+# export PNPM_HOME="$HOME/.local/share/pnpm"
+export NVM_DIR="$XDG_CONFIG_HOME/nvm"
+export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+export SCREEN_RECS="$HOME/Documents/screenrecs/"
+
+export GTK_THEME=Adwaita:dark
+export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
+export QT_STYLE_OVERRIDE=adwaita-dark
+
+# Moved to awesome
+# Startup commands
+setxkbmap latam # Doens't work on the first couple of tries on awesome for some reason...
+# setxkbmap -option caps:swapescape
+# startup nm-applet
+# startup xautolock \
+#   -notify 120 -notifier "lockscreen" \
+#   -time 7 -locker "systemctl suspend" \
+#   -detectsleep &
+
+# startup pasystray
+# startup picom -b &
+# startup greenclip daemon &
