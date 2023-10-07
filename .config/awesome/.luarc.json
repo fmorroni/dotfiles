@@ -1,0 +1,20 @@
+{
+  "diagnostics.globals": [
+    "vim",
+    "awesome",
+    "client",
+    "screen",
+    "root",
+    "tag",
+    "widget",
+    "mem_now",
+    "cpu_now",
+    "coretemp_now",
+    "fs_now",
+    "bat_now",
+    "volume_now",
+    "net_now",
+    "brightness_now",
+    "ScriptsDir",
+  ]
+}
