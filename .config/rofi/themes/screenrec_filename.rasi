@@ -1,0 +1,41 @@
+@import "launcher.rasi"
+
+configuration {
+	modi: "record:/home/franco/.config/rofi/scripts/screenrec.sh";
+  kb-custom-1: "Control+[35]";
+}
+
+error-message {
+  str: "error";
+}
+
+/* message { */
+/*   enabled: true; */
+/*   children: [textbox-error-msg, textbox-msg]; */
+/* } */
+
+/* textbox-msg { */
+/*   enabled: true; */
+/*   str: "hola"; */
+/* } */
+
+/* textbox-error-msg { */
+/*   enabled: false; */
+/* } */
+
+inputbar {
+  children: [ entry, prompt ];
+}
+
+entry {
+  enabled: true;
+  placeholder: "Enter recording name...";
+}
+
+prompt {
+  enabled: true;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: @active;
+  text-color: @background;
+}

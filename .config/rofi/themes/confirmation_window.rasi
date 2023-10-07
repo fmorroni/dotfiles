@@ -1,0 +1,31 @@
+@import "power_menu.rasi"
+
+window {
+  location: center;
+  anchor: center;
+  fullscreen: false;
+  width: 15%;
+}
+
+mainbox {
+  children: [ "message", "listview" ];
+  spacing: 1em;
+}
+
+listview {
+  columns: 2; lines: 1;
+  children: [textbox-accept, textbox-cancel];
+}
+
+textbox-cancel {
+  background-color: @urgent;
+  content: "hola";
+}
+
+element-text {
+  horizontal-align: 0.5;
+}
+
+textbox {
+  horizontal-align: 0.5;
+}
