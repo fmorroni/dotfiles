@@ -1,0 +1,3 @@
+map <C-i> zoom out
+map <C-o> zoom in
+set selection-clipboard clipboard
