@@ -1,0 +1,90 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=$ZDOTDIR/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt extendedglob nomatch append_history hist_ignore_all_dups
+unsetopt beep
+bindkey -v
+bindkey -M vicmd '^O' history-incremental-pattern-search-backward
+bindkey -M viins '^O' history-incremental-pattern-search-backward
+bindkey -M vicmd '^P' history-incremental-pattern-search-forward
+bindkey -M viins '^P' history-incremental-pattern-search-forward
+bindkey -M viins '^K' up-history
+bindkey -M viins '^J' down-history
+# End of lines configured by zsh-newuser-install
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' format '%d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' insert-unambiguous true
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'r:|[._-]=** r:|=**'
+zstyle ':completion:*' menu select=0
+zstyle ':completion:*' original false
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+# zstyle :compinstall filename '/home/franco/.config/zsh/completion'
+
+autoload -Uz colors && colors
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# Custom config
+## Aliases
+alias ls='ls --color=auto'
+alias la='ls -la'
+alias grep='grep --color=auto'
+alias battery='cat /sys/class/power_supply/BAT0/capacity'
+alias pacinstall='sudo pacman -Syu'
+alias pacsearch='pacman -Ss'
+alias history='history 1'
+alias gits='git status'
+alias gita='git add'
+alias gitc='git commit'
+alias gitd='git diff'
+#alias npm='pnpm'
+
+## Functions
+cdi () {
+  local max_depth=-1
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -d | --max-depth)
+        shift
+        if [[ $# -gt 0 ]]; then
+            max_depth="$1"
+        else
+            echo "Error: Missing argument for max depth."
+            return 1
+        fi
+        ;;
+      *)
+        break
+        ;;
+    esac
+    shift
+  done
+
+  if [ -z "$1" ]; then
+    echo "Usage: cdi [-d MAX_DEPTH] DIRECTORY"
+    return 1
+  fi
+
+  if [[ $max_depth -lt 0 ]]; then
+    local directory=$(find "$1" -type d | fzf)
+  else
+    local directory=$(find "$1" -maxdepth "$max_depth" -type d | fzf)
+  fi
+
+  if [ -n "$directory" ]; then
+    cd "$directory"
+  fi
+}
+
+## Startup
+neofetch
+stty -ixon

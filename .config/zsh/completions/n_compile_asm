@@ -1,0 +1,40 @@
+#compdef compile_asm
+
+LIBS="$HOME/OneDrive/itba/Arqui/my_libs/"
+
+zstyle ':completion:*:*:compile_asm:*:*' file-patterns '*.asm:asm-files'
+
+_abcd() {
+  compadd -X 'Description' -P "hola-" foo bar blah
+}
+
+_qwer() {
+  compadd -X 'Description' -P "chau-" foo bar blah
+}
+
+_get_asm_files() {
+  _files -g *.asm
+}
+
+_compile_asm() {
+  # _alternative \
+  #   'args:custom arg:((a\:"description a" b\:"description b" c\:"description c"))' \
+  #   "files:filename:_path_files -W $XDG_CONFIG_HOME -g 'r*'"
+  # _arguments \
+  #   '-f[files]:filename:_files -W $XDG_CONFIG_HOME' \
+  #   ':next arg:(a b c)' \
+  #   '-l[libs]:libraries:_files -W $HOME/OneDrive/itba/Arqui/my_libs/' \
+  #   '::asdf:_net_interfaces' \
+
+  _arguments -C \
+      '*'{-f,--files}'[Pass any files you want to compile and link. Unlimited]:*:users:_get_asm_files' \
+      '*'{-l,--libs}"[Pass libraries defined in the LIBS path. Unlimited arguments]:*:users:_files -W $LIBS" \
+}
+
+compdef _compile_asm compile_asm
+
+# zstyle ':completion:*:*:compile_asm:-f:*' \
+#   file-patterns \
+#   '*(-/):asdfqewr' \
+  # '**/*.asm:asm-files' \
+  # '%p:directories' \

@@ -1,0 +1,7 @@
+#compdef push_dir
+
+# function _push_dir() {
+#   _path_files -/
+# }
+
+compdef _cd push_dir

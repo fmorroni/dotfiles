@@ -1,0 +1,4 @@
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zsh/starship.toml"
+# export PATH="$HOME/.local/share/pnpm:$HOME/scripts/bin:$PATH"
+export PATH="$HOME/scripts/bin:$PATH"
+export FPATH="$XDG_CONFIG_HOME/zsh/completions:$FPATH"
