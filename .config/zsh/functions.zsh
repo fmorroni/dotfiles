@@ -122,10 +122,6 @@ function gitchore {
 function gitfix {
   local_gitaux "$0" 'fix' "$@"
 }
-function gita {
-  args=${@:-.}
-  git add $args
-}
 
 function configadd() {
   config add $@
