@@ -90,8 +90,9 @@ function open_directory_history {
     delete_history_dir $dir_idx 1>/dev/null
     open_directory_history
   elif [[ -n $dir_idx ]]; then
+    zle push-line # Keep command in promp without executing it.
     cd_hist_dir $dir_idx
-    zle .accept-line
+    zle accept-line
   fi
 }
 zle -N open_directory_history
