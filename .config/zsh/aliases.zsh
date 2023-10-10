@@ -1,7 +1,7 @@
 #!/bin/sh
 
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias configstatus='config status'
+alias configs='config status'
 alias configtracked='config ls-tree --full-tree --name-only -r HEAD | rg -io "^[^/]+(/[^/]+)?" | sort -u'
 alias cd='push_dir'
 alias ls='ls --color=auto'
