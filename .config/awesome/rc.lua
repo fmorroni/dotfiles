@@ -382,9 +382,9 @@ local globalkeys = mytable.join(
     { description = ": +1% screen brightness", group = "hotkeys" }),
   awful.key({}, "XF86MonBrightnessDown", runUserScript("brightnessIncBy", { -1 }, beautiful.brightness.update),
     { description = ": -1% screen brightness", group = "hotkeys" }),
-  awful.key({shiftKey}, "XF86MonBrightnessUp", runUserScript("brightnessIncBy", { 10 }, beautiful.brightness.update),
+  awful.key({ shiftKey }, "XF86MonBrightnessUp", runUserScript("brightnessIncBy", { 10 }, beautiful.brightness.update),
     { description = ": +10% screen brightness", group = "hotkeys" }),
-  awful.key({shiftKey}, "XF86MonBrightnessDown", runUserScript("brightnessIncBy", { -10 }, beautiful.brightness.update),
+  awful.key({ shiftKey }, "XF86MonBrightnessDown", runUserScript("brightnessIncBy", { -10 }, beautiful.brightness.update),
     { description = ": -10% screen brightness", group = "hotkeys" }),
   -- awful.key({}, "XF86MonBrightnessDown", function() os.execute("xbacklight -dec 2 -time 20 -steps 10") end,
   --   { description = ": Decrease screen brightness", group = "hotkeys" }),
@@ -392,20 +392,20 @@ local globalkeys = mytable.join(
   -- ALSA volume control
   awful.key({}, "XF86AudioRaiseVolume",
     function()
-      awful.spawn("amixer -q set " .. beautiful.volume.channel .. " 1%+")
-      beautiful.volume.update()
+      awful.spawn.easy_async("amixer -q set " .. beautiful.volume.channel .. " 1%+", beautiful.volume.update)
     end,
     { description = ": Volume up", group = "hotkeys" }),
   awful.key({}, "XF86AudioLowerVolume",
     function()
-      awful.spawn("amixer -q set " .. beautiful.volume.channel .. " 1%-")
-      beautiful.volume.update()
+      awful.spawn.easy_async("amixer -q set " .. beautiful.volume.channel .. " 1%-", beautiful.volume.update)
     end,
     { description = ": Volume down", group = "hotkeys" }),
   awful.key({}, "XF86AudioMute",
     function()
-      awful.spawn(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
-      beautiful.volume.update()
+      -- helpers.debug_print("Muting")
+      awful.spawn.easy_async(
+        "amixer -q set " .. (beautiful.volume.togglechannel or beautiful.volume.channel) .. " toggle",
+        beautiful.volume.update)
     end,
     { description = ": Toggle mute", group = "hotkeys" }),
 
