@@ -28,22 +28,31 @@ lvim.plugins = {
       vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
     end,
   },
-  {
-    "Wansmer/sibling-swap.nvim",
-    requires = { 'nvim-treesitter' },
-    config = function()
-      require('sibling-swap').setup({
-        use_default_keymaps = true,
-        keymaps = {
-          ['<a-l>'] = 'swap_with_right',
-          ['<a-h>'] = 'swap_with_left',
-        },
-        allow_interline_swaps = false,
-      })
-    end,
-  },
+  -- {
+  --   "Wansmer/sibling-swap.nvim",
+  --   requires = { 'nvim-treesitter' },
+  --   config = function()
+  --     require('sibling-swap').setup({
+  --       use_default_keymaps = true,
+  --       keymaps = {
+  --         ['<a-l>'] = 'swap_with_right',
+  --         ['<a-h>'] = 'swap_with_left',
+  --       },
+  --       allow_interline_swaps = false,
+  --     })
+  --   end,
+  -- },
   "mfussenegger/nvim-jdtls",
   "jidn/vim-dbml",
+  {
+    "drybalka/tree-climber.nvim",
+    config = function()
+      local keyopts = { noremap = true, silent = true }
+      -- vim.keymap.set({ 'n', 'v', 'o' }, '<a-k>', require('tree-climber').goto_parent, keyopts)
+      vim.keymap.set('n', '<a-h>', require('tree-climber').swap_prev, keyopts)
+      vim.keymap.set('n', '<a-l>', require('tree-climber').swap_next, keyopts)
+    end
+  },
   -- "sakhnik/nvim-gdb",
   -- {
   --   'glacambre/firenvim',

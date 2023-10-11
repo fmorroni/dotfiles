@@ -30,7 +30,7 @@ lvim.keys.normal_mode["k"] = "gk"
 -- Better paste
 -- (need to use the vim api because the lvim api assigns the same mapping to visual and select modes)
 -- vim.keymap.set("v", "p", '"_dP')
-vim.keymap.set('v', 'p', 'p:let @+=@0<CR>', { silent = true })
+vim.keymap.set("v", "p", "p:let @+=@0<CR>", { silent = true })
 -- In select mode make p insert letter p instead of pasting.
 vim.keymap.set("s", "p", "p")
 
@@ -40,6 +40,8 @@ lvim.keys.visual_mode["<c-s>"] = "y:%s/\\v<c-r>=escape(@\", '/\\.*$^~[')<CR>/"
 
 -- Re-run previous command-line command
 lvim.keys.normal_mode["<M-.>"] = "@:"
+lvim.keys.normal_mode["<leader>:"] = "q:"
 
--- Ta re buggy, una verga
--- lvim.keys.term_mode["<c-l>"] = "<ESC><ESC>dd"--iclear<CR><esc>pi"
+-- Doesn't work right for some reason
+-- vim.keymap.set("n", "<c-k>", "[m")
+-- vim.keymap.set("n", "<M-j>", "]m")
