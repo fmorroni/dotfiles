@@ -1,0 +1,23 @@
+$if Gdb
+  C-o: "next\n"
+  C-p: "step\n"
+  # C-s: "step\n"
+  # C-j: "si\n"
+  C-n: "dashboard source scroll 1\n"
+  C-k: "dashboard source scroll -1\n"
+  C-r: "dashboard assembly scroll 1\n"
+  C-t: "dashboard assembly scroll -1\n"
+  C-y: "b _start\nrun\n"
+$endif
+
+# Valid ctrl commands:
+# C-k  ✓
+# C-n  ✓
+# C-o  ✓
+# C-p  ✓
+# C-r  ✓
+# C-t  ✓
+# C-u
+# C-v
+# C-w
+# C-y  ✓
