@@ -29,12 +29,12 @@ class Pane():
     def split(self, dir = SplitDir.VERTICAL_ABOVE, percentage = 50, module_name = ''):
         NULLPROG = "sh -c 'while [ 1 = 1 ]; do sleep 100; done'"
         id, tty = Pane.tmux('split-window', '-l', f"{percentage}%", '-t', self.id, '-d', dir.value,
-                             '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
+                             '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG)
         # self.check()
         return Pane(id, tty, module_name)
 
-    def set_dashboard(self):
-        gdb.execute(f'dashboard -output {self.tty}')
+    # def set_dashboard(self):
+    #     gdb.execute(f'dashboard -output {self.tty}')
 
     def add_extra_module(self, module_name: str):
         gdb.execute(f'dashboard {module_name} -output {self.tty}')
@@ -44,7 +44,7 @@ class Pane():
 
     @staticmethod
     def tmux(*args):
-        return sp.check_output(['tmux'] + list(args)).decode('utf8')
+        return sp.check_output(['tmux'] + list(args)).decode('utf8').strip().split(',')
 
     def __str__(self) -> str:
         return f"{self.module_name}: {{ id: {self.id}, tty: {self.tty} }}"
@@ -59,9 +59,9 @@ class Window(Pane):
     @staticmethod
     def create_window():
         Pane.tmux('setw', 'remain-on-exit', 'on')
-        return Pane.tmux('display-message', '-p' , '-F', '#{pane_index},#{pane_tty}').strip().split(',')
+        return Pane.tmux('display-message', '-p' , '-F', '#{pane_index},#{pane_tty}')
 
-
+################### Layout ####################
 # ---------------------------------------------
 # |            |                   |          | 
 # |            |                   |  Memory  | 
@@ -71,7 +71,7 @@ class Window(Pane):
 # |--------------------------------|          | 
 # |                |               |          | 
 # |                |               |   Stack  | 
-# |   Dashboard?   |   Assembly    |          | 
+# |     Source     |   Assembly    |          | 
 # |                |               |          | 
 # |                |               |          | 
 # |                |               |          | 
@@ -96,14 +96,14 @@ memory_pane.add_extra_module('threads')
 
 source_pane = gdb_window.split(
         dir=Pane.SplitDir.VERTICAL_BELOW,
-        percentage=60,
+        percentage=55,
         module_name='source'
     )
 # dashboard_pane.set_dashboard()
 
 registers_pane = gdb_window.split(
         dir=Pane.SplitDir.HORIZONTAL_RIGHT,
-        percentage=65,
+        percentage=60,
         module_name='registers'
     )
 registers_pane.add_extra_module('history')
