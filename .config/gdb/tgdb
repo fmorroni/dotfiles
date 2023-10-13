@@ -3,7 +3,7 @@
 base_dir=$(dirname "$0")
 ARGS=
 if [ -f "./gdbinit" ]; then
-	ARGS=$ARGS\ -x\ ./gdbinit
+	ARGS=$ARGS -x ./gdbinit
 fi
 
 if [ -z "$TMUX" ]

@@ -3,73 +3,117 @@
 #A este archivo renómbrenlo como .tgdbinit y lo pueden usar en lugar del original.
 
 python
+from enum import StrEnum
 import subprocess as sp
-import os
 
-NULLPROG = "sh -c 'while [ 1 = 1 ]; do sleep 100; done'"
+class Pane():
+    class SplitDir(StrEnum):
+        HORIZONTAL_RIGHT = '-h'
+        HORIZONTAL_LEFT = '-hb'
+        VERTICAL_ABOVE = '-vb'
+        VERTICAL_BELOW = '-v'
 
-def tmux(*args):
-    return sp.check_output(['tmux'] + list(args)).decode('utf8')
+    def __init__(self, id: str, tty: str, module_name: str):
+        self.id = id
+        self.tty = tty
+        self.module_name = module_name
+        if module_name == 'dashboard':
+            self.add_extra_module('')
+        elif module_name != 'gdb':
+            self.add_extra_module(module_name)
 
-def set_title(tty, title):
-    with open(tty, 'ab') as t:
-        t.write(b'\x1b]2;' + title.encode('utf8') + b'\x1b\\')
+    def set_title(self):
+        with open(self.tty, 'ab') as t:
+            t.write(b'\x1b]2;' + self.module_name.encode('utf8') + b'\x1b\\')
 
-tmux('setw', 'remain-on-exit', 'on')
-gdb_pane, gdb_tty = tmux('display-message', '-p' , '-F', '#{pane_id},#{pane_tty}').strip().split(',')
-set_title(gdb_tty, 'gdb')
+    def split(self, dir = SplitDir.VERTICAL_ABOVE, percentage = 50, module_name = ''):
+        NULLPROG = "sh -c 'while [ 1 = 1 ]; do sleep 100; done'"
+        id, tty = Pane.tmux('split-window', '-l', f"{percentage}%", '-t', self.id, '-d', dir.value,
+                             '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
+        # self.check()
+        return Pane(id, tty, module_name)
 
-#GDB(0)
-#------------
-#DASHBOARD(1)
-#dashboard_pane, dashboard_tty = tmux('split-window', '-d', '-v', '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
-dashboard_pane, dashboard_tty = tmux('split-window','-p','60', '-d', '-v', '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
-sp.check_call(['stty', '--file', dashboard_tty, '-echo'])
-set_title(dashboard_tty, 'dashboard')
-gdb.execute(f'dashboard -output {dashboard_tty}')
+    def set_dashboard(self):
+        gdb.execute(f'dashboard -output {self.tty}')
 
+    def add_extra_module(self, module_name: str):
+        gdb.execute(f'dashboard {module_name} -output {self.tty}')
 
-#GDB(0)
-#------------
-#DASHBOARD(1)|ASSEMBLY(2)
-#assembly_pane, assembly_tty = tmux('split-window', '-d', '-h', '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
-assembly_pane, assembly_tty = tmux('split-window','-p','65','-t','1', '-d', '-h', '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
-set_title(assembly_tty, 'assembly')
-gdb.execute(f'dashboard assembly -output {assembly_tty}')
+    def check(self):
+        sp.check_call(['stty', '--file', self.tty, '-echo'])
 
+    @staticmethod
+    def tmux(*args):
+        return sp.check_output(['tmux'] + list(args)).decode('utf8')
 
-#GDB(0)
-#------------
-#DASHBOARD(1)|ASSEMBLY(2)|STACK(3)
-stack_pane, stack_tty = tmux('split-window','-p','40','-t','2', '-d', '-h', '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
-set_title(stack_tty, 'stack')
-gdb.execute(f'dashboard stack -output {stack_tty}')
-gdb.execute(f'dashboard breakpoints -output {stack_tty}')
-
-
-#GDB(0)|MEMORY(4)
-#------------
-#DASHBOARD(1)|ASSEMBLY(2)|STACK(3)
-memory_pane, memory_tty = tmux('split-window','-p','70','-t','0', '-d', '-h', '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
-set_title(memory_tty, 'memory')
-gdb.execute(f'dashboard threads -output {memory_tty}')
-gdb.execute(f'dashboard memory -output {memory_tty}')
+    def __str__(self) -> str:
+        return f"{self.module_name}: {{ id: {self.id}, tty: {self.tty} }}"
 
 
-#GDB(0)|MEMORY(4)|REGISTERS(5)
-#---------------------------------
-#DASHBOARD(1)|ASSEMBLY(2)|STACK(3)
-registers_pane, registers_tty = tmux('split-window','-p','50','-t','1', '-d', '-h', '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG).strip().split(',')
-set_title(registers_tty, 'registers')
-gdb.execute(f'dashboard registers -output {registers_tty}')
-gdb.execute(f'dashboard history -output {registers_tty}')
-gdb.execute(f'dashboard expressions -output {registers_tty}')
+class Window(Pane):
+    def __init__(self, module_name: str):
+        id, tty = Window.create_window()
+        Pane.__init__(self, id, tty, module_name)
+        self.set_title()
 
-#gdb.execute(f'set inferior-tty {registers_tty}')
-
-
+    @staticmethod
+    def create_window():
+        Pane.tmux('setw', 'remain-on-exit', 'on')
+        return Pane.tmux('display-message', '-p' , '-F', '#{pane_index},#{pane_tty}').strip().split(',')
 
 
+# ---------------------------------------------
+# |            |                   |          | 
+# |            |                   |  Memory  | 
+# |    GDB     |     Registers     |          | 
+# |            |                   |----------| 
+# |            |                   |          | 
+# |--------------------------------|          | 
+# |                |               |          | 
+# |                |               |   Stack  | 
+# |   Dashboard?   |   Assembly    |          | 
+# |                |               |          | 
+# |                |               |          | 
+# |                |               |          | 
+# ---------------------------------------------
+
+gdb_window = Window('gdb') # Includes source for some reason
+
+stack_pane = gdb_window.split(
+        dir=Pane.SplitDir.HORIZONTAL_RIGHT,
+        percentage=30,
+        module_name='stackmemory'
+    )
+stack_pane.add_extra_module('breakpoints')
+
+memory_pane = stack_pane.split(
+        dir=Pane.SplitDir.VERTICAL_ABOVE,
+        percentage=30,
+        module_name='memory'
+    )
+memory_pane.add_extra_module('threads')
+
+
+source_pane = gdb_window.split(
+        dir=Pane.SplitDir.VERTICAL_BELOW,
+        percentage=60,
+        module_name='source'
+    )
+# dashboard_pane.set_dashboard()
+
+registers_pane = gdb_window.split(
+        dir=Pane.SplitDir.HORIZONTAL_RIGHT,
+        percentage=65,
+        module_name='registers'
+    )
+registers_pane.add_extra_module('history')
+registers_pane.add_extra_module('expressions')
+
+assembly_pane = source_pane.split(
+        dir=Pane.SplitDir.HORIZONTAL_RIGHT,
+        percentage=50,
+        module_name='assembly'
+    )
 
 #configuraciones que quiero tener siempre
 gdb.execute(f'dashboard memory -style full True')
@@ -88,15 +132,11 @@ gdb.execute(f'set disassembly-flavor intel')
 
 
 # Disable unwanted sections
+gdb.execute(f'dashboard breakpoints')
 gdb.execute(f'dashboard threads')
 gdb.execute(f'dashboard variables')
 gdb.execute(f'dashboard history')
-
-
-#tmux('select-layout', 'even-horizontal')
-
-
-#tmux('select-pane', '-t', '0')
+gdb.execute(f'dashboard stack')
 
 end
 
