@@ -148,6 +148,7 @@ awful.layout.layouts                   = {
   awful.layout.suit.tile.left,
   awful.layout.suit.tile.bottom,
   awful.layout.suit.tile.top,
+  awful.layout.suit.fair,
 }
 
 lain.layout.termfair.nmaster           = 3
@@ -557,6 +558,8 @@ root.keys(globalkeys)
 -- {{{ Rules
 
 -- Rules to apply to new clients (through the "manage" signal).
+-- `xprop` command to find class (WM_CLASS second value), instance (WM_CLASS first value)
+-- or name (WM_NAME). Clients can be identified by any of this values.
 awful.rules.rules = {
   -- All clients will match this rule.
   {
@@ -578,33 +581,9 @@ awful.rules.rules = {
   -- Floating clients.
   {
     rule_any = {
-      instance = {
-        "DTA",   -- Firefox addon DownThemAll.
-        "copyq", -- Includes session name in class.
-        "pinentry",
-      },
-      class = {
-        "Arandr",
-        "Blueman-manager",
-        "Gpick",
-        "Kruler",
-        "MessageWin",  -- kalarm.
-        "Sxiv",
-        "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-        "Wpa_gui",
-        "veromix",
-        "xtightvncviewer" },
-
-      -- Note that the name property shown in xprop might be set slightly after creation of the client
-      -- and the name shown there might not match defined rules here.
-      name = {
-        "Event Tester", -- xev.
-      },
-      role = {
-        "AlarmWindow",   -- Thunderbird's calendar.
-        "ConfigManager", -- Thunderbird's about:config.
-        -- "pop-up",        -- e.g. Google Chrome's (detached) Developer Tools.
-      }
+      class = {},
+      instance = {},
+      name = { "Picture in picture" },
     },
     properties = { floating = true }
   },
