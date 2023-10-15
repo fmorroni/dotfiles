@@ -76,7 +76,7 @@ class Window(Pane):
 # |                |               |          | 
 # ---------------------------------------------
 
-gdb_window = Window('gdb') # Includes source for some reason
+gdb_window = Window('gdb')
 
 stack_pane = gdb_window.split(
         dir=Pane.SplitDir.HORIZONTAL_RIGHT,
