@@ -99,6 +99,7 @@ source_pane = gdb_window.split(
         module_name='source'
     )
 # dashboard_pane.set_dashboard()
+source_pane.add_extra_module('variables')
 
 registers_pane = gdb_window.split(
         dir=Pane.SplitDir.HORIZONTAL_RIGHT,
@@ -133,7 +134,7 @@ gdb.execute(f'set disassembly-flavor intel')
 # Disable unwanted sections
 gdb.execute(f'dashboard breakpoints')
 gdb.execute(f'dashboard threads')
-gdb.execute(f'dashboard variables')
+# gdb.execute(f'dashboard variables')
 gdb.execute(f'dashboard history')
 gdb.execute(f'dashboard stack')
 
