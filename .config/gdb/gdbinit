@@ -2006,6 +2006,28 @@ class StackMemory(Dashboard.Module):
         setattr(self.memory, 'full', False)
         setattr(self.memory, 'placeholder', '•')
         setattr(self.memory, 'cumulative', False)
+        self.reg_marks_enabled = True
+        self.width_set = False
+
+    def toggle_reg_marks(self, _):
+        if not self.reg_marks_enabled:
+            self.reg_marks_enabled = True
+            self.set_reg_marks()
+        else:
+            self.reg_marks_enabled = False
+            self.unset_reg_marks()
+
+    def set_reg_marks(self):
+        self.sp_mark = ' - ' + self.sp
+        self.bp_mark = ' - ' + self.bp
+        self.sp_bp_mark = ' - sbp'
+        self.ret_mark = ' - ret'
+
+    def unset_reg_marks(self):
+        self.sp_mark = ''
+        self.bp_mark = ''
+        self.sp_bp_mark = ''
+        self.ret_mark = ''
 
     def set_width(self):
         self.width = gdb.lookup_type('void').pointer().sizeof
@@ -2018,6 +2040,8 @@ class StackMemory(Dashboard.Module):
             self.bp = "rbp"
         else:
             raise Exception('StackMemory width must be either 4 or 8, was: ', self.width)
+        if self.reg_marks_enabled:
+            self.set_reg_marks()
 
     def label(self):
         return 'Stack Memory'
@@ -2042,11 +2066,11 @@ class StackMemory(Dashboard.Module):
             lines = self.frames[key].format(self.memory.get_per_line(term_width))
             if len(lines) > 0:
                 if lines[0] == lines[-2]:
-                    lines[0] = f"{lines[0]} <- bp/sp"
+                    lines[0] = f"{lines[0]}{self.sp_bp_mark}"
                 else:
-                    lines[0] = f"{lines[0]} <- esp"
-                    lines[-2] = f"{lines[-2]} <- ebp"
-                lines[-1] = f"{lines[-1]} <- ret"
+                    lines[0] = f"{lines[0]}{self.sp_mark}"
+                    lines[-2] = f"{lines[-2]}{self.bp_mark}"
+                lines[-1] = f"{lines[-1]}{self.ret_mark}"
             out.extend(lines)
         return out
 
@@ -2055,7 +2079,11 @@ class StackMemory(Dashboard.Module):
         self.frames2 = []
 
     def lines(self, term_width, term_height, style_changed):
-        self.set_width()
+        # This is disgusting but I have to set width here and not in the constructor because at
+        # instantiation the process hasn't been loaded yet and width is always calculated as 4 bytes
+        # (I guess it's related to how gdb was compiled)
+        if not self.width_set:
+            self.set_width()
         frame_lines = []
         frame = gdb.selected_frame()
         self.reset_frames()
@@ -2073,7 +2101,19 @@ class StackMemory(Dashboard.Module):
                 'doc': 'Number of frames to display at once',
                 'default': 2,
                 'type': int
-            }
+            },
+            # 'enable_reg_marks': {
+            #     'default': True,
+            #     'type': bool
+            # }
+        }
+
+    def commands(self):
+        return {
+            'toggle_reg_marks': {
+                'action': self.toggle_reg_marks,
+                'doc': 'Enable stack/base pointer and return address marks',
+            },
         }
 
 
