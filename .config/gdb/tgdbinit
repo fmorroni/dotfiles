@@ -3,11 +3,10 @@
 #A este archivo renómbrenlo como .tgdbinit y lo pueden usar en lugar del original.
 
 python
-from enum import StrEnum
 import subprocess as sp
 
 class Pane():
-    class SplitDir(StrEnum):
+    class SplitDir():
         HORIZONTAL_RIGHT = '-h'
         HORIZONTAL_LEFT = '-hb'
         VERTICAL_ABOVE = '-vb'
@@ -28,7 +27,7 @@ class Pane():
 
     def split(self, dir = SplitDir.VERTICAL_ABOVE, percentage = 50, module_name = ''):
         NULLPROG = "sh -c 'while [ 1 = 1 ]; do sleep 100; done'"
-        id, tty = Pane.tmux('split-window', '-l', f"{percentage}%", '-t', self.id, '-d', dir.value,
+        id, tty = Pane.tmux('split-window', '-l', f"{percentage}%", '-t', self.id, '-d', dir,
                              '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG)
         # self.check()
         return Pane(id, tty, module_name)
