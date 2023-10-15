@@ -10,6 +10,8 @@ lvim.builtin.telescope.pickers.live_grep.theme = 'ivy'
 lvim.builtin.telescope.pickers.live_grep.hidden = true
 lvim.builtin.telescope.pickers.live_grep.no_ignore = true
 
+lvim.builtin.telescope.pickers.buffers.initial_mode = "insert"
+
 lvim.builtin.telescope.on_config_done = function()
   local actions = require "telescope.actions"
   lvim.builtin.telescope.defaults.mappings.n["<leader>q"] = actions.close
