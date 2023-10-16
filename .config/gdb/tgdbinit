@@ -78,9 +78,10 @@ class Window(Pane):
 
 gdb_window = Window('gdb')
 
+stack_pane_width = 35 if gdb.lookup_type('void').pointer().sizeof == 8 else 30
 stack_pane = gdb_window.split(
         dir=Pane.SplitDir.HORIZONTAL_RIGHT,
-        percentage=35,
+        percentage=stack_pane_width,
         module_name='stackmemory'
     )
 stack_pane.add_extra_module('breakpoints')
