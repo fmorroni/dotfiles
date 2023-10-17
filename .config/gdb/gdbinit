@@ -2000,7 +2000,6 @@ The length defaults to 16 bytes.''',
 class StackMemory(Dashboard.Module):
     def __init__(self):
         self.frames = {}
-        self.frames2 = []
         self.total_frames = 2
         self.memory = Memory()
         setattr(self.memory, 'full', False)
@@ -2059,7 +2058,7 @@ class StackMemory(Dashboard.Module):
     def get_frame_lines(self, frame, term_width):
         name = frame.name()
         bp = frame.read_register(self.bp)
-        key = f"{name}-{bp}"
+        key = self.get_frame_key(frame)
         out = []
         if key in self.frames:
             out.append(divider(term_width, name))
@@ -2076,7 +2075,12 @@ class StackMemory(Dashboard.Module):
 
     def reset_frames(self):
         self.frames = {}
-        self.frames2 = []
+
+    def get_frame_key(self, frame):
+        name = frame.name()
+        bp = frame.read_register(self.bp)
+        return f"{name}-{bp}"
+
 
     def lines(self, term_width, term_height, style_changed):
         # This is disgusting but I have to set width here and not in the constructor because at
@@ -2086,10 +2090,12 @@ class StackMemory(Dashboard.Module):
             self.set_width()
         frame_lines = []
         frame = gdb.selected_frame()
-        self.reset_frames()
-        for i in range(self.total_frames):
+        # self.reset_frames()
+        for _ in range(self.total_frames):
             if frame != None:
-                self.watch_frame(frame)
+                key = self.get_frame_key(frame)
+                if key not in self.frames:
+                    self.watch_frame(frame)
                 lines = self.get_frame_lines(frame, term_width=20)
                 frame_lines.extend(lines)
                 frame = frame.older()
