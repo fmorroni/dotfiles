@@ -63,6 +63,8 @@ local config = {
       },
       configuration = {
         updateBuildConfiguration = "interactive",
+        -- The runtime names are found
+        -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
         runtimes = {
           {
             name = "JavaSE-17",

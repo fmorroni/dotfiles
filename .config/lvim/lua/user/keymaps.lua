@@ -6,6 +6,7 @@ lvim.builtin.which_key.mappings["f"] = { function()
   local themes = require('telescope.themes')
   require("lvim.core.telescope.custom-finders").find_project_files(themes.get_dropdown({ previewer = false }))
 end, "Find File" }
+lvim.builtin.which_key.mappings["d"]["x"] = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", "Clear Breakpoints" }
 
 ---- General ----
 lvim.keys.normal_mode["<c-p>"] = "<c-i>"
