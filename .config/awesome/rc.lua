@@ -578,14 +578,19 @@ awful.rules.rules = {
     }
   },
 
+  {
+    rule = { name = 'Brave-browser' },
+    properties = { maximize = true },
+  },
+
   -- Floating clients.
   {
     rule_any = {
-      class = {},
+      class = { "Qemu-system-x86_64" },
       instance = {},
       name = { "Picture in picture" },
     },
-    properties = { floating = true }
+    properties = { floating = true, ontop = true }
   },
 }
 
