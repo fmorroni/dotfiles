@@ -8,6 +8,7 @@ $if Gdb
   C-r: "dashboard assembly scroll 1\n"
   C-t: "dashboard assembly scroll -1\n"
   C-y: "b _start\nrun\n"
+  C-u: "target remote localhost:1234"
 $endif
 
 # Valid ctrl commands:
