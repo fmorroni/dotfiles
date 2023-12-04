@@ -15,7 +15,6 @@ local dpi                                       = require("beautiful.xresources"
 
 local os                                        = os
 local my_table                                  = awful.util.table or gears.table -- 4.{0,1} compatibility
-
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-dark"
 theme.wallpaper                                 = theme.dir .. "/neon.png"
@@ -64,6 +63,8 @@ theme.widget_vol_no                             = theme.dir .. "/icons/vol_no.pn
 theme.widget_vol_mute                           = theme.dir .. "/icons/vol_mute.png"
 theme.widget_mail                               = theme.dir .. "/icons/mail.png"
 theme.widget_mail_on                            = theme.dir .. "/icons/mail_on.png"
+theme.widget_bluetooth_on                       = theme.dir .. "/icons/bluetooth_on.png"
+theme.widget_bluetooth_off                      = theme.dir .. "/icons/bluetooth_off.png"
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = false
 theme.titlebar_close_button_focus               = theme.dir .. "/icons/titlebar/close_focus.png"
@@ -114,7 +115,7 @@ local clock                                     = awful.widget.watch(
 theme.cal                                       = lain.widget.cal({
   attach_to = { clock },
   notification_preset = {
-    font = "Terminus 10",
+    font = "Monospace 10",
     fg   = theme.fg_normal,
     bg   = theme.bg_normal
   }
@@ -230,6 +231,19 @@ theme.brightness      = lain.widget.brightness({
   end
 })
 
+-- Bluetooth
+-- local bluetooth_icon  = wibox.widget.imagebox(theme.widget_bluetooth_off)
+-- bluetooth_icon.font   = 'Terminus 13'
+-- theme.bluetooth       = lain.widget.bluetooth({
+--   settings = function()
+--     if bluetooth_on then
+--       volicon:set_image(theme.widget_bluetooth_on)
+--     else
+--       volicon:set_image(theme.widget_bluetooth_off)
+--     end
+--   end
+-- })
+
 -- Separators
 local spr             = wibox.widget.textbox('  ')
 local arrl_dl         = separators.arrow_left(theme.bg_focus, "alpha")
@@ -296,6 +310,7 @@ function theme.at_screen_connect(s)
     { keyboardlayout },
     { volicon,         theme.volume.widget },
     { brightness_icon, spr,                theme.brightness.widget },
+    -- { spr,             bluetooth_icon,     theme.bluetooth.widget },
     { memicon,         mem.widget },
     { cpuicon,         cpu.widget },
     { tempicon,        temp.widget },
