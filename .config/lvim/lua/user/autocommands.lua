@@ -38,5 +38,15 @@ lvim.autocommands = {
         vim.cmd("set commentstring=//%s")
       end
     }
-  }
+  },
+  {
+    { "BufNewFile", "BufRead" },
+    {
+      pattern = "*.wgsl",
+      callback = function()
+        vim.cmd("setfiletype wgsl")
+        vim.cmd("set commentstring=//%s")
+      end
+    }
+  },
 }
