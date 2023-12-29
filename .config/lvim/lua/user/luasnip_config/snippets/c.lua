@@ -78,14 +78,24 @@ local functionSnip = ls.s("fun", ls.fmt([[
 )
 
 local struct = ls.s("struct", ls.fmt([[
-    typedef struct {} {{
+    typedef struct {{
       {}
     }} {};
   ]],
   {
-    ls.i(1, "StructName"),
     ls.i(2),
-    ls.rep(1),
+    ls.i(1, "StructName"),
+  })
+)
+
+local enum = ls.s("enum", ls.fmt([[
+    typedef enum {{
+      {}
+    }} {};
+  ]],
+  {
+    ls.i(2),
+    ls.i(1, "EnumName"),
   })
 )
 
@@ -102,15 +112,17 @@ local main = ls.s("main", ls.fmt([[
 )
 
 local forStatement = ls.s("for", ls.fmt([[
-    for (int {} = {}; {} < {}; {}) {{
+    for (int {} = {}; {}; {}) {{
       {}
     }}
   ]],
   {
     ls.i(1, "i"),
     ls.i(2, "0"),
-    ls.rep(1),
-    ls.i(3, "len"),
+    ls.c(3, {
+      ls.fmt("{} < {}", { ls.rep(ls.ai[1]), ls.i(1, "len") }),
+      ls.i(nil, "condition"),
+    }),
     ls.d(4, function(args)
       return ls.sn(nil, ls.i(1, "++" .. args[1][1]))
     end, 1),
@@ -141,6 +153,7 @@ return {
   matrix,
   functionSnip,
   struct,
+  enum,
   forStatement,
   include,
   main,
