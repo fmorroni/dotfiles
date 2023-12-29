@@ -54,10 +54,10 @@ function vi-yank-eol-xclip {
 }
 zle -N vi-yank-eol-xclip
 
-function mvn_itba {
+function mvn-itba {
   if [[ -z $1 ]]; then
     echo "Usage: $(basename $0) <artifact id> [version]"
-    exit 1
+    return 1
   fi
   mvn archetype:generate \
     -DarchetypeGroupId=itba.EDA \
@@ -68,17 +68,17 @@ function mvn_itba {
     -DinteractiveMode=false
 }
 
-function cat_exec {
+function cat-exec {
   cat $(which $1)
 }
-compdef _path_commands cat_exec
+compdef _path_commands cat-exec
 
 function trestore_fzf {
   indexes=$(trash list | fzf --multi | awk '{$1=$1;print}' | cut -d ' ' -f 1)
   trash restore -r "$indexes"
 }
 
-function wpp_converter {
+function wpp-converter {
   ffmpeg -i $1 \
     -vf "scale=-2:480" \
     -c:v libx264 \

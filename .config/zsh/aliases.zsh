@@ -11,6 +11,7 @@ alias battery='cat /sys/class/power_supply/BAT0/capacity'
 alias pacinstall='sudo pacman -Syu'
 alias pacsearch='pacman -Ss'
 alias pacnamesearch="pacman -Sl | cut -d' ' -f2- | rg"
+alias yaynamesearch="yay -Sl | cut -d' ' -f2- | rg"
 alias history='history 1'
 alias gits='git status'
 # alias gita='git add'
