@@ -16,10 +16,10 @@ lvim.keys.normal_mode["<leader>o"] = 'o<ESC>0"_D'
 lvim.keys.normal_mode["<leader>O"] = 'O<ESC>0"_D'
 lvim.keys.normal_mode["|"] = "$"
 lvim.keys.visual_mode["|"] = "$"
-lvim.keys.normal_mode[",;"] = "<ESC>A;<ESC>"
-lvim.keys.insert_mode[",;"] = "<ESC>A;<ESC>"
-lvim.keys.insert_mode[",z"] = "<"
-lvim.keys.insert_mode[",Z"] = ">"
+-- lvim.keys.normal_mode[";;"] = "<ESC>A;<ESC>"
+lvim.keys.insert_mode[";;"] = "<ESC>A;<ESC>"
+-- lvim.keys.insert_mode[",z"] = "<"
+-- lvim.keys.insert_mode[",Z"] = ">"
 -- Remember to swap capslock for esc!!!
 -- setxkbmap -option caps:swapescape
 -- lvim.keys.insert_mode["jk"] = "<ESC>"
@@ -35,7 +35,6 @@ vim.keymap.set("v", "p", "p:let @+=@0<CR>", { silent = true })
 -- In select mode make p insert letter p instead of pasting.
 vim.keymap.set("s", "p", "p")
 
-lvim.keys.visual_mode["//"] = "y/\\V<c-r>=escape(@\",'/\\')<CR><CR>"
 lvim.keys.normal_mode["<c-s>"] = "yiw:%s/\\v<<c-r>\">"
 lvim.keys.visual_mode["<c-s>"] = "y:%s/\\v<c-r>=escape(@\", '/\\.*$^~[')<CR>/"
 
