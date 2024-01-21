@@ -417,6 +417,8 @@ local globalkeys = mytable.join(
     { description = ": Open browser in incognito", group = "launcher" }),
   awful.key({ modkey, shiftKey }, "s", function() awful.util.spawn("flameshot gui") end,
     { description = ": Snipping tool", group = "launcher" }),
+  awful.key({ modkey, shiftKey, ctrlKey }, "s", function() awful.util.spawn("flameshot gui --delay 2000") end,
+    { description = ": Snipping tool 2s delay", group = "launcher" }),
   awful.key({ modkey }, "r", runUserScript("rofi_launcher"),
     { description = ": Run rofi", group = "launcher" }),
   awful.key({ modkey }, "x", runUserScript("lockscreen"),
@@ -586,7 +588,7 @@ awful.rules.rules = {
   -- Floating clients.
   {
     rule_any = {
-      class = { "Qemu-system-x86_64" },
+      class = { "Qemu-system-x86_64", "PomodoroTimer" },
       instance = {},
       name = { "Picture in picture" },
     },
