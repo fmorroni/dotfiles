@@ -1,5 +1,3 @@
-#!/bin/sh
-
 DIRECTORY_HISTORY=()
 DIRHISTORY_SIZE=30
 

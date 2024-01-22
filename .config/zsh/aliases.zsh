@@ -1,5 +1,3 @@
-#!/bin/sh
-
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias configs='config status'
 alias configtracked='config ls-tree --full-tree --name-only -r HEAD | rg -io "^[^/]+(/[^/]+)?" | sort -u'
@@ -21,7 +19,7 @@ alias mariastart='sudo systemctl start mariadb.service'
 alias mariastop='sudo systemctl stop mariadb.service'
 alias mariastatus='systemctl status mariadb.service'
 alias cdihome='cdi -d 3 ~/'
-alias cdione='cdi ~/OneDrive'
+alias cdione="cdi --prune 'node_modules .classes .git target .settings' ~/OneDrive"
 alias btstart='sudo systemctl restart bluetooth.service'
 alias btstop='sudo systemctl stop bluetooth.service'
 alias btstatus='systemctl status bluetooth.service'

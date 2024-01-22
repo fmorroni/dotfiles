@@ -1,35 +1,75 @@
-#!/bin/sh
+cdi_usage () {
+  echo "Usage: cdi [[ -d MAX_DEPTH ] xor [ -p 'TO-PRUNE-1 ... TO-PRUNE-N' ]] <DIRECTORY>"
+  echo "Options:"
+  echo "  -d | --max-depth <depth>"
+  echo "  -p | --prune <space separated string of directory names to prune>"
+}
 
 cdi () {
-  local max_depth=-1
+  local max_depth_set=false
+  local prune_set=false
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
       -d | --max-depth)
-        shift
-        if [[ $# -gt 0 ]]; then
-            max_depth="$1"
+        if [[ "$prune_set" = true ]]; then
+          echo "Error: --max-depth does not work with --prune.\n"
+          cdi_usage
+          return 1
         else
-            echo "Error: Missing argument for max depth."
+          if [[ $# -ge 3 ]]; then
+            max_depth_set=true
+            local max_depth="$2"
+            shift 2
+          else
+            echo "Error: Missing argument for --max-depth.\n"
+            cdi_usage
             return 1
+          fi
+        fi
+        ;;
+      -p | --prune)
+        if [[ "$max_depth_set" = true ]]; then
+          echo "Error: --prune does not work with --max-depth.\n"
+          cdi_usage
+          return 1
+        else
+          if [[ $# -ge 3 ]]; then
+            prune_set=true
+            local to_prune_dirs=$2
+            local to_prune=()
+            # for dir in $=to_prune_dirs; do
+            for dir in ${(ps: :)to_prune_dirs}; do
+              to_prune+=('-name')
+              to_prune+=("$dir")
+              to_prune+=('-o')
+            done
+            to_prune[-1]=()
+            shift 2
+          else
+            echo "Error: Missing argument for --prune.\n"
+            cdi_usage
+            return 1
+          fi
         fi
         ;;
       *)
         break
         ;;
     esac
-    shift
   done
 
   if [ -z "$1" ]; then
-    echo "Usage: cdi [-d MAX_DEPTH] DIRECTORY"
+    cdi_usage
     return 1
   fi
 
-  if [[ $max_depth -lt 0 ]]; then
-    local directory=$(find "$1" -type d | fzf)
-  else
+  if [[ "$max_depth_set" = true ]]; then
     local directory=$(find "$1" -maxdepth "$max_depth" -type d | fzf)
+  elif [[ "$prune_set" = true ]]; then
+    local directory=$(find "$1" \( "${to_prune[@]}" \) -prune -o -type d | fzf)
+  else
+    local directory=$(find "$1" -type d | fzf)
   fi
 
   if [ -n "$directory" ]; then

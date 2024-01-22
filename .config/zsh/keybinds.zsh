@@ -1,5 +1,3 @@
-#!/bin/sh
-
 bindkey -M vicmd '^ ' autosuggest-accept
 bindkey -M viins '^ ' autosuggest-accept
 bindkey -M vicmd '^O' fzf-history-widget #history-incremental-pattern-search-backward
