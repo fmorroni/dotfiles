@@ -1,3 +1,98 @@
-map <C-i> zoom out
-map <C-o> zoom in
+map [normal] l navigate next
+map [fullscreen] l navigate next
+map [presentation] l navigate next
+map [normal] h navigate previous
+map [fullscreen] h navigate previous
+map [presentation] h navigate previous
+map [normal] <C-h> scroll left
+map [fullscreen] <C-h> scroll left
+map [normal] <C-l> scroll right
+map [fullscreen] <C-l> scroll right
 set selection-clipboard clipboard
+
+
+## Mappings:  map [mode] <binding> <shortcut function> <argument>
+
+## Modes
+# normal (default (sometimes???))
+# visual
+# insert
+# fullscreen
+# presentation
+# index
+
+## Mod keys
+# A - Alt
+# C - Control
+# S - Shift (bindigs with shift don't seem to work...)
+
+## Functions
+# abort: Switch back to normal mode
+# adjust_window: Adjust page width
+# change_mode: Change current mode
+# follow: Follow a link
+# focus_inputbar: Focus inputbar
+# goto: Go to a certain page
+# index_navigate: Navigate through the index
+# navigate: Navigate to the next/previous page
+# quit: Quit zathura
+# recolor: Recolor the pages
+# reload: Reload the document
+# rotate: Rotate the page
+# scroll: Scroll
+# search: Search next/previous item
+# set: Set an option
+# toggle_fullscreen: Toggle fullscreen
+# toggle_index: Show or hide index
+# toggle_inputbar: Show or hide inputbar
+# toggle_statusbar: Show or hide statusbar
+# zoom: Zoom in or out
+
+## Arguments
+# bottom
+# default
+# down
+# full-down
+# full-up
+# half-down
+# half-up
+# in
+# left
+# next
+# out
+# previous
+# right
+# specific
+# top
+# up
+# best-fit
+# width
+# rotate-cw
+# rotate-ccw
+
+## Special keys (should go between <>)
+# BackSpace: Back space
+# CapsLock: Caps lock
+# Esc: Escape
+# Down: Arrow down
+# Up: Arrow up
+# Left: Arrow left
+# Right: Arrow right
+# F1: F1
+# F2: F2
+# F3: F3
+# F4: F4
+# F5: F5
+# F6: F6
+# F7: F7
+# F8: F8
+# F9: F9
+# F10: F10
+# F11: F11
+# F12: F12
+# PageDown: Page Down
+# PageUp: Page Up
+# Return: Return
+# Space: Space
+# Super: Windows button
+# Tab: Tab
