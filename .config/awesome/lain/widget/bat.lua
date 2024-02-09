@@ -32,7 +32,7 @@ local function factory(args)
     local timeout     = args.timeout or 30
     local notify      = args.notify or "on"
     local full_notify = args.full_notify or notify
-    local n_perc      = args.n_perc or { 5, 20 }
+    local n_perc      = args.n_perc or { 5, 20, 85 }
     local batteries   = args.batteries or (args.battery and {args.battery}) or {}
     local ac          = args.ac or "AC0"
     local settings    = args.settings or function() end
@@ -62,6 +62,14 @@ local function factory(args)
         title   = "Battery low",
         text    = "Plug the cable!",
         timeout = 15,
+        fg      = "#202020",
+        bg      = "#CDCDCD"
+    }
+
+    bat_notification_charged_enough_preset = {
+        title   = "Battery over " .. n_perc[3] .. "%",
+        text    = "You can unplug the cable",
+        timeout = 30,
         fg      = "#202020",
         bg      = "#CDCDCD"
     }
@@ -218,12 +226,19 @@ local function factory(args)
                     }).id
                 end
                 fullnotification = false
-            elseif bat_now.status == "Full" and full_notify == "on" and not fullnotification then
+            elseif bat_now.status == "Full" and full_notify == "on" then
                 bat.id = naughty.notify({
                     preset = bat_notification_charged_preset,
                     replaces_id = bat.id
                 }).id
-                fullnotification = true
+            elseif bat_now.status == "Charging" and not fullnotification then
+                if tonumber(bat_now.perc) > n_perc[3] then
+                    bat.id = naughty.notify({
+                        preset = bat_notification_charged_enough_preset,
+                        replaces_id = bat.id
+                    }).id
+                    fullnotification = true
+                end
             end
         end
     end
