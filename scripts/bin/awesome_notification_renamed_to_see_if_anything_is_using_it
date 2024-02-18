@@ -1,0 +1,38 @@
+#!/bin/bash                                                                                                                                                                                                       
+# Author: Lorenzo Gaggini
+# Version: 0.2
+#
+# Create a naughty awesome wm notification by title
+# and message on secondary (big) screen
+
+# init env for cron/at execution
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+export DISPLAY=:0
+
+# check input
+if [ "$#" -lt 2 ]; then
+    echo "usage: $0 <title> <message> [timeout] [preset]"
+    exit 1
+fi
+
+# parse input
+TITLE=$1
+MSG=$2
+TIMEOUT=${3:-0}
+PRESET=${4:-''}
+
+if [[ $PRESET == "critical" ]]; then
+  BG=", bg = '#eb2d3e'"
+fi
+
+# init naughty
+/usr/bin/echo "naughty = require(\"naughty\")" | /usr/bin/awesome-client
+
+# feed awesome-client
+/usr/bin/echo "naughty.notify({
+  title = \"$TITLE\",
+  text = \"$MSG\",
+  screen =  screens,
+  timeout = $TIMEOUT,
+  preset = {font = 'FiraCode NF 11' $BG}
+})" | /usr/bin/awesome-client

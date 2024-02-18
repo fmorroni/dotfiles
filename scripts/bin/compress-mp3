@@ -1,0 +1,31 @@
+#!/bin/sh
+
+cleanup() {
+    echo "Exiting script."
+    exit 3
+}
+trap cleanup SIGINT
+
+script_name=$(basename $0)
+if [ "$#" -lt 3 ]; then
+  echo "Usage: $script_name <output_dir> <bitrate> <file_1> ... [file_n]" >&2
+  echo
+  echo "  Bitrate prolly best in 75k."
+  exit 1
+fi
+
+output_dir="$1"
+if [[ ! -d "$output_dir" ]]; then
+  echo "Output directory not found." >&2
+  exit 2
+fi
+bitrate="$2"
+shift 2
+
+i=1
+tot=$#
+for file in $@; do
+  ffmpeg -i "$file" -map 0:a:0 -b:a "$bitrate" "$output_dir/$file"
+  echo "Compressed $i/$tot"
+  ((++i))
+done
