@@ -130,11 +130,11 @@ keymap = [
 	{ on = [ "8" ], exec = "tab_switch 7", desc = "Switch to the eighth tab" },
 	{ on = [ "9" ], exec = "tab_switch 8", desc = "Switch to the ninth tab" },
 
-	{ on = [ "[" ], exec = "tab_switch -1 --relative", desc = "Switch to the previous tab" },
-	{ on = [ "]" ], exec = "tab_switch 1 --relative",  desc = "Switch to the next tab" },
+	{ on = [ "{" ], exec = "tab_switch -1 --relative", desc = "Switch to the previous tab" },
+	{ on = [ "}" ], exec = "tab_switch 1 --relative",  desc = "Switch to the next tab" },
 
-	{ on = [ "{" ], exec = "tab_swap -1", desc = "Swap the current tab with the previous tab" },
-	{ on = [ "}" ], exec = "tab_swap 1",  desc = "Swap the current tab with the next tab" },
+	{ on = [ "[" ], exec = "tab_swap -1", desc = "Swap the current tab with the previous tab" },
+	{ on = [ "]" ], exec = "tab_swap 1",  desc = "Swap the current tab with the next tab" },
 
 	# Tasks
 	{ on = [ "w" ], exec = "tasks_show", desc = "Show the tasks manager" },
@@ -143,6 +143,8 @@ keymap = [
 	{ on = [ "g", "h" ],       exec = "cd ~",             desc = "Go to the home directory" },
 	{ on = [ "g", "c" ],       exec = "cd ~/.config",     desc = "Go to the config directory" },
 	{ on = [ "g", "d" ],       exec = "cd ~/Downloads",   desc = "Go to the downloads directory" },
+	{ on = [ "g", "D" ],       exec = "cd ~/Documents",   desc = "Go to the documents directory" },
+	{ on = [ "g", "s" ],       exec = "cd ~/scripts/bin/",   desc = "Go to the scripts directory" },
 	{ on = [ "g", "t" ],       exec = "cd /tmp",          desc = "Go to the temporary directory" },
 	{ on = [ "g", "<Space>" ], exec = "cd --interactive", desc = "Go to a directory interactively" },
 
