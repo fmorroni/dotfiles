@@ -180,3 +180,17 @@ function ya() {
 	fi
 	\rm -f -- "$tmp"
 }
+
+function user-mount() {
+  local label=${$(lsblk $(blkid --uuid $1) -o LABEL --noheadings):-"no-label"}
+  local mntdir="$MNT_DIR/$label-$1"
+  mkdir -p "$mntdir"
+  sudo mount -o uid="$USER",gid="$USER",fmask=113,dmask=002 UUID="$1" "$mntdir"
+}
+
+function user-unmount() {
+  local dir="$MNT_DIR/$1"
+  sudo umount "$dir"
+  [ $? -eq 0 ] || return
+  rmdir "$dir"
+}

@@ -2,6 +2,11 @@
 
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 
+# Run this when some completions changed. Don't keep it activated
+# because it slows down the startup.
+# autoload -Uz compinit
+# compinit
+
 # zsh-supercharged sets up this stuff
 # history
 # HISTFILE=$ZDOTDIR/.zsh_history

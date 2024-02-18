@@ -1,0 +1,17 @@
+#compdef user-mount
+
+OLD_IFS=$IFS
+IFS=$'\n'
+
+local -a devices
+devices=($(lsblk --raw --noheadings -o NAME,LABEL,UUID | awk -F '[ ]' '{ if ($3 != "") { 
+    if ($2 != "") { print $3 ":" $2 " --> " $1 }
+    else { print $3 ":No label --> " $1 }
+  }
+}'))
+
+IFS=$OLD_IFS
+
+_arguments \
+  '1:device UUID:(($devices))' \
+  '2:directory:_files -/'  

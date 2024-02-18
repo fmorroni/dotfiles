@@ -1,0 +1,7 @@
+#compdef user-unmount
+
+local -a mounted
+mounted=($(ls $MNT_DIR))
+
+_arguments \
+  '1:Mounted directory:(($mounted))' \
