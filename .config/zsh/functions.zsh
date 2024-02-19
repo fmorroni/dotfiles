@@ -186,6 +186,8 @@ function user-mount() {
   local mntdir="$MNT_DIR/$label-$1"
   mkdir -p "$mntdir"
   sudo mount -o uid="$USER",gid="$USER",fmask=113,dmask=002 UUID="$1" "$mntdir"
+  [ $? -eq 0 ] || return
+  echo "Device mounted at $mntdir"
 }
 
 function user-unmount() {
@@ -193,4 +195,5 @@ function user-unmount() {
   sudo umount "$dir"
   [ $? -eq 0 ] || return
   rmdir "$dir"
+  echo "It's safe to remove the device"
 }

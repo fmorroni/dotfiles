@@ -40,3 +40,4 @@ alias rm='echo "Use trash!!!"'
 alias npm='echo "Use pnpm!!!"'
 alias pcalc='pcalc --colors'
 alias gdb='tgdb'
+alias less='less -r' # keep colors
