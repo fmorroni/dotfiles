@@ -48,6 +48,9 @@ play = [
 	{ run = 'mpv "%1"', orphan = true, for = "windows" },
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
 ]
+pdfOpener = [
+  { run = 'zathura "$@"', orphan = true, desc = "Open pdf in zathura", for = "linux" },
+]
 
 [open]
 rules = [
@@ -70,6 +73,7 @@ rules = [
 	{ mime = "application/x-7z-compressed", use = [ "extract", "reveal" ] },
 	{ mime = "application/x-rar",           use = [ "extract", "reveal" ] },
 	{ mime = "application/xz",              use = [ "extract", "reveal" ] },
+	{ mime = "application/pdf",             use = "pdfOpener" },
 
 	{ mime = "*", use = [ "open", "reveal" ] },
 ]
