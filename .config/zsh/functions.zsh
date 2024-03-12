@@ -197,3 +197,24 @@ function user-unmount() {
   rmdir "$dir"
   echo "It's safe to remove the device"
 }
+
+function passf() {
+  local passPaths=($(find $HOME/.password-store -type f -iname "$1.gpg" | sed 's|^.*\.password-store/||; s/\.gpg$//'))
+  if [ -z "$passPaths" ]; then
+    echo "No pass found matching '$1'"
+    return 1
+  fi
+  for passPath in $passPaths; do
+    echo "Showing $passPath:"
+    pass $passPath
+    echo
+  done
+}
+
+# Needed if using kitty
+scroll-and-clear-screen() {
+  printf '\n%.0s' {1..$LINES}
+  zle clear-screen
+}
+zle -N scroll-and-clear-screen
+bindkey '^l' scroll-and-clear-screen

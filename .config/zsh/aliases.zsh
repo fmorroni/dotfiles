@@ -27,7 +27,7 @@ alias btctl='bluetoothctl'
 alias btconnect='bluetoothctl connect'
 alias downloads='cd ~/Downloads'
 alias documents='cd ~/Documents'
-alias compile_c='gcc -Wall --pedantic -fsanitize=address'
+alias compile-c='gcc -Wall --pedantic -fsanitize=address'
 alias print_files="awk 'FNR==1{print \"\\n-----\", FILENAME, \"-----\"}1'"
 alias docker='sudo docker'
 alias dockerc='sudo docker container ls -as'
@@ -41,3 +41,4 @@ alias npm='echo "Use pnpm!!!"'
 alias pcalc='pcalc --colors'
 alias gdb='tgdb'
 alias less='less -r' # keep colors
+alias aft-mtp-unmount='fusermount -u'
