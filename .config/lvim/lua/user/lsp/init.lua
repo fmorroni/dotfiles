@@ -17,6 +17,7 @@ formatters.setup {
     name = "prettier",
     -- This takes precedence over project specific configs for some reason...
     -- extra_args = { "--no-semi", "--single-quote", "--print-width=100" },
+    filetypes = { "javascript", "typescript" },
   },
   { command = "google_java_format", filetypes = { "java" } },
   -- {
