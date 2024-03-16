@@ -40,5 +40,5 @@ alias rm='echo "Use trash!!!"'
 alias npm='echo "Use pnpm!!!"'
 alias pcalc='pcalc --colors'
 alias gdb='tgdb'
-alias less='less -r' # keep colors
+alias less='less -FIRX'
 alias aft-mtp-unmount='fusermount -u'
