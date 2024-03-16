@@ -1,4 +1,8 @@
 lvim.plugins = {
+  "tpope/vim-repeat",
+  "mfussenegger/nvim-jdtls",
+  "jidn/vim-dbml",
+
   {
     "kylechui/nvim-surround",
     config = function()
@@ -18,7 +22,7 @@ lvim.plugins = {
       })
     end,
   },
-  "tpope/vim-repeat",
+
   {
     "ggandor/leap.nvim",
     event = "BufRead",
@@ -28,22 +32,7 @@ lvim.plugins = {
       vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
     end,
   },
-  -- {
-  --   "Wansmer/sibling-swap.nvim",
-  --   requires = { 'nvim-treesitter' },
-  --   config = function()
-  --     require('sibling-swap').setup({
-  --       use_default_keymaps = true,
-  --       keymaps = {
-  --         ['<a-l>'] = 'swap_with_right',
-  --         ['<a-h>'] = 'swap_with_left',
-  --       },
-  --       allow_interline_swaps = false,
-  --     })
-  --   end,
-  -- },
-  "mfussenegger/nvim-jdtls",
-  "jidn/vim-dbml",
+
   {
     "drybalka/tree-climber.nvim",
     config = function()
@@ -53,6 +42,7 @@ lvim.plugins = {
       vim.keymap.set('n', '<a-l>', require('tree-climber').swap_next, keyopts)
     end
   },
+
   {
     "debugloop/telescope-undo.nvim",
     dependencies = {
@@ -129,6 +119,7 @@ lvim.plugins = {
   },
 
   -- "sakhnik/nvim-gdb",
+
   -- {
   --   'glacambre/firenvim',
 
