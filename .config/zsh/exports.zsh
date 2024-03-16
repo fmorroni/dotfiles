@@ -6,3 +6,4 @@ export PATH="$HOME/.local/share/pnpm/global/5/node_modules/.bin:$PATH"
 fpath+="$XDG_CONFIG_HOME/zsh/completions"
 
 export MNT_DIR="$HOME/mnt/"
+export ZK_NOTEBOOK_DIR="$HOME/Documents/zk-notebook/"
