@@ -3,14 +3,25 @@ P = function(obj)
   return obj
 end
 
-LogNewBuf = function(obj)
-  local buf = vim.api.nvim_create_buf(true, false)
+local function LogNewBuf(lines)
+  local buf = vim.api.nvim_create_buf(true, true)
   print("Logging to buffer: " .. buf)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.api.nvim_set_current_buf(buf)
+end
+
+
+LogObj = function(obj)
   local lines = {}
   for line in vim.inspect(obj):gmatch("([^\n]*)\n?") do
     table.insert(lines, line)
   end
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  LogNewBuf(lines)
+end
+
+LogMessages = function()
+  local messages = vim.split(vim.api.nvim_cmd({ cmd = 'mes' }, { output = true }), '\n')
+  LogNewBuf(messages)
 end
 
 CopyLineError = function()
