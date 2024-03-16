@@ -1,5 +1,12 @@
 #!/bin/sh
 
+script_name=$(basename "$0")
+
+if [ "$#" -ne 1 ] || [ "$1" != "info" ] && [ "$1" != "kill" ]; then
+	echo "Usage: $script_name [info|kill]"
+	exit 1
+fi
+
 pid=$(xprop | rg -i '\w*pid[^=]*=\s*(\d+)' -or '$1')
 
 info() {
@@ -7,10 +14,10 @@ info() {
 }
 
 kill() {
-  info=$(info)
+	info=$(info)
 	/bin/kill "$pid"
-  echo "Killed $pid"
-  echo "$info"
+	echo "Killed $pid"
+	echo "$info"
 }
 
 "$@"
