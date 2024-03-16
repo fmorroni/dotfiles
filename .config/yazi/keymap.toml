@@ -149,6 +149,7 @@ keymap = [
 	{ on = [ "g", "p" ],       run = "cd ~/projects",      desc = "Go to projects directory" },
 	{ on = [ "g", "r" ],       run = "cd ~/repos",         desc = "Go to repos directory" },
 	{ on = [ "g", "o" ],       run = "cd ~/OneDrive",      desc = "Go to OneDrive directory" },
+	{ on = [ "g", "m" ],       run = "cd ~/mnt",           desc = "Go to mnt directory" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive",   desc = "Go to a directory interactively" },
 
 	# Help
