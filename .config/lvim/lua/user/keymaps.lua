@@ -23,8 +23,8 @@ lvim.builtin.which_key.vmappings["z"] = {
 lvim.keys.normal_mode["<c-p>"] = "<c-i>"
 lvim.keys.normal_mode["<tab>"] = ">>"
 lvim.keys.normal_mode["<s-tab>"] = "<<"
-lvim.keys.normal_mode["<leader>o"] = 'o<ESC>0"_D'
-lvim.keys.normal_mode["<leader>O"] = 'O<ESC>0"_D'
+lvim.keys.normal_mode["<leader>o"] = { 'o<ESC>0"_D', { desc = 'Newline beneath' } }
+lvim.keys.normal_mode["<leader>O"] = { 'O<ESC>0"_D', { desc = 'Newline above' } }
 lvim.keys.normal_mode["|"] = "$"
 lvim.keys.visual_mode["|"] = "$"
 -- lvim.keys.normal_mode[";;"] = "<ESC>A;<ESC>"
