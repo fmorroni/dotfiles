@@ -85,6 +85,49 @@ lvim.plugins = {
       require("telescope").load_extension("undo")
     end,
   },
+
+  {
+    "toppair/peek.nvim",
+    event = { "VeryLazy" },
+    build = "deno task --quiet build:fast",
+    config = function()
+      require("peek").setup()
+      -- refer to `configuration to change defaults`
+      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+    end,
+  },
+
+  {
+    "zk-org/zk-nvim",
+    config = function()
+      require("zk").setup({
+        -- can be "telescope", "fzf", "fzf_lua" or "select" (`vim.ui.select`)
+        -- it's recommended to use "telescope", "fzf" or "fzf_lua"
+        picker = "telescope",
+
+        lsp = {
+          -- `config` is passed to `vim.lsp.start_client(config)`
+          config = {
+            cmd = { "zk", "lsp" },
+            name = "zk",
+            -- on_attach = function(client, bufNr)
+            --   vim.api.nvim_cmd({ cmd = 'setf', args = { 'zk' } }, {})
+            --   P('lololo')
+            -- end
+            -- etc, see `:h vim.lsp.start_client()`
+          },
+
+          -- automatically attach buffers in a zk notebook that match the given filetypes
+          auto_attach = {
+            enabled = true,
+            filetypes = { "markdown" },
+          },
+        },
+      })
+    end
+  },
+
   -- "sakhnik/nvim-gdb",
   -- {
   --   'glacambre/firenvim',

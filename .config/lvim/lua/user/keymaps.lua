@@ -7,6 +7,17 @@ lvim.builtin.which_key.mappings["f"] = { function()
   require("lvim.core.telescope.custom-finders").find_project_files(themes.get_dropdown({ previewer = false }))
 end, "Find File" }
 lvim.builtin.which_key.mappings["d"]["x"] = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", "Clear Breakpoints" }
+lvim.builtin.which_key.mappings["z"] = {
+  name = "zk",
+  n = { "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", "New note" },
+  o = { "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", "Open note from list" },
+  t = { "<Cmd>ZkTags<CR>", "List tags, then notes with selected tag" },
+  f = { "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", "Find notes matching query" },
+}
+lvim.builtin.which_key.vmappings["z"] = {
+  name = "zk",
+  f = { ":'<,'>ZkMatch<CR>", "Find notes matching current selection" },
+}
 
 ---- General ----
 lvim.keys.normal_mode["<c-p>"] = "<c-i>"
