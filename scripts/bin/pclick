@@ -1,0 +1,16 @@
+#!/bin/sh
+
+pid=$(xprop | rg -i '\w*pid[^=]*=\s*(\d+)' -or '$1')
+
+info() {
+	ps -up "$pid"
+}
+
+kill() {
+  info=$(info)
+	/bin/kill "$pid"
+  echo "Killed $pid"
+  echo "$info"
+}
+
+"$@"
