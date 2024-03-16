@@ -2,6 +2,10 @@
 
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 
+# This is so <c-s-z> and <c-s-x> work on kitty. Uggly but it works for now.
+# See 'https://github.com/kovidgoyal/kitty/discussions/5296'
+autoload -Uz -- /usr/lib64/kitty/shell-integration/zsh/kitty-integration; kitty-integration; unfunction kitty-integration
+
 # Run this when some completions changed. Don't keep it activated
 # because it slows down the startup.
 # autoload -Uz compinit
