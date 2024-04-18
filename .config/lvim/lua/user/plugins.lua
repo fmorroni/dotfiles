@@ -2,6 +2,7 @@ lvim.plugins = {
   "tpope/vim-repeat",
   "mfussenegger/nvim-jdtls",
   "jidn/vim-dbml",
+  "fladson/vim-kitty",
 
   {
     "kylechui/nvim-surround",
@@ -27,7 +28,8 @@ lvim.plugins = {
     "ggandor/leap.nvim",
     event = "BufRead",
     config = function()
-      lvim.lsp.buffer_mappings.normal_mode["gs"] = nil
+      -- lsp's gs seems pretty useful and I've never really used leap's gs...
+      -- lvim.lsp.buffer_mappings.normal_mode["gs"] = nil
       require("leap").add_default_mappings(true)
       vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
     end,
@@ -55,7 +57,7 @@ lvim.plugins = {
       { -- lazy style key map
         "<leader>u",
         "<cmd>Telescope undo<cr>",
-        desc = "undo history",
+        desc = "Undo history",
       },
     },
     opts = {
@@ -77,11 +79,14 @@ lvim.plugins = {
   },
 
   {
-    "toppair/peek.nvim",
+    -- "toppair/peek.nvim",
+    dir = "~/repos/peek.nvim",
     event = { "VeryLazy" },
     build = "deno task --quiet build:fast",
     config = function()
-      require("peek").setup()
+      require("peek").setup({
+        -- app = { 'brave', '--new-window' },
+      })
       -- refer to `configuration to change defaults`
       vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
       vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
@@ -118,11 +123,57 @@ lvim.plugins = {
     end
   },
 
+  {
+    'dfendr/clipboard-image.nvim',
+    config = function()
+      require 'clipboard-image'.setup {
+        -- Default configuration for all filetype
+        default = {
+          img_dir = { "%:p:h", ".images" },
+          img_dir_txt = ".images",
+          img_name = function() return os.date('%Y-%m-%d-%H-%M-%S') end, -- Example result: "2021-04-13-10-04-18"
+          affix = "<\n  %s\n>"                                           -- Multi lines affix
+        },
+      }
+    end
+  },
+
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
+
   -- "sakhnik/nvim-gdb",
 
   -- {
-  --   'glacambre/firenvim',
+  --   "rolv-apneseth/tfm.nvim",
+  --   lazy = false,
+  --   opts = {
+  --     -- TFM to use
+  --     -- Possible choices: "ranger" | "nnn" | "lf" | "vifm" | "yazi" (default)
+  --     file_manager = "yazi",
+  --     -- Replace netrw entirely
+  --     -- Default: false
+  --     replace_netrw = true,
+  --     -- Custom keybindings only applied within the TFM buffer
+  --     -- Default: {}
+  --     keybindings = {
+  --       ["<C-j>"] = "<C-j>",
+  --       ["<C-k>"] = "<C-k>"
+  --     },
+  --     -- Customise UI. The below options are the default
+  --     ui = {
+  --       border = "rounded",
+  --       height = 0.9,
+  --       width = 1,
+  --       x = 0.5,
+  --       y = 0.5,
+  --     },
+  --   },
+  -- },
 
+  -- {
+  --   'glacambre/firenvim',
   --   -- Lazy load firenvim
   --   -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
   --   lazy = not vim.g.started_by_firenvim,

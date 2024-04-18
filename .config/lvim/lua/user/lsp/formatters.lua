@@ -7,9 +7,10 @@ formatters.setup {
     name = "prettier",
     -- This takes precedence over project specific configs for some reason...
     -- extra_args = { "--no-semi", "--single-quote", "--print-width=100" },
-    filetypes = { "javascript", "typescript", "css" },
+    filetypes = { "javascript", "typescript", "css", "markdown" },
   },
   { command = "google_java_format", filetypes = { "java" } },
   { command = "shfmt",              filetypes = { "sh", "bash", "mksh" } },
-  { command = "mdformat",           filetypes = { "markdown" } },
+  { command = "sql-formatter",             filetypes = { "sql" } },
+  -- { command = "mdformat",           filetypes = { "markdown" } },
 }

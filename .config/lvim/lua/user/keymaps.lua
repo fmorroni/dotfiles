@@ -9,7 +9,8 @@ end, "Find File" }
 lvim.builtin.which_key.mappings["d"]["x"] = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", "Clear Breakpoints" }
 lvim.builtin.which_key.mappings["z"] = {
   name = "zk",
-  n = { "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", "New note" },
+  -- n = { "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", "New note" },
+  n = { require('user.telescope.zk_picker'), "Browser and create notes" },
   o = { "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", "Open note from list" },
   t = { "<Cmd>ZkTags<CR>", "List tags, then notes with selected tag" },
   f = { "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", "Find notes matching query" },
@@ -18,6 +19,13 @@ lvim.builtin.which_key.vmappings["z"] = {
   name = "zk",
   f = { ":'<,'>ZkMatch<CR>", "Find notes matching current selection" },
 }
+-- lvim.builtin.which_key.mappings["e"] = { require("tfm").open, "File explorer" }
+lvim.builtin.which_key.mappings["e"] = {
+  ":Telescope file_browser follow_symlinks=true path=%:p:h select_buffer=true hide_parent_dir=true<CR>",
+  "File browser",
+}
+
+lvim.keys.normal_mode["<C-a>"] = require('user.utils.general').get_telescope_chosen_file_action
 
 ---- General ----
 lvim.keys.normal_mode["<c-p>"] = "<c-i>"
