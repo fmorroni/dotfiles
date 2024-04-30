@@ -11,6 +11,6 @@ formatters.setup {
   },
   { command = "google_java_format", filetypes = { "java" } },
   { command = "shfmt",              filetypes = { "sh", "bash", "mksh" } },
-  { command = "sql-formatter",             filetypes = { "sql" } },
+  { command = "sqlfmt",             filetypes = { "sql" } },
   -- { command = "mdformat",           filetypes = { "markdown" } },
 }
