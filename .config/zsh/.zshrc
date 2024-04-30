@@ -11,12 +11,9 @@ autoload -Uz -- /usr/lib64/kitty/shell-integration/zsh/kitty-integration; kitty-
 # autoload -Uz compinit
 # compinit
 
-# zsh-supercharged sets up this stuff
-# history
-# HISTFILE=$ZDOTDIR/.zsh_history
-# HISTSIZE=1000
-# SAVEHIST=1000
-# setopt extendedglob nomatch append_history hist_ignore_all_dups
+# Disable xon/xoff flow-control (without this c-s stops terminal output and c-q resumes it,
+# there's probably a reason that exists but it's confusing and usless for me)
+stty -ixon
 
 setopt PUSHDSILENT
 
