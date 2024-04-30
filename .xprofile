@@ -9,8 +9,8 @@ function startup() {
 # Environment variables
 export EDITOR=lvim
 # export PNPM_HOME="$HOME/.local/share/pnpm"
-export NVM_DIR="$XDG_CONFIG_HOME/nvm"
-export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+# export NVM_DIR="$XDG_CONFIG_HOME/nvm"
+# export NPM_CONFIG_PREFIX="$HOME/.npm-global"
 export SCREEN_RECS="$HOME/Documents/screenrecs/"
 
 export GTK_THEME=Adwaita:dark
