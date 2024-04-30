@@ -218,3 +218,33 @@ scroll-and-clear-screen() {
 }
 zle -N scroll-and-clear-screen
 bindkey '^l' scroll-and-clear-screen
+
+ps-parent() {
+  if [[ $# -lt 1 ]]; then
+    echo "Usage: ps-parent <pid_1> [pid_2] ... [pid_n]"
+    return 1
+  fi
+  for pid in $@; do
+    ps f -p "$pid" --ppid "$pid" -o "pid,ppid,stat,tty,cmd"
+    echo
+  done
+}
+
+lsfd-custom() {
+  if [[ $# -lt 1 ]]; then
+    echo "Usage: lsfd-custom <pid_1> [pid_2] ... [pid_n]"
+    return 1
+  fi
+  for pid in $@; do
+    lsfd -p "$pid" | awk 'NR==1 {print; next} $8 != 0'
+    echo
+  done
+}
+
+open-terminal-in-cwd() {
+  # nohup and redirections are needed so the parent terminal
+  # is able to exit even if the child is active (this is a kitty thing)
+  # (and ! after & is a zsh thing apparently)
+  nohup kitty >/dev/null 2>/dev/null &!
+}
+zle -N open-terminal-in-cwd

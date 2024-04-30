@@ -14,5 +14,7 @@ bindkey -M vicmd '^K' up-history
 bindkey -M vicmd '^J' down-history
 bindkey -M vicmd 'y' vi-yank-xclip
 bindkey -M vicmd 'Y' vi-yank-eol-xclip
-bindkey -M vicmd '^R' redo
 bindkey -M viins '^R' redo
+bindkey -M vicmd '^R' redo
+bindkey -M viins '^a' open-terminal-in-cwd
+bindkey -M vicmd '^a' open-terminal-in-cwd
