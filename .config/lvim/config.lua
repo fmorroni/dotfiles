@@ -9,7 +9,7 @@ reload("user.luasnip_config")
 reload("user.lsp")
 reload("user.cmp")
 
-lvim.lsp.automatic_servers_installation = true
+lvim.lsp.installer.setup.automatic_installation = true
 
 -- general
 lvim.log.level = "warn"
