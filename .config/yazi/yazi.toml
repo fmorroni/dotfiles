@@ -48,6 +48,9 @@ play = [
 	{ run = 'mpv "%1"', orphan = true, for = "windows" },
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
 ]
+playAudio = [
+	{ run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
+]
 pdfOpener = [
   { run = 'zathura "$@"', orphan = true, desc = "Open pdf in zathura", for = "linux" },
 ]
@@ -59,7 +62,7 @@ rules = [
 	{ mime = "text/*",  use = [ "edit", "reveal" ] },
 	{ mime = "image/*", use = [ "open", "reveal" ] },
 	{ mime = "video/*", use = [ "play", "reveal" ] },
-	{ mime = "audio/*", use = [ "play", "reveal" ] },
+	{ mime = "audio/*", use = [ "playAudio", "reveal" ] },
 	{ mime = "inode/x-empty", use = [ "edit", "reveal" ] },
 
 	{ mime = "application/json", use = [ "edit", "reveal" ] },
