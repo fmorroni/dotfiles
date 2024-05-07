@@ -34,5 +34,14 @@ lvim.builtin.telescope.on_config_done = function()
   lvim.builtin.telescope.defaults.mappings.n["<C-n>"] = actions.cycle_history_next
   lvim.builtin.telescope.defaults.mappings.n["<C-p>"] = actions.cycle_history_prev
 
+  lvim.builtin.telescope.defaults.mappings.n["<C-d>"] = false
+  lvim.builtin.telescope.defaults.mappings.n["<C-u>"] = false
+  lvim.builtin.telescope.defaults.mappings.n["<M-k>"] = actions.preview_scrolling_up
+  lvim.builtin.telescope.defaults.mappings.n["<M-j>"] = actions.preview_scrolling_down
+  lvim.builtin.telescope.defaults.mappings.i["<C-d>"] = false
+  lvim.builtin.telescope.defaults.mappings.i["<C-u>"] = false
+  lvim.builtin.telescope.defaults.mappings.i["<M-k>"] = actions.preview_scrolling_up
+  lvim.builtin.telescope.defaults.mappings.i["<M-j>"] = actions.preview_scrolling_down
+
   lvim.builtin.telescope.defaults.mappings.n["p"] = actions_layout.toggle_preview
 end
