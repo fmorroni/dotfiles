@@ -3,6 +3,8 @@ require('user.telescope.file_browser')
 local actions = require "telescope.actions"
 local actions_layout = require("telescope.actions.layout")
 
+lvim.builtin.telescope.defaults.layout_config.scroll_speed = 1
+
 lvim.builtin.telescope.defaults.file_ignore_patterns = { ".git/", "node_modules" }
 lvim.builtin.telescope.defaults.find_command = { "fd", "-t=f", "-a" }
 lvim.builtin.telescope.defaults.path_display = { "absolute" }
