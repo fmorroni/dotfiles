@@ -27,6 +27,8 @@ lvim.builtin.which_key.mappings["e"] = {
 
 lvim.keys.normal_mode["<C-a>"] = require('user.utils.general').get_telescope_chosen_file_action
 
+lvim.builtin.which_key.mappings["s"]["w"] = { "<cmd>Telescope grep_string<cr>", "Telescope live grep on current word" }
+
 ---- General ----
 lvim.keys.normal_mode["<c-p>"] = "<c-i>"
 lvim.keys.normal_mode["<tab>"] = ">>"
