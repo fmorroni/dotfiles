@@ -45,5 +45,11 @@ lvim.builtin.telescope.on_config_done = function()
   lvim.builtin.telescope.defaults.mappings.i["<M-k>"] = actions.preview_scrolling_up
   lvim.builtin.telescope.defaults.mappings.i["<M-j>"] = actions.preview_scrolling_down
 
+  -- Not working bc lunarvim is outdated...
+  -- lvim.builtin.telescope.defaults.mappings.n["<M-l>"] = actions.preview_scrolling_right
+  -- lvim.builtin.telescope.defaults.mappings.n["<M-h>"] = actions.preview_scrolling_left
+  -- lvim.builtin.telescope.defaults.mappings.i["<M-l>"] = actions.preview_scrolling_right
+  -- lvim.builtin.telescope.defaults.mappings.i["<M-h>"] = actions.preview_scrolling_left
+
   lvim.builtin.telescope.defaults.mappings.n["p"] = actions_layout.toggle_preview
 end

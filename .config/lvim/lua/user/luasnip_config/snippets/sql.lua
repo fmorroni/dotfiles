@@ -20,7 +20,7 @@ M[2] = ls.s("searchpath", ls.fmt([[
 )
 
 M[3] = ls.s("insert", ls.fmt([[
-    insert into {table}{columns} values ( {values} )
+    insert into {table}{columns} values ( {values} );
   ]],
   {
     table = ls.i(1, "<table>"),

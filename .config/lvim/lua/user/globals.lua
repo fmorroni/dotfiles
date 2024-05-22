@@ -3,6 +3,11 @@ P = function(obj)
   return obj
 end
 
+ScratchBuffer = function()
+  local buf = vim.api.nvim_create_buf(true, true)
+  vim.api.nvim_set_current_buf(buf)
+end
+
 local function LogNewBuf(lines)
   local buf = vim.api.nvim_create_buf(true, true)
   print("Logging to buffer: " .. buf)
