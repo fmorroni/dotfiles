@@ -438,7 +438,9 @@ local globalkeys = mytable.join(
       end
       naughty.notify({ text = "Autolock " .. autolock.state, timeout = 2 })
     end,
-    { description = ": Toggle autolock", group = "launcher" })
+    { description = ": Toggle autolock", group = "launcher" }),
+  awful.key({ modkey, shiftKey }, "n", function() awful.spawn(editor_cmd .. " " .. home .. "/Documents/zk-notebook/") end,
+    { description = ": Open notes", group = "launcher" })
 )
 
 local clientkeys = mytable.join(
@@ -450,8 +452,8 @@ local clientkeys = mytable.join(
     { description = ": Toggle fullscreen", group = "client" }),
   awful.key({ modkey, shiftKey }, "c", function(c) c:kill() end,
     { description = ": Close", group = "client" }),
-  -- awful.key({ modkey, ctrlKey }, "space", awful.client.floating.toggle,
-  --   { description = ": Toggle floating", group = "client" }),
+  awful.key({ modkey, ctrlKey }, "space", awful.client.floating.toggle,
+    { description = ": Toggle floating", group = "client" }),
   awful.key({ modkey, ctrlKey }, "Return", function(c) c:swap(awful.client.getmaster()) end,
     { description = ": Move to master", group = "client" }),
   awful.key({ modkey }, "o", function(c) c:move_to_screen() end,
