@@ -12,10 +12,12 @@ class Pane():
         VERTICAL_ABOVE = '-vb'
         VERTICAL_BELOW = '-v'
 
-    def __init__(self, id: str, tty: str, module_name: str):
+    def __init__(self, id: str, tty: str, module_name: str, position: str | None = None, percentage: int = -1):
         self.id = id
         self.tty = tty
         self.module_name = module_name
+        self.position = position
+        self.percentage = percentage
         if module_name == 'dashboard':
             self.add_extra_module('')
         elif module_name != 'gdb':
@@ -30,7 +32,7 @@ class Pane():
         id, tty = Pane.tmux('split-window', '-l', f"{percentage}%", '-t', self.id, '-d', dir,
                              '-P', '-F', '#{pane_id},#{pane_tty}', NULLPROG)
         # self.check()
-        return Pane(id, tty, module_name)
+        return Pane(id, tty, module_name, dir, percentage)
 
     # def set_dashboard(self):
     #     gdb.execute(f'dashboard -output {self.tty}')
@@ -43,6 +45,7 @@ class Pane():
 
     @staticmethod
     def tmux(*args):
+        # print(args)
         return sp.check_output(['tmux'] + list(args)).decode('utf8').strip().split(',')
 
     def __str__(self) -> str:
@@ -78,10 +81,12 @@ class Window(Pane):
 
 gdb_window = Window('gdb')
 
-stack_pane_width = 35 if gdb.lookup_type('void').pointer().sizeof == 8 else 30
+# stack_pane_width = 35 if gdb.lookup_type('void').pointer().sizeof == 8 else 30
+# print("Stack pane width: ", stack_pane_width, gdb.lookup_type('void').pointer().sizeof)
 stack_pane = gdb_window.split(
         dir=Pane.SplitDir.HORIZONTAL_RIGHT,
-        percentage=stack_pane_width,
+        # percentage=stack_pane_width,
+        percentage=35,
         module_name='stackmemory'
     )
 stack_pane.add_extra_module('breakpoints')
@@ -133,10 +138,119 @@ gdb.execute(f'set disassembly-flavor intel')
 
 
 # Disable unwanted sections
-gdb.execute(f'dashboard breakpoints')
+# gdb.execute(f'dashboard breakpoints')
 gdb.execute(f'dashboard threads')
 # gdb.execute(f'dashboard variables')
 gdb.execute(f'dashboard history')
 gdb.execute(f'dashboard stack')
 
+stmem = dashboard.modules[8].instance
+
+def print_mem(mem):
+    for i in range(0, len(mem), 4):
+        print(mem[i : i+4])
+
+def print_og_lat(frame):
+    print_mem(frame.original)
+    print_mem(frame.latest)
+
+def get_frames():
+    return list(stmem.frames.values())
+
+def print_frames():
+    for frame in stmem.frames.values():
+        print(vars(frame))
+
+class HidePane():
+    def __init__(self, counterPart: str | None, hideId: str, showId: str, position: str, percentage: int):
+        self.hidden = False
+        self.counterPart = counterPart
+        self.counterPartHidden = False
+        self.info = ''
+        self.hideId = hideId
+        self.showId = showId
+        self.position = position
+        self.percentage = percentage
+
+
+class Hide(gdb.Command):
+    panes={
+        'assembly': HidePane('source', assembly_pane.id, source_pane.id, Pane.SplitDir.HORIZONTAL_RIGHT, assembly_pane.percentage),
+        'source': HidePane('assembly', source_pane.id, assembly_pane.id, Pane.SplitDir.HORIZONTAL_LEFT, 100 - assembly_pane.percentage),
+        # 'console': HidePane(source_pane.id, assembly_pane.id, Pane.SplitDir.HORIZONTAL_LEFT),
+        'registers': HidePane(None, registers_pane.id, gdb_window.id, Pane.SplitDir.HORIZONTAL_RIGHT, registers_pane.percentage),
+        'memory': HidePane('stack', memory_pane.id, stack_pane.id, Pane.SplitDir.VERTICAL_ABOVE, memory_pane.percentage),
+        'stack': HidePane('memory', stack_pane.id, memory_pane.id, Pane.SplitDir.VERTICAL_BELOW, 100 - memory_pane.percentage),
+        # 'mem-stack': HidePane(None, '', '', Pane.SplitDir.HORIZONTAL_RIGHT, stack_pane.percentage),
+    }
+
+    def __init__(self):
+        super(Hide, self).__init__("hide", gdb.COMMAND_USER)
+
+    def invoke(self, arg, fromtty):
+        if arg not in Hide.panes.keys():
+            print('Chosse one of: ', Hide.panes.keys())
+            return
+
+        if arg == 'mem-stack':
+
+            return
+
+        hidePane = Hide.panes[arg]
+        counterPartPane =  Hide.panes[hidePane.counterPart] if hidePane.counterPart else None
+        # if arg == 'mem-stack':
+        #     if hidePane.hidden:
+        #         Pane.tmux('join-pane', hidePane.position, '-l', f"{hidePane.percentage}%",
+        #                   '-s', hidePane.info, '-t', hidePane.showId)
+        #         hidePane.hidden = False
+        #     else:
+        #         [hidePane.info] = Pane.tmux('break-pane', '-dPs', hidePane.hideId)
+        #         hidePane.hidden = True
+        #     return
+        if hidePane.hidden:
+            Pane.tmux('join-pane', hidePane.position, '-l', f"{hidePane.percentage}%",
+                      '-s', hidePane.info, '-t', hidePane.showId)
+            hidePane.hidden = False
+            if counterPartPane:
+                counterPartPane.counterPartHidden = False
+            Pane.tmux('select-pane', '-t', '0')
+        elif not hidePane.counterPartHidden:
+            [hidePane.info] = Pane.tmux('break-pane', '-dPs', hidePane.hideId)
+            hidePane.hidden = True
+            if counterPartPane:
+                counterPartPane.counterPartHidden = True
+        else:
+            # print(f"Can't hide {arg} when {hidePane.counterPart} is already hidden")
+            self.invoke(hidePane.counterPart, '')
+            self.invoke(arg, '')
+
+        gdb.execute('dashboard')
+
+    def complete(self, arguments_string, last):
+        return [arg for arg in Hide.panes.keys() if arg.startswith(arguments_string)]
+
+Hide()
+
 end
+
+# make sure dashboard output is updated when gdb state changes
+define hookpost-up
+    dashboard
+end
+define hookpost-down
+    dashboard
+end
+define hookpost-thread
+    dashboard
+end
+define hookpost-delete
+    dashboard
+end
+define hookpost-clear
+    dashboard
+end
+define hookpost-break
+    dashboard
+end
+
+# vim: set ft=python:
