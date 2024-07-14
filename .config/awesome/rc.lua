@@ -273,10 +273,9 @@ local globalkeys = mytable.join(
     end
   end, { description = ": Restore minimized", group = "client" }),
   awful.key({ modkey, shiftKey }, "m", function()
-      client.focus = awful.client.getmaster()
-      client.focus:raise()
-    end,
-    { description = ": Focus master", group = "client" }),
+    client.focus = awful.client.getmaster()
+    client.focus:raise()
+  end, { description = ": Focus master", group = "client" }),
 
 
   -- By-direction client focus
@@ -367,9 +366,7 @@ local globalkeys = mytable.join(
     { description = ": Open a terminal", group = "launcher" }),
   awful.key({ modkey, ctrlKey }, "r", awesome.restart,
     { description = ": Reload awesome", group = "awesome" }),
-  awful.key({ modkey, shiftKey }, "e", function()
-      awful.spawn(editor_cmd .. " " .. awesome.conffile)
-    end,
+  awful.key({ modkey, shiftKey }, "e", function() awful.spawn(editor_cmd .. " " .. awesome.conffile) end,
     { description = ": Edit config", group = "awesome" }),
   -- awful.key({ modkey, shiftKey }, "q", awesome.quit,
   --   { description = ": Quit awesome", group = "awesome" }),
@@ -466,20 +463,17 @@ local clientkeys = mytable.join(
       -- The client currently has the input focus, so it cannot be
       -- minimized, since minimized clients can't have the focus.
       c.minimized = true
-    end,
-    { description = ": Minimize", group = "client" }),
+    end, { description = ": Minimize", group = "client" }),
   awful.key({ modkey }, "m",
     function(c)
       c.maximized = not c.maximized
       c:raise()
-    end,
-    { description = ": (un)maximize", group = "client" }),
+    end, { description = ": (un)maximize", group = "client" }),
   awful.key({ modkey, ctrlKey }, "m",
     function(c)
       c.maximized_vertical = not c.maximized_vertical
       c:raise()
-    end,
-    { description = ": (un)maximize vertically", group = "client" }),
+    end, { description = ": (un)maximize vertically", group = "client" })
 -- awful.key({ modkey, shiftKey }, "m",
 --   function(c)
 --     c.maximized_horizontal = not c.maximized_horizontal
