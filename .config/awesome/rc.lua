@@ -596,6 +596,12 @@ awful.rules.rules = {
   },
 }
 
+-- Make all new floating windows stay on top (for toggled floating)
+client.connect_signal("property::floating", function(c)
+  -- fullscreen and maximized are considered floating for some reason.
+  c.ontop = c.floating and not c.fullscreen and not c.maximized
+end)
+
 -- }}}
 
 -- {{{ Signals
