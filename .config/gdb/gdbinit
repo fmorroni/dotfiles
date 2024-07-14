@@ -2045,19 +2045,34 @@ class StackMemory(Dashboard.Module):
     def label(self):
         return 'Stack Memory'
 
+    stackErrors = [ 'Stack too long', 'sp larger than bp' ]
     def watch_frame(self, frame):
-        name = frame.name()
         bp = frame.read_register(self.bp)
         sp = frame.read_register(self.sp)
-        if sp <= bp:
-            key = f"{name}-{bp}"
-            expression = f"{sp}"
-            length = bp - sp + self.width*2
+
+        if sp > bp:
+            return StackMemory.stackErrors[1]
+        if bp - sp > 4096:
+            return StackMemory.stackErrors[0]
+
+        key = self.get_frame_key(frame)
+        expression = f"{sp}"
+        length = bp - sp + self.width*2
+        # print('length: ', length)
+        if key in self.frames:
+            # print(f'key {key} existed')
+            region = self.frames[key]
+            # print('Region before: ', vars(region))
+            region.length = length
+            region.expression = expression
+            # print('Region after: ', vars(region))
+        else:
             self.frames[key] = Memory.Region(expression, length, self.memory)
+
+        return None
 
     def get_frame_lines(self, frame, term_width):
         name = frame.name()
-        bp = frame.read_register(self.bp)
         key = self.get_frame_key(frame)
         out = []
         if key in self.frames:
@@ -2090,13 +2105,14 @@ class StackMemory(Dashboard.Module):
             self.set_width()
         frame_lines = []
         frame = gdb.selected_frame()
-        # self.reset_frames()
+        self.reset_frames()
         for _ in range(self.total_frames):
             if frame != None:
-                key = self.get_frame_key(frame)
-                if key not in self.frames:
-                    self.watch_frame(frame)
-                lines = self.get_frame_lines(frame, term_width=20)
+                error = self.watch_frame(frame)
+                if error in StackMemory.stackErrors:
+                    lines = [divider(term_width, frame.name() or 'No frame name found'), error]
+                else:
+                    lines = self.get_frame_lines(frame, term_width=20)
                 frame_lines.extend(lines)
                 frame = frame.older()
         return frame_lines
