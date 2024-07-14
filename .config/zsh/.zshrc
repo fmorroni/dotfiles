@@ -29,7 +29,7 @@ plug "zap-zsh/vim"
 # plug "zap-zsh/exa"
 
 # source
-plug "$HOME/.config/zsh/exports.zsh"
+# plug "$HOME/.config/zsh/exports.zsh" --> Replaced for .zshenv which is automatically sourced before zshrc
 plug "$HOME/.config/zsh/aliases.zsh"
 plug "$HOME/.config/zsh/functions.zsh"
 plug "$HOME/.config/zsh/keybinds.zsh"

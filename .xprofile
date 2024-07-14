@@ -1,17 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
-function startup() {
-  if [[ $(pgrep $1 -c) -lt 1 ]]; then
-    $@ &
-  fi
-}
-
-# Environment variables
-export EDITOR=lvim
-# export PNPM_HOME="$HOME/.local/share/pnpm"
-# export NVM_DIR="$XDG_CONFIG_HOME/nvm"
-# export NPM_CONFIG_PREFIX="$HOME/.npm-global"
-export SCREEN_RECS="$HOME/Documents/screenrecs/"
+# startup() {
+#   if [[ $(pgrep "$1" -c) -lt 1 ]]; then
+#     $@ &
+#   fi
+# }
 
 export GTK_THEME=Adwaita:dark
 export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
