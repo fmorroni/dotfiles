@@ -170,9 +170,9 @@ awful.util.taglist_buttons             = mytable.join(
   awful.button({}, 3, awful.tag.viewtoggle),
   awful.button({ modkey }, 3, function(t)
     if client.focus then client.focus:toggle_tag(t) end
-  end),
-  awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
-  awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
+  end)
+-- awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
+-- awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
 )
 
 awful.util.tasklist_buttons            = mytable.join(
@@ -185,9 +185,9 @@ awful.util.tasklist_buttons            = mytable.join(
   end),
   awful.button({}, 3, function()
     awful.menu.client_list({ theme = { width = 250 } })
-  end),
-  awful.button({}, 4, function() awful.client.focus.byidx(1) end),
-  awful.button({}, 5, function() awful.client.focus.byidx(-1) end)
+  end)
+-- awful.button({}, 4, function() awful.client.focus.byidx(1) end),
+-- awful.button({}, 5, function() awful.client.focus.byidx(-1) end)
 )
 
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", home, theme))
@@ -227,10 +227,10 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 
 -- {{{ Mouse bindings
 
-root.buttons(mytable.join(
-  awful.button({}, 4, awful.tag.viewnext),
-  awful.button({}, 5, awful.tag.viewprev)
-))
+-- root.buttons(mytable.join(
+--   awful.button({}, 4, awful.tag.viewnext),
+--   awful.button({}, 5, awful.tag.viewprev)
+-- ))
 
 -- }}}
 
@@ -480,12 +480,11 @@ local clientkeys = mytable.join(
       c:raise()
     end,
     { description = ": (un)maximize vertically", group = "client" }),
-  awful.key({ modkey, shiftKey }, "m",
-    function(c)
-      c.maximized_horizontal = not c.maximized_horizontal
-      c:raise()
-    end,
-    { description = ": (un)maximize horizontally", group = "client" })
+-- awful.key({ modkey, shiftKey }, "m",
+--   function(c)
+--     c.maximized_horizontal = not c.maximized_horizontal
+--     c:raise()
+--   end, { description = ": (un)maximize horizontally", group = "client" })
 )
 
 -- Bind all key numbers to tags.
