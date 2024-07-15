@@ -51,10 +51,14 @@ play = [
 pdfOpener = [
   { run = 'zathura "$@"', orphan = true, desc = "Open pdf in zathura", for = "linux" },
 ]
+lorien = [
+  { run = 'lorien "$@"', orphan = true, desc = "Open in Lorien", for = "linux" },
+]
 
 [open]
 rules = [
-	{ name = "*/", use = [ "edit", "open", "reveal" ] },
+	{ name = "*/",          use = [ "edit", "open", "reveal" ] },
+	{ name = "*.lorien",    use = "lorien" },
 
 	{ mime = "text/*",  use = [ "edit", "reveal" ] },
 	{ mime = "image/*", use = [ "open", "reveal" ] },
