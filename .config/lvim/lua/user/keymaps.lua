@@ -1,6 +1,8 @@
 lvim.leader = "space"
 
 ---- Which key ----
+-- By default <leader>w was mapped to :w! which is fucking stupid...
+lvim.builtin.which_key.mappings["w"] = { "<CMD>w<CR>", "Save" }
 lvim.builtin.which_key.mappings["q"] = { "<CMD>confirm quit<CR>", "Quit" }
 lvim.builtin.which_key.mappings["f"] = { function()
   local themes = require('telescope.themes')
@@ -62,6 +64,9 @@ lvim.keys.visual_mode["<c-s>"] = "y:%s/\\v<c-r>=escape(@\", '/\\.*$^~[')<CR>/"
 -- Re-run previous command-line command
 lvim.keys.normal_mode["<M-.>"] = "@:"
 lvim.keys.normal_mode["<leader>:"] = "q:"
+
+-- I never use U and this is a lot more comfortable for redoing.
+lvim.keys.normal_mode["U"] = "<c-r>"
 
 -- Doesn't work right for some reason
 -- vim.keymap.set("n", "<c-k>", "[m")
