@@ -54,13 +54,32 @@ lvim.plugins = {
     end,
   },
 
+  -- {
+  --   "drybalka/tree-climber.nvim",
+  --   config = function()
+  --     local keyopts = { noremap = true, silent = true }
+  --     -- vim.keymap.set({ 'n', 'v', 'o' }, '<a-k>', require('tree-climber').goto_parent, keyopts)
+  --     vim.keymap.set('n', '<a-h>', require('tree-climber').swap_prev, keyopts)
+  --     vim.keymap.set('n', '<a-l>', require('tree-climber').swap_next, keyopts)
+  --   end
+  -- },
   {
-    "drybalka/tree-climber.nvim",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
-      local keyopts = { noremap = true, silent = true }
-      -- vim.keymap.set({ 'n', 'v', 'o' }, '<a-k>', require('tree-climber').goto_parent, keyopts)
-      vim.keymap.set('n', '<a-h>', require('tree-climber').swap_prev, keyopts)
-      vim.keymap.set('n', '<a-l>', require('tree-climber').swap_next, keyopts)
+      require 'nvim-treesitter.configs'.setup {
+        textobjects = {
+          swap = {
+            enable = true,
+            swap_previous = {
+              ["<a-h>"] = "@parameter.inner",
+            },
+            swap_next = {
+              ["<a-l>"] = "@parameter.inner",
+            },
+          },
+        },
+      }
     end
   },
 
