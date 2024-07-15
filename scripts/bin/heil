@@ -1,0 +1,66 @@
+#!/bin/bash
+
+usage() {
+	echo "Usage: heil [options] [file]"
+	echo -e "\t--sep | -s      <separator>"
+	echo -e "\t-A              <top number of lines>"
+	echo -e "\t-B              <bottom number of lines>"
+	echo -e "\t-C              <top-bottom number of lines>"
+}
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+	-h | --help)
+		usage
+		exit 0
+		;;
+	-s | --sep)
+    shift
+		sep="$1"
+    shift
+    # Breaks if the last argument is a flag and no flag value is passed.
+		# shift 2
+		;;
+	-A)
+    shift
+		headN="$1"
+		shift
+		;;
+	-B)
+    shift
+		tailN="$1"
+    shift
+		;;
+	-C)
+		shift
+		headN="$1"
+		tailN="$1"
+		shift
+		;;
+	*)
+		file="$1"
+		shift
+		;;
+	esac
+done
+# The +x makes sure that -s can be set to the empty string and not be replaced by the default
+if [ -z "${sep+x}" ]; then
+    sep="\n\t.\n\t.\n\t.\n"
+fi
+if [ -z "$headN" ]; then
+	headN=10
+fi
+if [ -z "$tailN" ]; then
+	tailN=10
+fi
+if [ -n "$file" ]; then
+	head -n "$headN" "$file"
+	echo -e "$sep"
+	tail -n "$tailN" "$file"
+else
+	cat | {
+		head -n "$headN"
+		echo -e "$sep"
+		tail -n "$tailN"
+	}
+fi

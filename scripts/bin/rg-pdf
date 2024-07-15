@@ -1,0 +1,53 @@
+#!/bin/bash
+
+usage() {
+	echo "Usage: $0 [rg-options] <regex> <pdf-1> [pdf-2] ... [pdf-n]"
+	exit 1
+}
+
+if [ "$#" -lt 2 ]; then
+	usage
+fi
+
+rg_options=$1
+shift
+regex=$1
+shift
+
+if ! command -v pdftotext &>/dev/null; then
+	echo "pdftotext could not be found. Please install it to use this script."
+	exit 1
+fi
+
+# BLUE="\033[0;34m"
+# YELLOW="\033[0;33m"
+GREEN="\033[0;32m"
+# RED="\033[0;31m"
+RESET="\033[0m"
+
+for pdf in "$@"; do
+	if [ ! -f "$pdf" ]; then
+		echo "File not found: $pdf"
+		continue
+	fi
+
+	num_pages=$(pdfinfo "$pdf" | rg -i 'pages:\s*(\d+)' -or '$1')
+	if [ -n "$num_pages" ]; then
+		echo -e "> Processing $GREEN$pdf$RESET, which has $GREEN$num_pages$RESET pages:"
+
+		matches=0
+		for ((page_n = 1; page_n <= num_pages; page_n++)); do
+			if match=$(pdftotext "$pdf" -f $page_n -l $((page_n + 1)) - 2>/dev/null | rg --color=always $rg_options "$regex"); then
+				echo -e "• In page $page_n match:"
+        echo -e "$match"
+        ((matches = matches + 1))
+			fi
+		done
+    if [ $matches -eq 0 ]; then
+      echo "No matches found ✗"
+    fi
+    echo
+	else
+		echo "Could not determine the number of pages for $pdf"
+	fi
+done
