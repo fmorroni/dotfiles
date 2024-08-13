@@ -152,7 +152,7 @@ keymap = [
 	{ on = [ "g", "n" ],       run = "cd ~/Documents/zk-notebook",   desc = "Go to notes directory" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive",             desc = "Go to a directory interactively" },
 	{ on = [ "g", "t", "m", "p" ],              run = "cd /tmp",     desc = "Go to the temporary directory" },
-	{ on = [ "g", "t", "e", "s", "t", "s" ],    run = "cd ~/tests",  desc = "Go to the temporary directory" },
+	{ on = [ "g", "t", "e", "s", "t", "s" ],    run = "cd ~/tests",  desc = "Go to the tests directory" },
 
 	# Help
 	{ on = [ "g", "?" ], run = "help", desc = "Open help" },
