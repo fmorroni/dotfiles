@@ -130,6 +130,12 @@ local forStatement = ls.s("for", ls.fmt([[
   })
 )
 
+function pascalToScreamingSnake(filename)
+    local snake_case = filename:gsub("(%u)", "_%1"):gsub("^_", "")
+    snake_case = snake_case:gsub("%.", "_")
+    return snake_case:upper()
+end
+
 local guard = ls.s("guard", ls.fmt([[
     #ifndef {}
     #define {}
@@ -139,10 +145,13 @@ local guard = ls.s("guard", ls.fmt([[
     #endif
   ]],
   {
+    ls.f(function(_, snip)
+      return pascalToScreamingSnake(snip.env.TM_FILENAME)
+    end, _, {key = "guardName"}),
+    ls.rep(require("luasnip.nodes.key_indexer").new_key("guardName")),
     ls.i(1),
-    ls.rep(1),
-    ls.i(2),
-  })
+  }
+  )
 )
 
 return {

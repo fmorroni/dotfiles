@@ -11,6 +11,7 @@ M.f = ls.function_node
 M.d = ls.dynamic_node
 M.sn = ls.snippet_node
 M.isn = ls.indent_snippet_node
+M.k = require("luasnip.nodes.key_indexer").new_key
 
 M.fmt = require("luasnip.extras.fmt").format_nodes
 M.rep = require("luasnip.extras").rep
