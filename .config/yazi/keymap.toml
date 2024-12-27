@@ -51,16 +51,16 @@ keymap = [
 	{ on = [ "G" ],      run = "arrow 99999999",  desc = "Move cursor to the bottom" },
 
 	# Selection
-	{ on = [ "<Space>" ], run = [ "select --state=none", "arrow 1" ], desc = "Toggle the current selection state" },
+	{ on = [ "<Space>" ], run = [ "toggle", "arrow 1" ], desc = "Toggle the current selection state" },
 	{ on = [ "v" ],       run = "visual_mode",                        desc = "Enter visual mode (selection mode)" },
 	{ on = [ "V" ],       run = "visual_mode --unset",                desc = "Enter visual mode (unset mode)" },
-	{ on = [ "<C-a>" ],   run = "select_all --state=true",            desc = "Select all files" },
-	{ on = [ "<C-r>" ],   run = "select_all --state=none",            desc = "Inverse selection of all files" },
+	{ on = [ "<C-a>" ],   run = "toggle_all --state=on",            desc = "Select all files" },
+	{ on = [ "<C-r>" ],   run = "toggle_all",            desc = "Inverse selection of all files" },
 
 	# Operation
 	{ on = [ "o" ],         run = [ "escape --visual", "open" ],                       desc = "Open the selected files" },
 	{ on = [ "O" ],         run = [ "escape --visual", "open --interactive" ],         desc = "Open the selected files interactively" },
-	{ on = [ "<Enter>" ],   run = "plugin --sync smart-enter",                         desc = "Enter the child directory, or open the file" },
+	{ on = [ "<Enter>" ],   run = "plugin smart-enter",                                desc = "Enter the child directory, or open the file" },
 	{ on = [ "<S-Enter>" ], run = [ "escape --visual", "open --interactive" ],         desc = "Open the selected files interactively" },
 	{ on = [ "y" ],         run = [ "escape --visual", "yank" ],                       desc = "Copy the selected files" },
 	{ on = [ "Y" ],         run = "unyank",                                            desc = "Cancel the yank status of files" },
@@ -72,6 +72,7 @@ keymap = [
 	{ on = [ "d" ],         run = [ "escape --visual", "remove" ],                     desc = "Move the files to the trash" },
 	{ on = [ "D" ],         run = [ "escape --visual", "remove --permanently" ],       desc = "Permanently delete the files" },
 	{ on = [ "a" ],         run = "create",                                            desc = "Create a file or directory (ends with / for directories)" },
+	{ on = [ "A" ],         run = "create --dir",                                      desc = "Create directory" },
 	{ on = [ "r" ],         run = [ "escape --visual", "rename --cursor=before_ext" ], desc = "Rename a file or directory" },
 	{ on = [ ";" ],         run = [ "escape --visual", "shell --interactive" ],                      desc = "Run a shell command" },
 	{ on = [ ":" ],         run = [ "escape --visual", "shell --block --interactive" ],              desc = "Run a shell command (block the UI until the command finishes)" },
@@ -85,7 +86,8 @@ keymap = [
 	# Linemode
 	{ on = [ "m", "s" ], run = "linemode size",        desc = "Set linemode to size" },
 	{ on = [ "m", "p" ], run = "linemode permissions", desc = "Set linemode to permissions" },
-	{ on = [ "m", "m" ], run = "linemode mtime",       desc = "Set linemode to mtime" },
+	{ on = [ "m", "c" ], run = "linemode btime",        desc = "Set linemode to created time" },
+	{ on = [ "m", "m" ], run = "linemode mtime",       desc = "Set linemode to modified time" },
 	{ on = [ "m", "n" ], run = "linemode none",        desc = "Set linemode to none" },
 
 	# Copy
@@ -104,10 +106,10 @@ keymap = [
 	{ on = [ "N" ], run = "find_arrow --previous",   desc = "Go to previous found file" },
 
 	# Sorting
-  { on = [ ",", "m" ], run = "sort modified --reverse=no",     desc = "Sort by modified time" }, 
-  { on = [ ",", "M" ], run = "sort modified --reverse",        desc = "Sort by modified time (reverse)" }, 
-  { on = [ ",", "c" ], run = "sort created --reverse=no",      desc = "Sort by created time" }, 
-  { on = [ ",", "C" ], run = "sort created  --reverse",        desc = "Sort by created time (reverse)" }, 
+  { on = [ ",", "m" ], run = "sort mtime --reverse=no",     desc = "Sort by modified time" }, 
+  { on = [ ",", "M" ], run = "sort mtime --reverse",        desc = "Sort by modified time (reverse)" }, 
+  { on = [ ",", "c" ], run = "sort btime --reverse=no",      desc = "Sort by created time" }, 
+  { on = [ ",", "C" ], run = "sort btime  --reverse",        desc = "Sort by created time (reverse)" }, 
   { on = [ ",", "e" ], run = "sort extension --reverse=no",    desc = "Sort by extension" }, 
   { on = [ ",", "E" ], run = "sort extension --reverse",       desc = "Sort by extension (reverse)" }, 
   { on = [ ",", "a" ], run = "sort alphabetical --reverse=no", desc = "Sort alphabetically" }, 
@@ -177,7 +179,7 @@ keymap = [
 	{ on = [ "g", "?" ], run = "help", desc = "Open help" }
 ]
 
-[select]
+[pick]
 
 keymap = [
 	{ on = [ "<C-c>" ],   run = "close",          desc = "Cancel selection" },
