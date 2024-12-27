@@ -151,6 +151,7 @@ keymap = [
 	{ on = [ "g", "r" ],       run = "cd ~/repos",                   desc = "Go to repos directory" },
 	{ on = [ "g", "o" ],       run = "cd ~/OneDrive",                desc = "Go to OneDrive directory" },
 	{ on = [ "g", "m" ],       run = "cd ~/mnt",                     desc = "Go to mnt directory" },
+	{ on = [ "g", "v" ],       run = "cd ~/Videos",                  desc = "Go to videos" },
 	{ on = [ "g", "n" ],       run = "cd ~/Documents/zk-notebook",   desc = "Go to notes directory" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive",             desc = "Go to a directory interactively" },
 	{ on = [ "g", "t", "m", "p" ],              run = "cd /tmp",     desc = "Go to the temporary directory" },
