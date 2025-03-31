@@ -17,3 +17,5 @@
 	staash = stash --include-untracked
 	rs = restore --staged
 	res = restore
+[core]
+	hooksPath = /home/franco/.config/git/hooks
