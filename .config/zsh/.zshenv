@@ -14,7 +14,7 @@ fpath+="$XDG_CONFIG_HOME/zsh/completions"
 
 export EDITOR=lvim
 export ZK_NOTEBOOK_DIR="$HOME/Documents/zk-notebook/"
-export SCREEN_RECS="$HOME/Documents/screenrecs/"
+export SCREEN_RECS="$HOME/Videos"
 export MNT_DIR="$HOME/mnt/"
 # For use in psql
 export PAGER="less -S"
