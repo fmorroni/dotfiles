@@ -54,14 +54,21 @@ pdfOpener = [
 lorien = [
   { run = 'lorien "$@"', orphan = true, desc = "Open in Lorien", for = "linux" },
 ]
+xournal = [
+  { run = 'xournalpp "$@"', orphan = true, desc = "Open in Xournal++", for = "linux" },
+]
+imageViewer = [
+  { run = 'nomacs "$@"', orphan = true, desc = "Open in nomacs", for = "linux" },
+]
 
 [open]
 rules = [
 	{ name = "*/",          use = [ "edit", "open", "reveal" ] },
 	{ name = "*.lorien",    use = "lorien" },
+	{ name = "*.xopp",      use = "xournal" },
 
 	{ mime = "text/*",  use = [ "edit", "reveal" ] },
-	{ mime = "image/*", use = [ "open", "reveal" ] },
+	{ mime = "image/*", use = [ "imageViewer", "open", "reveal" ] },
 	{ mime = "video/*", use = [ "play", "reveal" ] },
 	{ mime = "audio/*", use = [ "play", "reveal" ] },
 	{ mime = "inode/empty", use = [ "edit", "reveal" ] },
@@ -77,7 +84,7 @@ rules = [
 	{ mime = "application/7z-compressed", use = [ "extract", "reveal" ] },
 	{ mime = "application/rar",           use = [ "extract", "reveal" ] },
 	{ mime = "application/xz",              use = [ "extract", "reveal" ] },
-	{ mime = "application/pdf",             use = "pdfOpener" },
+	{ mime = "application/pdf",             use = [ "pdfOpener", "xournal" ] },
 
 	{ mime = "*", use = [ "open", "reveal" ] },
 ]
