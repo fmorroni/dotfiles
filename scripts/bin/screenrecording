@@ -1,19 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-function record() {
-  "$HOME/.local/bin/awesome_notification" "Select recording area" "Will record into: $filename" 3
+record() {
+  "awesome-notification" "Select recording area" "Will record into: $filename" 3
   # pipe 'y' to autoaccept overwritting file
-  echo y | ffcast -s rec $filename
+  echo y | ffcast -s rec "$filename"
   code=$?
   case "$code" in
-    1) "$HOME/.local/bin/awesome_notification" "Recording failure: $code" "Invalid argument" 3 critical
+    1) "awesome-notification" "Recording failure: $code" "Invalid argument" 3 critical
     return 1
     ;;
-    143) "$HOME/.local/bin/awesome_notification" "Recording cancelled" "" 3
+    143) "awesome-notification" "Recording cancelled" "" 3
     ;;
-    255) "$HOME/.local/bin/awesome_notification" "Recording successful" "" 3
+    255) "awesome-notification" "Recording successful" "" 3
     ;;
-    *) "$HOME/.local/bin/awesome_notification" "Recording failure: $code" "Unexpected error" 3 critical
+    *) "awesome-notification" "Recording failure: $code" "Unexpected error" 3 critical
     return 1
     ;;
   esac
@@ -23,16 +23,16 @@ function record() {
 process1='(/\S+)*ffmpeg\s.*\sx11grab\s.*'
 process2='ffcast|xrectsel'
 
-if [[ -z $(pgrep -fxn $process1) && -z $(pgrep $process2) ]]; then
+if [[ -z $(pgrep -fxn "$process1") && -z $(pgrep $process2) ]]; then
   NEW="new"
   OVERWRITE="overwrite"
   output=$(NEW=$NEW OVERWRITE=$OVERWRITE rofi -show record -theme screenrec_filename.rasi 2>&1)
   operation="${output%% *}"
   filename="${output#* }"
   case "$operation" in
-    $NEW) record
+    "$NEW") record
     ;;
-    $OVERWRITE) confirmation=$(echo -en "Yes\nNo" | "$HOME/.config/rofi/scripts/confirmation.sh" "Overwrite '$(basename $filename)'?")
+    "$OVERWRITE") confirmation=$(echo -en "Yes\nNo" | "$HOME/.config/rofi/scripts/confirmation.sh" "Overwrite '$(basename "$filename")'?")
       case "$confirmation" in
         "Yes") record
         ;;
@@ -42,8 +42,8 @@ if [[ -z $(pgrep -fxn $process1) && -z $(pgrep $process2) ]]; then
     ;;
   esac
 else
-  if [[ -n $(pgrep -fxn $process1) ]]; then
-    pkill -fxn $process1
+  if [[ -n $(pgrep -fxn "$process1") ]]; then
+    pkill -fxn "$process1"
   else
     pkill $process2
   fi

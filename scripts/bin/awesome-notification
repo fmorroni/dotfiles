@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$#" -lt 3 ]; then
+	echo "usage: $0 <title> <message> <timeout>"
+	exit 1
+fi
+
+awesome-client 'naughty = require("naughty")
+local title = "'"$1"'"
+local message = "'"$2"'"
+local timeout = tonumber("'"$3"'")
+naughty.notify({title = title, text = message, timeout = timeout})'
