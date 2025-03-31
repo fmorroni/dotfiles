@@ -12,7 +12,7 @@ export PATH="$ANDROID_TOOLS_PATHS:$PNPM_HOME:$HOME/.cargo/bin/:$HOME/scripts/bin
 # export PATH="./:$PATH" # Works but no autocomplete
 fpath+="$XDG_CONFIG_HOME/zsh/completions"
 
-export EDITOR=lvim
+export EDITOR=nvim
 export ZK_NOTEBOOK_DIR="$HOME/Documents/zk-notebook/"
 export SCREEN_RECS="$HOME/Videos"
 export MNT_DIR="$HOME/mnt/"
