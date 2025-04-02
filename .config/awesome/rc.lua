@@ -406,7 +406,7 @@ local globalkeys = mytable.join(
         beautiful.volume.update)
     end,
     { description = ": Toggle mute", group = "hotkeys" }),
-  awful.key({ modkey, ctrlKey }, "k", runUserScript("pclick", { "kill" }),
+  awful.key({ modkey, shiftKey, ctrlKey }, "k", runUserScript("pclick", { "kill" }),
     { description = ": Click to kill", group = "hotkeys" }),
 
   -- User programs
