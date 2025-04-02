@@ -1,11 +1,33 @@
+vim.diagnostic.config({
+  float = {
+    border = "rounded",
+    focusable = true,
+  },
+})
+
 return {
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
-      theme = 'gruvbox',
+      theme = 'tokyonight',
       sections = {
         lualine_x = { '%S', 'encoding', 'fileformat', 'filetype' },
+        lualine_c = {
+          'filename',
+          {
+            'macro',
+            fmt = function()
+              local reg = vim.fn.reg_recording()
+              if reg ~= "" then
+                return "Recording @" .. reg
+              end
+              return nil
+            end,
+            color = { fg = "#ff9e64" },
+            draw_empty = false,
+          }
+        },
       }
     },
   },
@@ -62,7 +84,6 @@ return {
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
         },
       },
       presets = {
@@ -70,13 +91,19 @@ return {
         command_palette = true,       -- position the cmdline and popupmenu together
         long_message_to_split = true, -- long messages will be sent to a split
         inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false,       -- add a border to hover docs and signature help
+        lsp_doc_border = true,        -- add a border to hover docs and signature help
       },
     },
     dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
-    }
-  }
+    },
+  },
+
+  {
+    "SmiteshP/nvim-navic",
+    opts = { highlight = true },
+    dependencies = { 'neovim/nvim-lspconfig' },
+  },
 }
