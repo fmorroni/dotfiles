@@ -273,6 +273,7 @@ function theme.at_screen_connect(s)
     app = awful.util.terminal,
     argname = '--class %s',
     height = 0.35,
+    followtag = true,
   })
 
   -- If wallpaper is a function, call it with the screen
