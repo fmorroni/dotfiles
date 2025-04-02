@@ -3,11 +3,16 @@
 script_name=$(basename "$0")
 
 if [ "$#" -ne 1 ] || [ "$1" != "info" ] && [ "$1" != "kill" ]; then
-	echo "Usage: $script_name [info|kill]"
+	echo "Usage: $script_name <info|kill>"
 	exit 1
 fi
 
 pid=$(xprop | rg -i '\w*pid[^=]*=\s*(\d+)' -or '$1')
+
+if [ -z "$pid" ]; then
+  echo "Could not determine PID, exiting."
+  exit 1
+fi
 
 info() {
 	ps -up "$pid"
