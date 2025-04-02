@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $(basename "$0") <layout-file>" >&2
+    exit 1
+fi
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/arandr"
+LAYOUT_FILE="$CONFIG_DIR/$1"
+
+if [ ! -f "$LAYOUT_FILE" ]; then
+    echo "Error: File '$LAYOUT_FILE' not found." >&2
+    exit 2
+fi
+
+if [ ! -x "$LAYOUT_FILE" ]; then
+    echo "Error: File '$LAYOUT_FILE' is not executable." >&2
+    exit 3
+fi
+
+exec "$LAYOUT_FILE"
