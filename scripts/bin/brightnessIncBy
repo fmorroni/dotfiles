@@ -1,17 +1,21 @@
 #!/bin/sh
 
+# Default $1 to 0 if not provided
+change_percent=${1:-0}
+
 max_brightness=$(cat /sys/class/backlight/intel_backlight/max_brightness)
 current_brightness=$(cat /sys/class/backlight/intel_backlight/brightness)
 
-new_brightness=$(($current_brightness + "$1" * $max_brightness / 100)) 
+new_brightness=$((current_brightness + change_percent * max_brightness / 100)) 
 
-if [ $new_brightness -gt $max_brightness ]; then
+if [ "$new_brightness" -gt "$max_brightness" ]; then
   new_brightness=$max_brightness
-elif [ $new_brightness -lt 1 ]; then
+elif [ "$new_brightness" -lt 1 ]; then
   new_brightness=1
 fi
 
-"$HOME/scripts/bin/brightness" $new_brightness
+# "$HOME/scripts/bin/brightness" "$new_brightness"
+brightness "$new_brightness"
 
 # Output brightness percentage
-echo $((($new_brightness - 1) * 100 / ($max_brightness - 1)))
+echo $(((new_brightness - 1) * 100 / (max_brightness - 1)))
