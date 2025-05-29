@@ -127,20 +127,32 @@ run_once({
 
 -- {{{ Variable definitions
 
-local theme         = "powerarrow-dark"
-local modkey        = "Mod4"
-local altkey        = "Mod1"
-local shiftKey      = "Shift"
-local ctrlKey       = "Control"
-local terminal      = "kitty"
-local editor        = os.getenv("EDITOR") or "nvim"
-local editor_cmd    = terminal .. " -e " .. editor .. " "
-local browser       = "brave"
+local theme                            = "powerarrow-dark"
+local modkey                           = "Mod4"
+local altkey                           = "Mod1"
+local shiftKey                         = "Shift"
+local ctrlKey                          = "Control"
+local terminal                         = "kitty"
+local editor                           = os.getenv("EDITOR") or "nvim"
+local editor_cmd                       = terminal .. " -e " .. editor .. " "
+local browser                          = "brave"
 
-awful.util.terminal = terminal
+awful.util.terminal                    = terminal
+local number_keys   = {
+  { key = 1, keycode = 10 },
+  { key = 2, keycode = 11 },
+  { key = 3, keycode = 12 },
+  { key = 4, keycode = 13 },
+  { key = 5, keycode = 14 },
+  { key = 6, keycode = 15 },
+  { key = 7, keycode = 16 },
+  { key = 8, keycode = 17 },
+  { key = 9, keycode = 18 },
+  { key = 0, keycode = 19 },
+}
 awful.util.tagnames = {}
-for i = 1, 9 do
-  table.insert(awful.util.tagnames, tostring(i))
+for _, entry in ipairs(number_keys) do
+  table.insert(awful.util.tagnames, tostring(entry.key))
 end
 
 awful.layout.layouts                   = {
@@ -236,7 +248,7 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 
 -- {{{ Key bindings
 
-local globalkeys = mytable.join(
+local globalkeys    = mytable.join(
   awful.key({ modkey }, "space", function() naughty.destroy_all_notifications() end,
     { description = ": Destroy all notifications", group = "hotkeys" }),
   awful.key({ modkey }, "s", function() hotkeys_popup:show_help() end,
@@ -327,6 +339,8 @@ local globalkeys = mytable.join(
     { description = ": Select previous", group = "layout" }),
 
   -- Screen focus
+  awful.key({ modkey, ctrlKey }, "Tab", function() awful.screen.focus_relative(1) end,
+    { description = ": Focus the next screen", group = "screen" }),
   awful.key({ modkey, ctrlKey }, "j", function() awful.screen.focus_relative(1) end,
     { description = ": Focus the next screen", group = "screen" }),
   awful.key({ modkey, ctrlKey }, "k", function() awful.screen.focus_relative(-1) end,
@@ -445,7 +459,7 @@ local globalkeys = mytable.join(
     { description = ": Open notes", group = "launcher" })
 )
 
-local clientkeys = mytable.join(
+local clientkeys    = mytable.join(
   awful.key({ modkey }, "f",
     function(c)
       c.fullscreen = not c.fullscreen
@@ -488,10 +502,12 @@ local clientkeys = mytable.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i, entry in ipairs(number_keys) do
+  local k = entry.key
+  local code = entry.keycode
   globalkeys = mytable.join(globalkeys,
     -- View tag only.
-    awful.key({ modkey }, "#" .. i + 9,
+    awful.key({ modkey }, "#" .. code,
       function()
         local screen = awful.screen.focused()
         local tag = screen.tags[i]
@@ -499,9 +515,9 @@ for i = 1, 9 do
           tag:view_only()
         end
       end,
-      { description = ": View tag #" .. i, group = "tag" }),
+      { description = ": View tag #" .. k, group = "tag" }),
     -- Toggle tag display.
-    awful.key({ modkey, ctrlKey }, "#" .. i + 9,
+    awful.key({ modkey, ctrlKey }, "#" .. code,
       function()
         local screen = awful.screen.focused()
         local tag = screen.tags[i]
@@ -509,9 +525,9 @@ for i = 1, 9 do
           awful.tag.viewtoggle(tag)
         end
       end,
-      { description = ": Toggle tag #" .. i, group = "tag" }),
+      { description = ": Toggle tag #" .. k, group = "tag" }),
     -- Move client to tag.
-    awful.key({ modkey, shiftKey }, "#" .. i + 9,
+    awful.key({ modkey, shiftKey }, "#" .. code,
       function()
         if client.focus then
           local tag = client.focus.screen.tags[i]
@@ -520,9 +536,9 @@ for i = 1, 9 do
           end
         end
       end,
-      { description = ": Move focused client to tag #" .. i, group = "tag" }),
+      { description = ": Move focused client to tag #" .. k, group = "tag" }),
     -- Toggle tag on focused client.
-    awful.key({ modkey, ctrlKey, shiftKey }, "#" .. i + 9,
+    awful.key({ modkey, ctrlKey, shiftKey }, "#" .. code,
       function()
         if client.focus then
           local tag = client.focus.screen.tags[i]
