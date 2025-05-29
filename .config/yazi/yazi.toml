@@ -60,12 +60,16 @@ xournal = [
 imageViewer = [
   { run = 'nomacs "$@"', orphan = true, desc = "Open in nomacs", for = "linux" },
 ]
+3d-print = [
+  { run = 'prusa-slicer "$@"', orphan = true, desc = "Open in Prusa Slicer", for = "linux" },
+]
 
 [open]
 rules = [
 	{ name = "*/",          use = [ "edit", "open", "reveal" ] },
 	{ name = "*.lorien",    use = "lorien" },
 	{ name = "*.xopp",      use = "xournal" },
+	{ name = "*.3mf",       use = "3d-print" },
 
 	{ mime = "text/*",  use = [ "edit", "reveal" ] },
 	{ mime = "image/*", use = [ "imageViewer", "open", "reveal" ] },

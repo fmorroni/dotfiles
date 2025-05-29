@@ -12,8 +12,8 @@ keymap = [
 	{ on = [ "<C-z>" ], run = "suspend",            desc = "Suspend the process" },
 
 	# Navigation
-	{ on = [ "k" ], run = "arrow -1", desc = "Move cursor up" },
-	{ on = [ "j" ], run = "arrow 1",  desc = "Move cursor down" },
+	{ on = [ "k" ], run = "arrow prev", desc = "Move cursor up" },
+	{ on = [ "j" ], run = "arrow next",  desc = "Move cursor down" },
 
 	{ on = [ "K" ], run = "arrow -5", desc = "Move cursor up 5 lines" },
 	{ on = [ "J" ], run = "arrow 5",  desc = "Move cursor down 5 lines" },
@@ -81,7 +81,7 @@ keymap = [
 	{ on = [ "S" ],         run = "search rg",                                         desc = "Search files by content using ripgrep" },
 	{ on = [ "<C-s>" ],     run = "search none",                                       desc = "Cancel the ongoing search" },
 	# { on = [ "z" ],         run = "jump zoxide",                                       desc = "Jump to a directory using zoxide" },
-	{ on = [ "Z" ],         run = "plugin fzf",                                          desc = "Jump to a directory, or reveal a file using fzf" },
+	{ on = [ "z" ],         run = "plugin fzf",                                          desc = "Jump to a directory, or reveal a file using fzf" },
 
 	# Linemode
 	{ on = [ "m", "s" ], run = "linemode size",        desc = "Set linemode to size" },
@@ -139,7 +139,7 @@ keymap = [
 	{ on = [ "]" ], run = "tab_swap 1",  desc = "Swap the current tab with the next tab" },
 
 	# Tasks
-	{ on = [ "w" ], run = "tasks_show", desc = "Show the tasks manager" },
+	{ on = [ "w" ], run = "tasks:show", desc = "Show the tasks manager" },
 
 	# Goto
 	{ on = [ "g", "h" ],       run = "cd ~",                         desc = "Go to the home directory" },
@@ -279,7 +279,7 @@ keymap = [
 keymap = [
 	{ on = [ "<C-c>" ],   run = "close",                                      desc = "Cancel completion" },
 	{ on = [ "<Tab>" ],   run = "close --submit",                             desc = "Submit the completion" },
-	{ on = [ "<Enter>" ], run = [ "close --submit", "close_input --submit" ], desc = "Submit the completion and input" },
+	{ on = [ "<Enter>" ], run = [ "close --submit", "input:close --submit" ], desc = "Submit the completion and input" },
 
 	{ on = [ "<C-k>" ], run = "arrow -1", desc = "Move cursor up" },
 	{ on = [ "<C-j>" ], run = "arrow 1",  desc = "Move cursor down" },
