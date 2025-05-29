@@ -98,7 +98,7 @@ local autolock = {
     '-notify ' .. (suspendTimeoutMins - lockTimeoutMins) * 60,
     '-notifier "lockscreen"',
     '-time ' .. suspendTimeoutMins,
-    '-locker "systemctl suspend"',
+    '-locker "systemctl suspend-then-hibernate"',
     '-detectsleep'
   ),
   on = true,
