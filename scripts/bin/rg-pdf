@@ -37,7 +37,7 @@ for pdf in "$@"; do
 
 		matches=0
 		for ((page_n = 1; page_n <= num_pages; page_n++)); do
-			if match=$(pdftotext "$pdf" -f $page_n -l $((page_n + 1)) - 2>/dev/null | rg --color=always $rg_options "$regex"); then
+			if match=$(pdftotext "$pdf" -f $page_n -l $page_n - 2>/dev/null | rg --color=always $rg_options "$regex"); then
 				echo -e "• In page $page_n match:"
         echo -e "$match"
         ((matches = matches + 1))
