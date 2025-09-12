@@ -58,3 +58,5 @@ fi
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[alias]='fg=#00c3ff'
 ZSH_HIGHLIGHT_STYLES[comment]='fg=#8f8d8d'
+
+eval "$(zoxide init zsh)"
