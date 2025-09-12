@@ -50,7 +50,7 @@ local function factory(args)
 
     if #batteries == 0 then bat.get_batteries() end
 
-    bat_notification_critical_preset = {
+    local bat_notification_critical_preset = {
         title   = "Battery exhausted",
         text    = "Shutdown imminent",
         timeout = 15,
@@ -58,7 +58,7 @@ local function factory(args)
         bg      = "#FFFFFF"
     }
 
-    bat_notification_low_preset = {
+    local bat_notification_low_preset = {
         title   = "Battery low",
         text    = "Plug the cable!",
         timeout = 15,
@@ -66,15 +66,15 @@ local function factory(args)
         bg      = "#CDCDCD"
     }
 
-    bat_notification_charged_enough_preset = {
-        title   = "Battery over " .. n_perc[3] .. "%",
-        text    = "You can unplug the cable",
-        timeout = 30,
-        fg      = "#202020",
-        bg      = "#CDCDCD"
-    }
+    -- local bat_notification_charged_enough_preset = {
+    --     title   = "Battery over " .. n_perc[3] .. "%",
+    --     text    = "You can unplug the cable",
+    --     timeout = 30,
+    --     fg      = "#202020",
+    --     bg      = "#CDCDCD"
+    -- }
 
-    bat_notification_charged_preset = {
+    local bat_notification_charged_preset = {
         title   = "Battery full",
         text    = "You can unplug the cable",
         timeout = 15,
@@ -191,7 +191,7 @@ local function factory(args)
                     end
 
                     if 0 < rate_time and rate_time < 0.01 then -- check for magnitude discrepancies (#199)
-                        rate_time_magnitude = math.abs(math.floor(math.log10(rate_time)))
+                        local rate_time_magnitude = math.abs(math.floor(math.log10(rate_time)))
                         rate_time = rate_time * 10^(rate_time_magnitude - 2)
                     end
                  end
@@ -226,19 +226,19 @@ local function factory(args)
                     }).id
                 end
                 fullnotification = false
-            elseif bat_now.status == "Full" and full_notify == "on" then
+            elseif bat_now.status == "Full" and full_notify == "on" and not fullnotification then
                 bat.id = naughty.notify({
                     preset = bat_notification_charged_preset,
                     replaces_id = bat.id
                 }).id
-            elseif bat_now.status == "Charging" and not fullnotification then
-                if tonumber(bat_now.perc) > n_perc[3] then
-                    bat.id = naughty.notify({
-                        preset = bat_notification_charged_enough_preset,
-                        replaces_id = bat.id
-                    }).id
-                    fullnotification = true
-                end
+                fullnotification = true
+            -- elseif bat_now.status == "Charging" then
+            --     if tonumber(bat_now.perc) > n_perc[3] then
+            --         bat.id = naughty.notify({
+            --             preset = bat_notification_charged_enough_preset,
+            --             replaces_id = bat.id
+            --         }).id
+            --     end
             end
         end
     end
