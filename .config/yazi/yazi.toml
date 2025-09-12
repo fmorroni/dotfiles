@@ -29,6 +29,9 @@ edit = [
 	{ run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
 	{ run = 'code "%*"',          orphan = true, for = "windows" },
 ]
+diff = [
+	{ run = '${EDITOR:=vi} -d "$@"', desc = "File diff", block = true, for = "unix" },
+]
 open = [
 	{ run = 'xdg-open "$@"',                desc = "Open", for = "linux" },
 	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
@@ -90,7 +93,7 @@ rules = [
 	{ mime = "application/xz",              use = [ "extract", "reveal" ] },
 	{ mime = "application/pdf",             use = [ "pdfOpener", "xournal" ] },
 
-	{ mime = "*", use = [ "open", "reveal" ] },
+	{ mime = "*", use = [ "open", "reveal", "diff" ] },
 ]
 
 [tasks]
