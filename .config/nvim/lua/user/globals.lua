@@ -23,3 +23,10 @@ LogObj = function(obj)
   end
   LogNewBuf(lines)
 end
+
+local path_separator = package.config:sub(1, 1) -- `/` on Unix, `\` on Windows
+
+JoinPath = function(...)
+  local parts = { ... }
+  return table.concat(parts, path_separator)
+end

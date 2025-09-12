@@ -78,13 +78,14 @@ local functionSnip = ls.s("fun", ls.fmt([[
 )
 
 local struct = ls.s("struct", ls.fmt([[
-    typedef struct {{
-      {}
-    }} {};
+    typedef struct {name} {{
+      {body}
+    }} {t_name};
   ]],
   {
-    ls.i(2),
-    ls.i(1, "StructName"),
+    name = ls.i(1, "StructName"),
+    t_name = ls.rep(1),
+    body = ls.i(2),
   })
 )
 
@@ -100,14 +101,18 @@ local enum = ls.s("enum", ls.fmt([[
 )
 
 local main = ls.s("main", ls.fmt([[
-    int main() {{
+    int main({}) {{
       {}
 
       return 0;
     }}
   ]],
   {
-    ls.i(1),
+    ls.c(1, {
+      ls.t("int argc, char* argv[]"),
+      ls.t(""),
+    }),
+    ls.i(2),
   })
 )
 
@@ -159,7 +164,7 @@ return {
   sharedSnips.ternary_c,
   sharedSnips.while_c,
   sharedSnips.if_c,
-  matrix,
+  -- matrix,
   functionSnip,
   struct,
   enum,

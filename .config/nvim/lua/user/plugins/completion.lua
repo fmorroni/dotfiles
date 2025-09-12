@@ -5,7 +5,9 @@ return {
 
     -- use a release tag to download pre-built binaries
     version = '*',
-    dependencies = { 'L3MON4D3/LuaSnip', version = '*' },
+    dependencies = {
+      { 'L3MON4D3/LuaSnip', version = '*' },
+    },
 
     opts = {
       keymap = {
@@ -36,7 +38,13 @@ return {
 
       snippets = { preset = 'luasnip' },
       sources = {
-        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        default = { "snippets", "lsp", "path", "buffer" },
+        per_filetype = {
+          sql = { 'snippets', 'dadbod', 'buffer' },
+          mysql = { 'snippets', 'dadbod', 'buffer' },
+          postgres = { 'snippets', 'dadbod', 'buffer' },
+          lua = { "lazydev", "snippets", "lsp", "path", "buffer" },
+        },
         providers = {
           lazydev = {
             name = "LazyDev",
@@ -44,6 +52,7 @@ return {
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
           },
+          dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
         },
       },
 

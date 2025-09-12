@@ -3,6 +3,10 @@ vim.diagnostic.config({
     border = "rounded",
     focusable = true,
   },
+  -- Show inline diagnostics.
+  virtual_text = true,
+  -- Show prittified diagnostics (takes more screen space).
+  -- virtual_lines = true,
 })
 
 return {
@@ -12,7 +16,8 @@ return {
     opts = {
       theme = 'tokyonight',
       sections = {
-        lualine_x = { '%S', 'encoding', 'fileformat', 'filetype' },
+        lualine_x = { '%S', '', 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'selectioncount', 'progress'},
         lualine_c = {
           'filename',
           {

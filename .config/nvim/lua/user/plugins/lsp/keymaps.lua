@@ -26,16 +26,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
     bufmap('n', 'gs', vim.lsp.buf.signature_help, { desc = "Displays a function's signature information" })
 
     bufmap('n', '<leader>lr', vim.lsp.buf.rename, { desc = 'Renames all references to the symbol under the cursor' })
-    bufmap('n', '<leader>lf', vim.lsp.buf.format, { desc = 'Format current file' })
+    -- In formatting.lua, otherwise it will only be available when a language server attaches.
+    -- bufmap('n', '<leader>lf', conform.format, { desc = 'Format current file' })
     bufmap('n', '<leader>la', vim.lsp.buf.code_action,
       { desc = 'Selects a code action available at the current cursor position' })
 
-    bufmap('n', '<leader>lj', vim.diagnostic.goto_next)
-    bufmap('n', '<leader>lk', vim.diagnostic.goto_prev)
-    bufmap('n', '<leader>lej', function() vim.diagnostic.goto_next({ severity = "ERROR" }) end)
-    bufmap('n', '<leader>lek', function() vim.diagnostic.goto_prev({ severity = "ERROR" }) end)
-    bufmap('n', '<leader>lwj', function() vim.diagnostic.goto_next({ severity = "WARN" }) end)
-    bufmap('n', '<leader>lwk', function() vim.diagnostic.goto_prev({ severity = "WARN" }) end)
-    bufmap('n', 'gl', vim.diagnostic.open_float)
+    bufmap('n', '<leader>lj', function() vim.diagnostic.jump({ count = 1, float = true }) end,
+      { desc = 'Jump to next diagnostic' })
+    bufmap('n', '<leader>lk', function() vim.diagnostic.jump({ count = -1, float = true }) end,
+      { desc = 'Jump to prev diagnostic' })
+    bufmap('n', '<leader>lej', function() vim.diagnostic.jump({ count = 1, float = true, severity = "ERROR" }) end,
+      { desc = 'Jump to next error' })
+    bufmap('n', '<leader>lek', function() vim.diagnostic.jump({ count = -1, float = true, severity = "ERROR" }) end,
+      { desc = 'Jump to prev error' })
+    bufmap('n', '<leader>lwj', function() vim.diagnostic.jump({ count = 1, float = true, severity = "WARN" }) end,
+      { desc = 'Jump to next warning' })
+    bufmap('n', '<leader>lwk', function() vim.diagnostic.jump({ count = -1, float = true, severity = "WARN" }) end,
+      { desc = 'Jump to prev warning' })
+    bufmap('n', 'gl', vim.diagnostic.open_float, { desc = 'Open floating diagnostics window' })
+
+    pcall(vim.keymap.del, "n", "gri")
+    pcall(vim.keymap.del, "n", "grr")
+    pcall(vim.keymap.del, "n", "grt")
+    pcall(vim.keymap.del, "n", "gra")
+    pcall(vim.keymap.del, "n", "grn")
   end
 })

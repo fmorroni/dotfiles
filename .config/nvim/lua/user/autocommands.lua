@@ -5,3 +5,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank({ higroup = 'IncSearch', timeout = 100 })
   end,
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'java',
+  callback = function(args)
+    require('user.plugins.lsp.jdtls').setup()
+  end
+})

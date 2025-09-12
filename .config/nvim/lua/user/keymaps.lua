@@ -51,3 +51,5 @@ map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
 
 map('n', '<leader>lp', '<CMD>Lazy<CR>')
 map('n', '<leader>li', '<CMD>LspInfo<CR>')
+
+-- map('i', '<c-p>', '<c-o>', { desc = "Run normal mode command from insert mode" })

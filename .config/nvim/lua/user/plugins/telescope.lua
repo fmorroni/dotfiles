@@ -12,14 +12,17 @@ return {
     },
     keys = function()
       local builtin = require('telescope.builtin') -- Now loaded only when needed
+      local grep_hidden = function() builtin.live_grep({ additional_args = { '--hidden' } }) end
       return {
         { '<leader>ff', builtin.find_files,      desc = 'Telescope find files' },
         { '<leader>fg', builtin.live_grep,       desc = 'Telescope live grep' },
+        { '<leader>fa', grep_hidden,             desc = 'Telescope live grep including hidden files' },
         { '<leader>fb', builtin.buffers,         desc = 'Telescope buffers' },
         { '<leader>fh', builtin.help_tags,       desc = 'Telescope help tags' },
         { '<leader>fw', builtin.grep_string,     desc = 'Telescope find word' },
         { '<leader>fr', builtin.registers,       desc = 'Telescope registers' },
         { '<leader>fc', builtin.command_history, desc = 'Telescope command history' },
+        { '<leader>fd', builtin.diagnostics,     desc = 'Telescope diagnostics' },
       }
     end,
     opts = function()

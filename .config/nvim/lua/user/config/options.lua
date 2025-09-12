@@ -61,3 +61,5 @@ vim.opt.nrformats:append('alpha')
 
 -- Add code breadcrumbs to winbar.
 vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+
+vim.g.c_syntax_for_h = true
