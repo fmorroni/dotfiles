@@ -73,6 +73,7 @@ rules = [
 	{ name = "*.lorien",    use = "lorien" },
 	{ name = "*.xopp",      use = "xournal" },
 	{ name = "*.3mf",       use = "3d-print" },
+	{ name = "*.gif",       use = "play" },
 
 	{ mime = "text/*",  use = [ "edit", "reveal" ] },
 	{ mime = "image/*", use = [ "imageViewer", "open", "reveal" ] },
