@@ -547,7 +547,7 @@ for i, entry in ipairs(number_keys) do
           end
         end
       end,
-      { description = ": Toggle focused client on tag #" .. i, group = "tag" })
+      { description = ": Toggle focused client on tag #" .. k, group = "tag" })
   )
 end
 
