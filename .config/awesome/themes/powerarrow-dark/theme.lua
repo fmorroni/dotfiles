@@ -15,9 +15,22 @@ local dpi                                       = require("beautiful.xresources"
 
 local os                                        = os
 local my_table                                  = awful.util.table or gears.table -- 4.{0,1} compatibility
+
+local current_wallpaper_index                   = 1
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-dark"
-theme.wallpaper                                 = theme.dir .. "/neon.png"
+theme.wallpapers_dir                            = theme.dir .. "/wallpapers"
+theme.wallpapers                                = {
+  theme.wallpapers_dir .. "/neon-shallows-wp-1.png",
+  theme.wallpapers_dir .. "/neon-shallows-wp-2.jpg",
+  theme.wallpapers_dir .. "/neon-shallows-wp-3.png",
+  theme.wallpapers_dir .. "/neon-shallows-wp-4.png",
+}
+theme.wallpaper                                 = function(_)
+  if #theme.wallpapers == 0 then return nil end
+  return theme.wallpapers[current_wallpaper_index]
+end
+theme.wallpaper_timer                           = 600
 theme.font                                      = "Terminus 9"
 theme.fg_normal                                 = "#DDDDFF"
 theme.fg_focus                                  = "#EA6F81"
@@ -277,9 +290,11 @@ function theme.at_screen_connect(s)
   })
 
   -- If wallpaper is a function, call it with the screen
-  local wallpaper = theme.wallpaper
-  if type(wallpaper) == "function" then
-    wallpaper = wallpaper(s)
+  local wallpaper
+  if type(theme.wallpaper) == "function" then
+    wallpaper = theme.wallpaper(s)
+  else
+    wallpaper = theme.wallpaper
   end
   gears.wallpaper.maximized(wallpaper, s, true)
 
@@ -333,6 +348,19 @@ function theme.at_screen_connect(s)
     },
     s.mytasklist, -- Middle widget
     s.mywidgetbox,
+  }
+end
+
+if theme.wallpaper_timer and theme.wallpaper_timer ~= 0 then
+  gears.timer {
+    timeout = theme.wallpaper_timer,
+    autostart = true,
+    callback = function()
+      current_wallpaper_index = (current_wallpaper_index % #theme.wallpapers) + 1
+      for s in screen do
+        gears.wallpaper.maximized(theme.wallpaper(s), s, true)
+      end
+    end
   }
 end
 
