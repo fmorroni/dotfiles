@@ -29,7 +29,7 @@ return {
       require("mason-lspconfig").setup({
         automatic_enable = {
           exclude = {
-            "jdtls",
+            "jdtls", -- This should ignore jdtls for mason-lspconfig but it doesn't seem to do anything.
           }
         }
       })
@@ -49,10 +49,11 @@ return {
             on_attach = default_on_attach,
             filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }, -- exclude "proto".
           })
-        end
+        end,
         -- ["rust_analyzer"] = function ()
         --     require("rust-tools").setup {}
-        -- end
+        -- end,
+        jdtls = function() end -- Empty handler does seem to properly ignore it.
       })
       require('user.plugins.lsp.keymaps')
     end,
