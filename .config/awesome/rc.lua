@@ -390,16 +390,26 @@ local globalkeys    = mytable.join(
     { description = ": Dropdown application", group = "launcher" }),
 
   -- Screen brightness
-  awful.key({}, "XF86MonBrightnessUp", runUserScript("brightnessIncBy", { 1 }, beautiful.brightness.update),
+  awful.key({}, "XF86MonBrightnessUp", 
+    function()
+      awful.spawn.easy_async("brightnessctl set +1%", beautiful.brightness.update)
+    end,
     { description = ": +1% screen brightness", group = "hotkeys" }),
-  awful.key({}, "XF86MonBrightnessDown", runUserScript("brightnessIncBy", { -1 }, beautiful.brightness.update),
+  awful.key({}, "XF86MonBrightnessDown", 
+    function()
+      awful.spawn.easy_async("brightnessctl set 1%-", beautiful.brightness.update)
+    end,
     { description = ": -1% screen brightness", group = "hotkeys" }),
-  awful.key({ shiftKey }, "XF86MonBrightnessUp", runUserScript("brightnessIncBy", { 10 }, beautiful.brightness.update),
+  awful.key({ shiftKey }, "XF86MonBrightnessUp",
+    function()
+      awful.spawn.easy_async("brightnessctl set +10%", beautiful.brightness.update)
+    end,
     { description = ": +10% screen brightness", group = "hotkeys" }),
-  awful.key({ shiftKey }, "XF86MonBrightnessDown", runUserScript("brightnessIncBy", { -10 }, beautiful.brightness.update),
+  awful.key({ shiftKey }, "XF86MonBrightnessDown",
+    function()
+      awful.spawn.easy_async("brightnessctl set 10%-", beautiful.brightness.update)
+    end,
     { description = ": -10% screen brightness", group = "hotkeys" }),
-  -- awful.key({}, "XF86MonBrightnessDown", function() os.execute("xbacklight -dec 2 -time 20 -steps 10") end,
-  --   { description = ": Decrease screen brightness", group = "hotkeys" }),
 
   -- ALSA volume control
   awful.key({}, "XF86AudioRaiseVolume",
