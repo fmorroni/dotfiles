@@ -12,7 +12,6 @@ export QT_STYLE_OVERRIDE=adwaita-dark
 
 # Moved to awesome
 # Startup commands
-setxkbmap latam # Doens't work on the first couple of tries on awesome for some reason...
 # setxkbmap -option caps:swapescape
 # startup nm-applet
 # startup xautolock \

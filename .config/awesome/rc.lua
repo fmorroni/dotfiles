@@ -106,8 +106,6 @@ local autolock = {
 }
 
 run_once({
-  'setxkbmap latam',
-  'setxkbmap -option caps:swapescape',
   'nm-applet',
   autolock.cmd,
   -- 'pasystray',
