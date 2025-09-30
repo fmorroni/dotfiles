@@ -16,6 +16,8 @@ local dpi                                       = require("beautiful.xresources"
 local os                                        = os
 local my_table                                  = awful.util.table or gears.table -- 4.{0,1} compatibility
 
+local font_family                               = "Terminus"
+
 local current_wallpaper_index                   = 1
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-dark"
@@ -31,7 +33,7 @@ theme.wallpaper                                 = function(_)
   return theme.wallpapers[current_wallpaper_index]
 end
 theme.wallpaper_timer                           = 600
-theme.font                                      = "Terminus 9"
+theme.font                                      = font_family .. " 9"
 theme.fg_normal                                 = "#DDDDFF"
 theme.fg_focus                                  = "#EA6F81"
 theme.fg_urgent                                 = "#CC9393"
@@ -162,7 +164,7 @@ local temp                                      = lain.widget.temp({
 -- local fsicon = wibox.widget.imagebox(theme.widget_hdd)
 -- -- commented because it needs Gio/Glib >= 2.54
 -- theme.fs = lain.widget.fs({
---   notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "Terminus 10" },
+--   notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = font_family .. " 10" },
 --   settings = function()
 --     widget:set_markup(markup.font(theme.font, " " .. fs_now["/"].percentage .. "% "))
 --   end
@@ -193,7 +195,7 @@ local bat                                       = lain.widget.bat({
 -- ALSA volume
 local volicon                                   = wibox.widget.imagebox(theme.widget_vol)
 theme.volume                                    = lain.widget.alsa({
-  notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "Terminus 10" },
+  notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = font_family .. " 10" },
   settings = function()
     if volume_now.status == "off" then
       volicon:set_image(theme.widget_vol_mute)
@@ -236,8 +238,8 @@ theme.volume.widget:buttons(awful.util.table.join(
 -- })
 
 -- Brightness
-local brightness_icon = wibox.widget.textbox('☼')
-brightness_icon.font  = 'Terminus 13'
+local brightness_icon = wibox.widget.textbox("☼")
+brightness_icon.font  = font_family .. " 13"
 theme.brightness      = lain.widget.brightness({
   settings = function()
     widget:set_markup(markup.font(theme.font, " " .. brightness_now .. "% "))
@@ -246,7 +248,7 @@ theme.brightness      = lain.widget.brightness({
 
 -- Bluetooth
 -- local bluetooth_icon  = wibox.widget.imagebox(theme.widget_bluetooth_off)
--- bluetooth_icon.font   = 'Terminus 13'
+-- bluetooth_icon.font   = font_family .. " 13"
 -- theme.bluetooth       = lain.widget.bluetooth({
 --   settings = function()
 --     if bluetooth_on then
