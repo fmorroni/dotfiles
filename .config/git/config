@@ -9,10 +9,10 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[difftool "lvimdiff"]
-	cmd = lvim -f -d \"$LOCAL\" \"$REMOTE\"
-[mergetool "lvimdiff"]
-	cmd = lvim -f -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+[difftool "nvimdiff"]
+	cmd = nvim -f -d \"$LOCAL\" \"$REMOTE\"
+[mergetool "nvimdiff"]
+	cmd = nvim -f -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
 [alias]
 	staash = stash --include-untracked
 	rs = restore --staged
