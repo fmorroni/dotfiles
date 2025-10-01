@@ -422,7 +422,6 @@ local globalkeys    = mytable.join(
     { description = ": Volume down", group = "hotkeys" }),
   awful.key({}, "XF86AudioMute",
     function()
-      -- helpers.debug_print("Muting")
       awful.spawn.easy_async(
         "amixer -q set " .. (beautiful.volume.togglechannel or beautiful.volume.channel) .. " toggle",
         beautiful.volume.update)
