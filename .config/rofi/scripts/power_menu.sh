@@ -39,9 +39,9 @@ run_cmd() {
 	confirmation="$(confirm_exit "$(echo "$1" | cut -f 2 -d ' ')")"
 	if [[ "$confirmation" == "$yes" ]]; then
 		if [[ $1 == "$suspend" ]]; then
-			systemctl suspend
+			systemctl suspend-then-hibernate
 		elif [[ $1 == "$hibernate" ]]; then
-			"$HOME"/scripts/bin/lockscreen
+			"$HOME/scripts/bin/lockscreen"
 			systemctl hibernate
 		elif [[ $1 == "$reboot" ]]; then
 			systemctl reboot

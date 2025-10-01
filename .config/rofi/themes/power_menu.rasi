@@ -72,7 +72,7 @@ inputbar {
     border-color:                @selected;
     background-color:            transparent;
     text-color:                  @foreground;
-    children:                    [ "textbox-prompt-colon", dummy, "prompt"];
+    children:                    [ "textbox-prompt-colon", dummy, "textbox-bat", "prompt"];
 }
 
 dummy {
@@ -86,6 +86,14 @@ textbox-prompt-colon {
     padding:                     10px 14px;
     border-radius:               4px;
     background-color:            @urgent;
+    text-color:                  @background;
+}
+textbox-bat {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "Bat: ";
+    padding:                     10px 14px;
+    border-radius:               4px;
     text-color:                  @background;
 }
 prompt {

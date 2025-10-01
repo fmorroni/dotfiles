@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
+# SCREEN_RECS="${SCREEN_RECS%%/}"
 SCREEN_RECS="${SCREEN_RECS%%/}"
 
 echo -e "\0prompt\x1fRecordings"
