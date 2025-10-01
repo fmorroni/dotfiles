@@ -1,0 +1,42 @@
+-- Probably best to just go back to nvim-jdtls... Painless java my ass
+-- Use this config as template:
+-- https://github.com/mfussenegger/nvim-jdtls/wiki/Sample-Configurations
+
+return {
+  "nvim-java/nvim-java",
+  -- dev = true,
+  dependencies = { "neovim/nvim-lspconfig" },
+  -- config = function()
+  --   require("java").setup({
+  --     jdk = {
+  --       auto_install = false,
+  --     },
+  --     -- lombok = {
+  --     --   enable = false,
+  --     -- }
+  --   })
+  --   require('lspconfig').jdtls.setup({
+  --     servers = {
+  --       jdtls = {
+  --         settings = {
+  --           java = {
+  --             configuration = {
+  --               runtimes = {
+  --                 {
+  --                   name = "JavaSE-17",
+  --                   path = "/usr/lib/jvm/java-17-openjdk/",
+  --                 },
+  --                 {
+  --                   name = "JavaSE-21",
+  --                   path = "/usr/lib/jvm/java-21-openjdk/",
+  --                   default = true,
+  --                 }
+  --               }
+  --             }
+  --           }
+  --         }
+  --       },
+  --     },
+  --   })
+  -- end,
+}
