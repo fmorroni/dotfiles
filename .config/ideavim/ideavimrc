@@ -1,0 +1,68 @@
+let mapleader=" "
+
+""" Plugins  --------------------------------
+" Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'justinmk/vim-sneak'
+Plug 'machakann/vim-highlightedyank'
+
+""" Common settings -------------------------
+set incsearch
+set showmode
+set so=5
+set relativenumber
+set clipboard+=unnamedplus
+set ignorecase
+
+""" Idea specific settings ------------------
+set ideajoin
+
+""" My Mappings -----------------------------
+" map <leader>f <Plug>(easymotion-s)
+" map <leader>e <Plug>(easymotion-f)
+
+map <leader>w <Action>(SaveDocument)
+map <leader>c <Action>(CloseEditor)
+map <leader>ff <Action>(GotoFile)
+map <leader>fg <Action>(TextSearchAction)
+map <leader>lr <Action>(RenameElement)
+map <leader>z <Action>(ToggleDistractionFreeMode)
+map <leader>lk <Action>(GotoPreviousError)
+map <leader>lj <Action>(GotoNextError)
+map <leader>lf <Action>(ReformatCode)
+" map <leader>e <Action>(ActivateProjectToolWindow)
+" map <leader>t <Action>(ActivateProblemsViewToolWindow)
+map gr <Action>(ShowUsages)
+map <leader>o o<esc>
+map <leader>O O<esc>
+nmap <s-l> <Action>(NextTab)
+nmap <s-h> <Action>(PreviousTab)
+map <a-k> <Action>(MoveLineUp)
+map <a-j> <Action>(MoveLineDown)
+map % <Action>(EditorMatchBrace)
+nnoremap <c-p> <c-i>
+nmap <tab> >>
+nmap <s-tab> <<
+vmap <tab> >gv
+vmap <s-tab> <gv
+
+vmap p p:let @+=@0<CR>
+smap p p
+" map <leader>d <Action>(Debug)
+" map <leader>c <Action>(Stop)
+
+" map <leader>s <Action>(SelectInProjectView)
+" map <leader>a <Action>(Annotate)
+" map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
+
+" Reformat the current line only
+
+" map <leader>b <Action>(ToggleLineBreakpoint)
+
+" Toggle case and start typing. E.g. `<leader>iget`: `property` -> `getProperty`
+" map <leader>i ~hi
+" Remove selection and toggle case. E.g. `v2l<leader>u`: `getProperty` -> `property`
+" vmap <leader>u d~h
+
+" I think it's a better solution
+map U <C-R>
