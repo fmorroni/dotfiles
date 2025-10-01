@@ -1,0 +1,12 @@
+#compdef monitor-setup
+
+_monitor_setup_complete() {
+  local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/arandr"
+  
+  # If the directory exists, list its files; otherwise, return nothing
+  if [[ -d "$config_dir" ]]; then
+    _files -W "$config_dir" -/
+  fi
+}
+
+compdef _monitor_setup_complete monitor-setup
