@@ -90,13 +90,22 @@
             ],
             "Enable": true
           },
-          null,
           {
             "Path": "OpenTabletDriver.Desktop.Binding.MultiKeyBinding",
             "Settings": [
               {
                 "Property": "Keys",
-                "Value": "Application+CapsLock"
+                "Value": "Application + Tab"
+              }
+            ],
+            "Enable": true
+          },
+          {
+            "Path": "OpenTabletDriver.Desktop.Binding.MultiKeyBinding",
+            "Settings": [
+              {
+                "Property": "Keys",
+                "Value": "Application + CapsLock"
               }
             ],
             "Enable": true
