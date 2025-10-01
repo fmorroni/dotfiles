@@ -8,6 +8,10 @@ map [normal] <C-h> scroll left
 map [fullscreen] <C-h> scroll left
 map [normal] <C-l> scroll right
 map [fullscreen] <C-l> scroll right
+map [normal] <Space> scroll half-down
+map [fullscreen] <Space> scroll half-down
+map [normal] <S-Space> scroll half-up
+map [fullscreen] <S-Space> scroll half-up
 set selection-clipboard clipboard
 
 
