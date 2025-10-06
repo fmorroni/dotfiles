@@ -1,12 +1,24 @@
 local M = {}
 
-function M.setup(capabilities)
+--- @class SetupArgs
+--- @field capabilities? table
+--- @field on_attach? fun(client: vim.lsp.Client, bufnr: integer)
+
+--- @param args? SetupArgs
+function M.setup(args)
+  args = args or {}
+
+  local capabilities = args.capabilities or {}
+  local on_attach = args.on_attach or function() end
+
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
   local workspace_dir = JoinPath(vim.fn.stdpath("data"), "jdtls-workspace", project_name)
   local packages_dir = JoinPath(vim.fn.stdpath("data"), "mason", "packages", "jdtls")
   local os_config = "linux"
   local extendedClientCapabilities = require('jdtls').extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+
+  ---@type vim.lsp.ClientConfig
   local config = {
     -- The command that starts the language server
     -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
@@ -77,12 +89,12 @@ function M.setup(capabilities)
       -- },
       -- contentProvider = { preferred = "fernflower" },
       extendedClientCapabilities = extendedClientCapabilities,
-      sources = {
-        organizeImports = {
-          starThreshold = 9999,
-          staticStarThreshold = 9999,
-        },
-      },
+      -- sources = {
+      --   organizeImports = {
+      --     starThreshold = 9999,
+      --     staticStarThreshold = 9999,
+      --   },
+      -- },
       -- codeGeneration = {
       --   toString = {
       --     template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
@@ -101,9 +113,10 @@ function M.setup(capabilities)
     -- See https://github.com/mfussenegger/nvim-jdtls#java-debug-installation
     --
     -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
-    init_options = {
-      bundles = {},
-    },
+    -- init_options = {
+    --   bundles = {},
+    -- },
+    on_attach = on_attach,
   }
 
   require("jdtls").start_or_attach(config)
