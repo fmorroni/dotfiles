@@ -40,6 +40,9 @@ extract = [
 imageViewer = [
   { run = 'nomacs "$@"', orphan = true, desc = "Open in nomacs", for = "unix" },
 ]
+logRead = [
+  { run = 'lnav "$@"', block = true, desc = "Open in lnav", for = "unix" },
+]
 lorien = [
   { run = 'lorien "$@"', orphan = true, desc = "Open in Lorien", for = "unix" },
 ]
@@ -70,6 +73,7 @@ xournal = [
 rules = [
 	{ name = "*/",          use = [ "edit", "open", "reveal" ] },
   { name = "*.gif",       use = "play" },
+	{ name = "*.log",       use = "logRead" },
 	{ name = "*.lorien",    use = "lorien" },
 	{ name = "*.xopp",      use = "xournal" },
 	{ name = "*.3mf",       use = "3d-print" },
