@@ -32,47 +32,47 @@ diff = [
 	{ run = '${EDITOR} -d "$@"', desc = "File diff", block = true, for = "unix" },
 ]
 edit = [
-	{ run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
+	{ run = '${EDITOR:=vi} "$@"', desc = "Editor", block = true, for = "unix" },
 ]
 extract = [
 	{ run = 'ya pub extract --list "$@"', desc = "Extract here" },
 ]
 imageViewer = [
-  { run = 'nomacs "$@"', orphan = true, desc = "Open in nomacs", for = "linux" },
+  { run = 'nomacs "$@"', orphan = true, desc = "Open in nomacs", for = "unix" },
 ]
 lorien = [
-  { run = 'lorien "$@"', orphan = true, desc = "Open in Lorien", for = "linux" },
+  { run = 'lorien "$@"', orphan = true, desc = "Open in Lorien", for = "unix" },
 ]
 open = [
-	{ run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
+	{ run = 'xdg-open "$1"',                desc = "Open", for = "unix" },
 	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
 ]
 pdfOpener = [
-  { run = 'zathura "$@"', orphan = true, desc = "Open pdf in zathura", for = "linux" },
+  { run = 'zathura "$@"', orphan = true, desc = "Open pdf in zathura", for = "unix" },
 ]
 play = [
 	{ run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
 	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 reveal = [
-	{ run = 'xdg-open "$(dirname "$1")"',           desc = "Reveal", for = "linux" },
+	{ run = 'xdg-open "$(dirname "$1")"',           desc = "Reveal", for = "unix" },
 	{ run = 'open -R "$1"',                         desc = "Reveal", for = "macos" },
 	{ run = '''clear; exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 xournal = [
-  { run = 'xournalpp "$@"', orphan = true, desc = "Open in Xournal++", for = "linux" },
+  { run = 'xournalpp "$@"', orphan = true, desc = "Open in Xournal++", for = "unix" },
 ]
 3d-print = [
-  { run = 'prusa-slicer "$@"', orphan = true, desc = "Open in Prusa Slicer", for = "linux" },
+  { run = 'prusa-slicer "$@"', orphan = true, desc = "Open in Prusa Slicer", for = "unix" },
 ]
 
 [open]
 rules = [
 	{ name = "*/",          use = [ "edit", "open", "reveal" ] },
+  { name = "*.gif",       use = "play" },
 	{ name = "*.lorien",    use = "lorien" },
 	{ name = "*.xopp",      use = "xournal" },
 	{ name = "*.3mf",       use = "3d-print" },
-	{ name = "*.gif",       use = "play" },
 
 	{ mime = "text/*",  use = [ "edit", "reveal" ] },
 	{ mime = "image/*", use = [ "imageViewer", "open", "reveal" ] },
@@ -202,6 +202,7 @@ shell_offset = [ 0, 2, 50, 3 ]
 
 [confirm]
 # trash
+trash_title 	= "Trash {n} selected file{s}?"
 trash_origin	= "center"
 trash_offset	= [ 0, 0, 70, 20 ]
 
