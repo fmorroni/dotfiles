@@ -12,6 +12,7 @@ return {
     },
     keys = function()
       local builtin = require('telescope.builtin') -- Now loaded only when needed
+      local extensions = require('telescope').extensions
       local grep_hidden = function() builtin.live_grep({ additional_args = { '--hidden' } }) end
       return {
         { '<leader>ff', builtin.find_files,      desc = 'Telescope find files' },
@@ -23,6 +24,7 @@ return {
         { '<leader>fr', builtin.registers,       desc = 'Telescope registers' },
         { '<leader>fc', builtin.command_history, desc = 'Telescope command history' },
         { '<leader>fd', builtin.diagnostics,     desc = 'Telescope diagnostics' },
+        { '<leader>fn', extensions.notify.notify,            desc = 'Telescope notifications' },
       }
     end,
     opts = function()
