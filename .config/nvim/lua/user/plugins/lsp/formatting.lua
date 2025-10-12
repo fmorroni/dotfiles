@@ -1,8 +1,8 @@
 return {
   "stevearc/conform.nvim",
   dependencies = {
-    'mason-org/mason.nvim',
-    'mason-org/mason-lspconfig.nvim',
+    "mason-org/mason.nvim",
+    "mason-org/mason-lspconfig.nvim",
   },
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
@@ -10,9 +10,7 @@ return {
     {
       -- Customize or remove this keymap to your liking
       "<leader>lf",
-      function()
-        require("conform").format({ async = true })
-      end,
+      function() require("conform").format({ async = true }) end,
       mode = "",
       desc = "Format buffer",
     },
@@ -24,7 +22,7 @@ return {
     -- Define your formatters
     formatters_by_ft = {
       lua = { "stylua" },
-      python = { "isort", "black" },
+      -- python = { "isort", "black" },
       javascript = { "prettierd", "prettier", stop_after_first = true },
       typescript = { "prettierd", "prettier", stop_after_first = true },
       typescriptreact = { "prettierd", "prettier", stop_after_first = true },

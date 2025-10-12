@@ -24,7 +24,7 @@ return {
     })
   end,
   keys = {
-    { '<leader>ee', '<CMD>NvimTreeToggle<CR>',   mode = 'n', desc = 'Toggle nvim-tree' },
-    { '<leader>ef', '<CMD>NvimTreeFindFile<CR>', mode = 'n', desc = 'Toggle nvim-tree' },
-  }
+    { "<leader>ee", "<CMD>NvimTreeToggle<CR>", mode = "n", desc = "Toggle nvim-tree" },
+    { "<leader>ef", "<CMD>NvimTreeFindFile<CR>", mode = "n", desc = "Toggle nvim-tree" },
+  },
 }

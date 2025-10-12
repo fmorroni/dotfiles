@@ -1,48 +1,48 @@
 return {
   {
-    'saghen/blink.cmp',
+    "saghen/blink.cmp",
     -- dependencies = { 'rafamadriz/friendly-snippets' },
 
     -- use a release tag to download pre-built binaries
-    version = '*',
+    version = "*",
     dependencies = {
-      { 'L3MON4D3/LuaSnip', version = '*' },
+      { "L3MON4D3/LuaSnip", version = "*" },
     },
 
     opts = {
       keymap = {
-        preset = 'none',
-        ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-        ['<C-e>'] = { 'hide' },
-        ['<CR>'] = { 'select_and_accept', 'fallback' },
-        ['<Tab>'] = { 'select_and_accept', 'fallback' },
-        ['<C-c>'] = { 'cancel', 'fallback' },
+        preset = "none",
+        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<C-e>"] = { "hide" },
+        ["<CR>"] = { "select_and_accept", "fallback" },
+        ["<Tab>"] = { "select_and_accept", "fallback" },
+        ["<C-c>"] = { "cancel", "fallback" },
 
-        ['<Up>'] = { 'select_prev', 'fallback' },
-        ['<Down>'] = { 'select_next', 'fallback' },
-        ['<C-k>'] = { 'select_prev', 'fallback_to_mappings' },
-        ['<C-j>'] = { 'select_next', 'fallback_to_mappings' },
+        ["<Up>"] = { "select_prev", "fallback" },
+        ["<Down>"] = { "select_next", "fallback" },
+        ["<C-k>"] = { "select_prev", "fallback_to_mappings" },
+        ["<C-j>"] = { "select_next", "fallback_to_mappings" },
 
-        ['<A-k>'] = { 'scroll_documentation_up', 'fallback' },
-        ['<A-j>'] = { 'scroll_documentation_down', 'fallback' },
+        ["<A-k>"] = { "scroll_documentation_up", "fallback" },
+        ["<A-j>"] = { "scroll_documentation_down", "fallback" },
 
         -- ['<Tab>'] = { 'snippet_forward', 'fallback' },
         -- ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
 
-        ['<C-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
+        ["<C-s>"] = { "show_signature", "hide_signature", "fallback" },
       },
 
       appearance = {
-        nerd_font_variant = 'mono'
+        nerd_font_variant = "mono",
       },
 
-      snippets = { preset = 'luasnip' },
+      snippets = { preset = "luasnip" },
       sources = {
         default = { "snippets", "lsp", "path", "buffer" },
         per_filetype = {
-          sql = { 'snippets', 'dadbod', 'buffer' },
-          mysql = { 'snippets', 'dadbod', 'buffer' },
-          postgres = { 'snippets', 'dadbod', 'buffer' },
+          sql = { "snippets", "dadbod", "buffer" },
+          mysql = { "snippets", "dadbod", "buffer" },
+          postgres = { "snippets", "dadbod", "buffer" },
           lua = { "lazydev", "snippets", "lsp", "path", "buffer" },
         },
         providers = {
@@ -70,13 +70,13 @@ return {
           -- nvim-cmp style menu
           draw = {
             columns = {
-              { "label",      "label_description", gap = 1 },
+              { "label", "label_description", gap = 1 },
               { "source_name" },
-              { "kind_icon",  "kind",              gap = 1 }
+              { "kind_icon", "kind", gap = 1 },
             },
-          }
+          },
         },
-      }
+      },
     },
-  }
+  },
 }

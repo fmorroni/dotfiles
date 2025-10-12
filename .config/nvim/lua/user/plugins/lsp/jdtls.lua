@@ -15,7 +15,7 @@ function M.setup(args)
   local workspace_dir = JoinPath(vim.fn.stdpath("data"), "jdtls-workspace", project_name)
   local packages_dir = JoinPath(vim.fn.stdpath("data"), "mason", "packages", "jdtls")
   local os_config = "linux"
-  local extendedClientCapabilities = require('jdtls').extendedClientCapabilities
+  local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
   extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
   ---@type vim.lsp.ClientConfig
@@ -50,7 +50,7 @@ function M.setup(args)
     },
     capabilities = capabilities,
     -- One dedicated LSP server & client will be started per unique root_dir
-    root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml", }),
+    root_dir = vim.fs.root(0, { ".git", "mvnw", "gradlew", "pom.xml" }),
 
     -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
     -- for a list of options

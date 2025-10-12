@@ -8,7 +8,7 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     keys = {
-      { "<leader>nn", "<CMD>Navbuddy<CR>", desc = "Open navbuddy" }
+      { "<leader>nn", "<CMD>Navbuddy<CR>", desc = "Open navbuddy" },
     },
-  }
+  },
 }

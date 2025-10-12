@@ -1,37 +1,37 @@
 return {
   {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons',
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
       {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-      }
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+      },
     },
     keys = function()
-      local builtin = require('telescope.builtin') -- Now loaded only when needed
-      local extensions = require('telescope').extensions
-      local grep_hidden = function() builtin.live_grep({ additional_args = { '--hidden' } }) end
+      local builtin = require("telescope.builtin") -- Now loaded only when needed
+      local extensions = require("telescope").extensions
+      local grep_hidden = function() builtin.live_grep({ additional_args = { "--hidden" } }) end
       return {
-        { '<leader>ff', builtin.find_files,      desc = 'Telescope find files' },
-        { '<leader>fg', builtin.live_grep,       desc = 'Telescope live grep' },
-        { '<leader>fa', grep_hidden,             desc = 'Telescope live grep including hidden files' },
-        { '<leader>fb', builtin.buffers,         desc = 'Telescope buffers' },
-        { '<leader>fh', builtin.help_tags,       desc = 'Telescope help tags' },
-        { '<leader>fw', builtin.grep_string,     desc = 'Telescope find word' },
-        { '<leader>fr', builtin.registers,       desc = 'Telescope registers' },
-        { '<leader>fc', builtin.command_history, desc = 'Telescope command history' },
-        { '<leader>fd', builtin.diagnostics,     desc = 'Telescope diagnostics' },
-        { '<leader>fn', extensions.notify.notify,            desc = 'Telescope notifications' },
+        { "<leader>ff", builtin.find_files, desc = "Telescope find files" },
+        { "<leader>fg", builtin.live_grep, desc = "Telescope live grep" },
+        { "<leader>fa", grep_hidden, desc = "Telescope live grep including hidden files" },
+        { "<leader>fb", builtin.buffers, desc = "Telescope buffers" },
+        { "<leader>fh", builtin.help_tags, desc = "Telescope help tags" },
+        { "<leader>fw", builtin.grep_string, desc = "Telescope find word" },
+        { "<leader>fr", builtin.registers, desc = "Telescope registers" },
+        { "<leader>fc", builtin.command_history, desc = "Telescope command history" },
+        { "<leader>fd", builtin.diagnostics, desc = "Telescope diagnostics" },
+        { "<leader>fn", extensions.notify.notify, desc = "Telescope notifications" },
       }
     end,
     opts = function()
-      local actions = require('telescope.actions')
-      local actions_layout = require('telescope.actions.layout')
-      local actions_state = require('telescope.actions.state')
-      local builtin = require('telescope.builtin') -- Now loaded only when needed
+      local actions = require("telescope.actions")
+      local actions_layout = require("telescope.actions.layout")
+      local actions_state = require("telescope.actions.state")
+      local builtin = require("telescope.builtin") -- Now loaded only when needed
 
       local find_files_current_line = function(opts)
         opts = opts or {}

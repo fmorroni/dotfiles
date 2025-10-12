@@ -10,7 +10,7 @@ return {
       ["ac"] = "@class.outer",
       ["ic"] = "@class.inner",
       -- You can also use captures from other query groups like `:TSEditQuery locals`
-      ["as"] = { "@scope", query_group = "locals", desc = "Select language scope" }
+      ["as"] = { "@scope", query_group = "locals", desc = "Select language scope" },
     },
     -- selection_modes = {
     --   ['@parameter.outer'] = 'v', -- charwise
@@ -28,7 +28,7 @@ return {
 
     -- end,
     enable = true,
-    set_jumps = true,       -- whether to set jumps in the jumplist
+    set_jumps = true, -- whether to set jumps in the jumplist
     goto_next_start = {
       ["]f"] = "@function.outer",
       ["]c"] = "@class.outer",

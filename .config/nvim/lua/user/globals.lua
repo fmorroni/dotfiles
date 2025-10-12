@@ -15,7 +15,6 @@ local function LogNewBuf(lines)
   vim.api.nvim_set_current_buf(buf)
 end
 
-
 LogObj = function(obj)
   local lines = {}
   for line in vim.inspect(obj):gmatch("([^\n]*)\n?") do

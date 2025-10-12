@@ -57,7 +57,7 @@ vim.opt.undofile = true
 vim.opt.virtualedit = "block"
 
 -- Can increment letters.
-vim.opt.nrformats:append('alpha')
+vim.opt.nrformats:append("alpha")
 
 -- Add code breadcrumbs to winbar.
 vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"

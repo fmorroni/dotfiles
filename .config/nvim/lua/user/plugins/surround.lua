@@ -13,7 +13,7 @@ return {
         visual_line = "gQ",
         delete = "dq",
         change = "cq",
-      }
+      },
     },
-  }
+  },
 }

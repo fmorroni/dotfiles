@@ -1,1 +1,1 @@
-require('luasnip').filetype_extend("cpp", { "c" })
+require("luasnip").filetype_extend("cpp", { "c" })

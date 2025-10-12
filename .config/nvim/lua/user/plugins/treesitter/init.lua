@@ -4,9 +4,23 @@ return {
     build = ":TSUpdate",
     opts = {
       ensure_installed = {
-        "bash", "c", "diff", "html", "java", "javascript", "lua", "make",
-        "printf", "python", "regex", "rust", "sql", "toml",
-        "typescript", "xml", "yaml",
+        "bash",
+        "c",
+        "diff",
+        "html",
+        "java",
+        "javascript",
+        "lua",
+        "make",
+        "printf",
+        "python",
+        "regex",
+        "rust",
+        "sql",
+        "toml",
+        "typescript",
+        "xml",
+        "yaml",
       },
       sync_install = false,
       highlight = { enable = true },
@@ -24,9 +38,7 @@ return {
       textobjects = require("user.plugins.treesitter.textobjects"),
     },
     ---@param opts TSConfig
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end
+    config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
   },
   "nvim-treesitter/nvim-treesitter-textobjects",
 }

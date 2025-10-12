@@ -4,7 +4,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
     keys = {
-      { '<leader>ft', '<CMD>TodoTelescope<CR>', desc = 'Find TODO comments' },
+      { "<leader>ft", "<CMD>TodoTelescope<CR>", desc = "Find TODO comments" },
     },
-  }
+  },
 }
