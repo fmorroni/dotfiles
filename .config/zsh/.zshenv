@@ -1,15 +1,12 @@
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zsh/starship.toml"
 
 export PNPM_HOME="$HOME/.local/share/pnpm"
-# export PATH="$(pnpm root -g)/.bin:$PATH"
 
 export ANDROID_HOME="$HOME/lib/android/sdk"
 export ANDROID_SDK_HOME="$ANDROID_HOME"
-export ANDROID_TOOLS_PATHS="$ANDROID_SDK_HOME/cmdline-tools/latest/bin"
 export ANDROID_AVD_HOME="$ANDROID_SDK_HOME/avd"
+export ANDROID_TOOLS_PATHS="$ANDROID_SDK_HOME/cmdline-tools/latest/bin"
 
-export PATH="$ANDROID_TOOLS_PATHS:$PNPM_HOME:$HOME/scripts/bin:$PATH"
-# export PATH="./:$PATH" # Works but no autocomplete
 fpath+="$XDG_CONFIG_HOME/zsh/completions"
 
 export EDITOR=nvim
