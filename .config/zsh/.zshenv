@@ -1,5 +1,11 @@
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zsh/starship.toml"
 
+# Rust
+
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+
+# Js
 export PNPM_HOME="$HOME/.local/share/pnpm"
 
 export ANDROID_HOME="$HOME/lib/android/sdk"

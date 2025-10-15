@@ -60,3 +60,9 @@ ZSH_HIGHLIGHT_STYLES[alias]='fg=#00c3ff'
 ZSH_HIGHLIGHT_STYLES[comment]='fg=#8f8d8d'
 
 eval "$(zoxide init zsh)"
+
+# Ruby
+source "/usr/share/chruby/chruby.sh"
+RUBIES+=(
+  $XDG_DATA_HOME/rubies/*(/)
+)
