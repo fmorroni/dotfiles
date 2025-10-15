@@ -6,7 +6,6 @@ alias cd='push_dir'
 alias ls='ls --color=auto'
 alias la='ls -lAh'
 alias grep='grep --color=auto'
-alias battery='cat /sys/class/power_supply/BAT0/capacity'
 alias pacinstall='doas pacman -Syu'
 alias pacsearch='pacman -Ss'
 alias pacnamesearch="pacman -Sl | cut -d' ' -f2- | rg"
