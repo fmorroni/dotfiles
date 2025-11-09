@@ -46,13 +46,15 @@ plug "$HOME/.config/zsh/directory_history.zsh"
 #   alias catt="bat --theme \"Visual Studio Dark+\"" 
 # fi
 
+# TODO: remove. Using user service now.
+#
 # Start ssh-agent
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
-    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-fi
+# if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+#     ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+# fi
+# if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
+#     source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+# fi
 
 # Syntax highlighting customization
 typeset -A ZSH_HIGHLIGHT_STYLES

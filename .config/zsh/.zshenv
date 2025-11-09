@@ -1,3 +1,5 @@
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zsh/starship.toml"
 
 # Rust
