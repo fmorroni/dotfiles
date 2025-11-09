@@ -1,7 +1,8 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    branch = "master",
+    -- branch = "master",
+    tag = "v0.1.9",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
@@ -72,6 +73,14 @@ return {
         end
       end
 
+      local picker_defaults = {
+        path_display = {
+          filename_first = {
+            reverse_directories = true,
+          },
+        },
+      }
+
       return {
         defaults = {
           mappings = {
@@ -102,6 +111,13 @@ return {
               ["dd"] = actions.delete_buffer,
             },
           },
+        },
+        pickers = {
+          find_files = picker_defaults,
+          live_grep = picker_defaults,
+          buffers = picker_defaults,
+          diagnostics = picker_defaults,
+          grep_string = picker_defaults,
         },
       }
     end,
