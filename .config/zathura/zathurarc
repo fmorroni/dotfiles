@@ -12,6 +12,8 @@ map [normal] <Space> scroll half-down
 map [fullscreen] <Space> scroll half-down
 map [normal] <S-Space> scroll half-up
 map [fullscreen] <S-Space> scroll half-up
+map [normal] = zoom in
+map [fullscreen] = zoom in
 set selection-clipboard clipboard
 
 
