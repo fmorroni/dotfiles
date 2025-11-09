@@ -68,3 +68,7 @@ source "/usr/share/chruby/chruby.sh"
 RUBIES+=(
   $XDG_DATA_HOME/rubies/*(/)
 )
+
+# TODO: remove when it gets fixed upstream https://github.com/andreafrancia/trash-cli/issues/338
+compdef _gnu_generic trash
+compdef _gnu_generic trash-put
