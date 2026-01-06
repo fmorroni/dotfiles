@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-image=/usr/share/wallpapers/arch2.jpg
+image=~/Pictures/wallpapers/arch2.png
 
 # line position (from center)
 P=0
@@ -8,6 +8,7 @@ P=0
 i3lock \
     --color=282828 \
     --image="$image" \
+    --fill \
     --inside-color=282828FF \
     --insidever-color=282828FF \
     --insidewrong-color=282828FF \
