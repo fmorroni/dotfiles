@@ -46,6 +46,9 @@ return {
           lua = { "lazydev", "snippets", "lsp", "path", "buffer" },
         },
         providers = {
+          -- By default, the buffer source will only show when the LSP source is disabled or returns no items.
+          -- See: https://cmp.saghen.dev/configuration/sources.html#show-buffer-completions-with-lsp
+          lsp = { fallbacks = {} },
           lazydev = {
             name = "LazyDev",
             module = "lazydev.integrations.blink",
