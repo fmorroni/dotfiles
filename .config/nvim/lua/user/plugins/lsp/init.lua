@@ -1,3 +1,17 @@
+local default_on_attach = function(client, bufnr)
+  if client.server_capabilities.documentSymbolProvider then
+    require("nvim-navic").attach(client, bufnr)
+    require("nvim-navbuddy").attach(client, bufnr)
+  end
+end
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    default_on_attach(client, ev.buf)
+  end,
+})
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -7,32 +21,25 @@ return {
     },
     config = function()
       local default_capabilities = require("blink.cmp").get_lsp_capabilities()
-      local default_on_attach = function(client, bufnr)
-        if client.server_capabilities.documentSymbolProvider then
-          require("nvim-navic").attach(client, bufnr)
-          require("nvim-navbuddy").attach(client, bufnr)
-        end
-      end
 
+      -- NOTE: setting `on_attach` here is basically useless when using nvim-lspconfig as
+      -- most if not all configs there already set `on_attach`, and that one will be used instead
+      -- of `default_on_attach` because it has more priority. This may change if the proposal
+      -- on [this commit](https://github.com/neovim/neovim/issues/33577) gets implemented.
+      -- For now `on_attach` will be set instead using the `LspAttach` autocmd.
+      -- Also, most configs also set `root_dir` so the `root_markers` gets ignored.
       vim.lsp.config("*", {
         root_markers = { ".git" },
-      })
-
-      vim.lsp.config("*", {
         capabilities = default_capabilities,
-        on_attach = default_on_attach,
+        -- on_attach = default_on_attach,
       })
 
       vim.lsp.config("clangd", {
         filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }, -- exclude "proto".
       })
 
-      -- I had to add `capabilities` and `on_attach` again here because for some reason it didn't use the
-      -- ones configured with wildcard...
       -- TODO: Check what should be disabled in order for ruff and basedpyright to work correctly together
       vim.lsp.config("basedpyright", {
-        capabilities = default_capabilities,
-        on_attach = default_on_attach,
         settings = {
           basedpyright = {
             -- allowedUntypedLibraries = { "matplotlib" },
@@ -41,40 +48,24 @@ return {
         },
       })
 
+      -- HACK: I use `root_dir` here instead of `root_markers` because the nvim-lspconfig config
+      -- for `denols` already sets `root_dir` and there isn't a way to disable it from here yet.
       vim.lsp.config("denols", {
-        root_markers = { "deno.json" },
+        root_dir = function(bufnr, on_dir)
+          local root_markers = { "deno.json" }
+          local project_root = vim.fs.root(bufnr, root_markers)
+          if project_root then on_dir(project_root) end
+        end,
         workspace_required = true,
       })
+
       -- INFO: `ts_ls` includes a `root_dir` function in nvim-lspconfig which overrides `root_markers`,
       -- but as of the lastest nvim-lspconfig version deno.json and deno.lock are excluded from matching
       -- so it's not necessary to set it up manually.
-      -- vim.lsp.config("ts_ls", {
-      --   root_markers = { "tsconfig.json" },
-      --   workspace_required = true,
-      -- })
-
-      -- INFO: nvm, actually doesn't really work. It works if I reinstall them every time I change ruby version,
-      -- which sucks... But I'm not planning on changing versions oftem so good enough for now.
-      -- -- WARNING: this is a hack to make it work. Make an issue on mason gh so they fix it.
-      -- -- Also see: https://github.com/mason-org/mason.nvim/pull/1894 and https://github.com/mason-org/mason.nvim/issues/1292
-      -- vim.lsp.config("solargraph", {
-      --   cmd = {
-      --     "/usr/bin/chruby-exec",
-      --     "ruby-3.4.7",
-      --     "--",
-      --     "solargraph",
-      --     "stdio",
-      --   },
-      -- })
-      -- vim.lsp.config("rubocop", {
-      --   cmd = {
-      --     "/usr/bin/chruby-exec",
-      --     "ruby-3.4.7",
-      --     "--",
-      --     "rubocop",
-      --     "stdio",
-      --   },
-      -- })
+      vim.lsp.config("ts_ls", {
+        -- root_markers = { "tsconfig.json" },
+        workspace_required = false,
+      })
 
       require("user.plugins.lsp.keymaps")
     end,
