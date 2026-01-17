@@ -1,7 +1,8 @@
 [user]
 	name = Franco Morroni
-	mail = fmorroni99@gmail.com
-	email = fmorroni99@gmail.com
+	mail = fmorroni@fu.do
+	email = fmorroni@fu.do
+	signingkey = 260FFCAA9EF86C78
 [init]
 	defaultBranch = main
 [filter "lfs"]
