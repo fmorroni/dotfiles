@@ -1,219 +1,72 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 format = """
-$os\
-[\uE0B0](fg:bar_one bg:bar_two)\
-$custom$directory\
-[\uE0B0](fg:bar_two bg:bar_three)\
+[░▒▓](#a3aed2)\
+[  ](bg:#a3aed2 fg:#090c0c)\
+[](bg:#769ff0 fg:#a3aed2)\
+$directory\
+[](fg:#769ff0 bg:#394260)\
 $git_branch\
 $git_status\
-[\uE0B0](fg:bar_three bg:bar_four)\
-$c\
-$dart\
-$elixir\
-$elm\
-$golang\
-$haskell\
-$java\
-$julia\
-$lua\
-$nodejs\
-$nim\
-$php\
-$python\
-$rlang\
+[](fg:#394260 bg:#212736)\
 $ruby\
+$nodejs\
 $rust\
-$scala\
-[\uE0B0](fg:bar_four)\
-$character\
-"""
-
-right_format = """
-[\uE0B2](fg:bar_three)\
+$golang\
+$php\
+[](fg:#212736 bg:#1d2230)\
 $time\
-"""
-
-palette = 'theme'
-
-[character]
-success_symbol = " " #"[❯](bold green)"
-error_symbol = "[!](bold yellow)"
-vimcmd_symbol = " " #"[❯](bold white)"
-
-# Defines the colour palette for the theme
-[palettes.theme]
-bar_one = '#C0CAF5'
-bar_two = '#6992D7'
-bar_three = '#394260'
-bar_four = '#212736'
-bar_five = '#1D2230'
-bar_char = 'green'
-text_one = '#090C0C'
-text_two = '#EEEEEE'
-text_three = '#A3AED2'
-
-[os]
-style = 'bg:bar_one fg:text_one'
-format = '[ $symbol ]($style)'
-disabled = false
-
-[os.symbols]
-Alpine = ''
-Amazon = ''
-Android = ''
-Arch = ''
-CentOS = ''
-Debian = ''
-DragonFly = ''
-Emscripten = ''
-EndeavourOS = ''
-Fedora = ''
-FreeBSD = ''
-Garuda = '﯑'
-Gentoo = ''
-HardenedBSD = 'ﲊ'
-Illumos = ''
-Linux = "\uE712"
-Macos = "\uE711"
-Manjaro = ''
-Mariner = ''
-MidnightBSD = ''
-Mint = ''
-NetBSD = ''
-NixOS = ''
-OpenBSD = ''
-openSUSE = ''
-OracleLinux = ''
-Pop = ''
-Raspbian = ''
-Redhat = "\uE7BB"
-RedHatEnterprise = "\uE7BB"
-Redox = ''
-Solus = 'ﴱ'
-SUSE = ''
-Ubuntu = ''
-Unknown = ''
-Windows = ''
+[ ](fg:#1d2230)\
+\n$character"""
 
 [directory]
-truncation_length = 1
-truncation_symbol = '.../'
-truncate_to_repo = false
-fish_style_pwd_dir_length = 1
-style = 'bold fg:text_two bg:bar_two'
-format = '[ $path ]($style)'
-
-[custom.home]
-when = ''' test '$HOME' = '$PWD' '''
-style = 'bold fg:text_two bg:bar_two'
-symbol = ' '
-
-[custom.folder]
-when = ''' test '$HOME' != '$PWD' '''
-style = 'bold fg:text_two bg:bar_two'
-symbol = ' '
+style = "fg:#e3e5e5 bg:#769ff0"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
 
 [directory.substitutions]
-'Documents' = ' '
-'Downloads' = ' '
-'Music' = ' '
-'Pictures' = ' '
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
 
 [git_branch]
-symbol = ' '
-style = 'fg:text_three bg:bar_three'
-format = '[ $symbol $branch ]($style)'
+symbol = ""
+style = "bg:#394260"
+format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
 
 [git_status]
-style = 'fg:text_three bg:bar_three'
-format = '[$all_status$ahead_behind ]($style)'
-
-[c]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[dart]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[elixir]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[elm]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[golang]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[haskell]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[java]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[julia]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[lua]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[nodejs]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[nim]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[php]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[python]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
-
-[rlang]
-symbol = 'ﳒ '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
+style = "bg:#394260"
+format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
 
 [ruby]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
+symbol = " "
+style = "bg:#212736"
+format = "[[ $symbol ](fg:#769ff0 bg:#212736)]($style)"
+
+[nodejs]
+symbol = ""
+style = "bg:#212736"
+format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)"
 
 [rust]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
+symbol = ""
+style = "bg:#212736"
+format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)"
 
-[scala]
-symbol = ' '
-style = 'fg:text_three bg:bar_four'
-format = '[ $symbol ($version) ]($style)'
+[golang]
+symbol = ""
+style = "bg:#212736"
+format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)"
+
+[php]
+symbol = ""
+style = "bg:#212736"
+format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)"
 
 [time]
 disabled = false
-time_format = '%R' # Hour:Minute Format
-style = 'fg:text_three bg:bar_three'
-format = '[   $time ]($style)'
+time_format = "%R" # Hour:Minute Format
+style = "bg:#1d2230"
+format = "[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)"
