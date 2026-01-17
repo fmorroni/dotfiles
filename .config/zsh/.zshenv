@@ -24,3 +24,7 @@ export MNT_DIR="$HOME/mnt/"
 
 # For use in psql
 export PAGER="less -S"
+
+# FUDO
+export GEM_SERVER="http://127.0.0.1:9200"
+export RUBYGEMS_GEMDEPS=-

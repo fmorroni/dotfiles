@@ -64,11 +64,20 @@ ZSH_HIGHLIGHT_STYLES[comment]='fg=#8f8d8d'
 eval "$(zoxide init zsh)"
 
 # Ruby
-source "/usr/share/chruby/chruby.sh"
-RUBIES+=(
-  $XDG_DATA_HOME/rubies/*(/)
-)
+# source "/usr/share/chruby/chruby.sh"
+# RUBIES+=(
+#   $XDG_DATA_HOME/rubies/*(/)
+# )
 
 # TODO: remove when it gets fixed upstream https://github.com/andreafrancia/trash-cli/issues/338
 compdef _gnu_generic trash
 compdef _gnu_generic trash-put
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/franco/programs/google-cloud-sdk/path.zsh.inc' ]; then . '/home/franco/programs/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/franco/programs/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/franco/programs/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Added by `rbenv init` on Tue Jan  6 03:21:38 PM -03 2026
+eval "$(rbenv init - --no-rehash zsh)"
