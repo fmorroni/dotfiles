@@ -66,6 +66,43 @@ return {
         -- root_markers = { "tsconfig.json" },
         workspace_required = false,
       })
+      -- vim.lsp.config("ts_ls", {
+      --   root_markers = { "tsconfig.json" },
+      --   workspace_required = true,
+      -- })
+
+      -- NOTE: must install rubocop with `gem`
+      vim.lsp.enable('rubocop')
+      vim.lsp.config['rubocop'] = {
+        capabilities = default_capabilities,
+        cmd = { "rubocop", "--lsp" },
+        filetypes = { "ruby" },
+        root_markers = { "Gemfile", ".ruby-version", ".git" },
+        workspace_required = true,
+      }
+
+      -- NOTE: must install solargraph with `gem`
+      vim.lsp.enable('solargraph')
+      vim.lsp.config('solargraph', {
+        capabilities = default_capabilities,
+        cmd = { "env", "BUNDLE_GEMFILE=~/.rbenv/Gemfile", "solargraph", "stdio" },
+        filetypes = { "ruby" },
+        root_markers = { "Gemfile", ".ruby-version", ".git" },
+        workspace_required = true,
+        init_options = { formatting = true },
+        settings = {
+          solargraph = {
+            autoformat = false,
+            formatting = false,
+            completion = true,
+            diagnostic = true,
+            folding = true,
+            references = true,
+            rename = true,
+            symbols = true
+          }
+        }
+      })
 
       require("user.plugins.lsp.keymaps")
     end,
