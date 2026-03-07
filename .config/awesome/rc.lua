@@ -544,17 +544,40 @@ for i, entry in ipairs(number_keys) do
         end
       end,
       { description = ": Move focused client to tag #" .. k, group = "tag" }),
-    -- Toggle tag on focused client.
+    -- -- Toggle focused client on tag.
+    -- awful.key({ modkey, ctrlKey, shiftKey }, "#" .. code,
+    --   function()
+    --     if client.focus then
+    --       local tag = client.focus.screen.tags[i]
+    --       if tag then
+    --         client.focus:toggle_tag(tag)
+    --       end
+    --     end
+    --   end,
+    --   { description = ": Toggle focused client on tag #" .. k, group = "tag" }),
+    -- Swap tags.
     awful.key({ modkey, ctrlKey, shiftKey }, "#" .. code,
       function()
-        if client.focus then
-          local tag = client.focus.screen.tags[i]
-          if tag then
-            client.focus:toggle_tag(tag)
-          end
-        end
+        -- local tag_to_obj = function(tag)
+        --   return {
+        --     name = tag.name,
+        --     selected = tag.selected,
+        --     activated = tag.activated,
+        --     index = tag.index,
+        --     screen = tag.screen.index
+        --   }
+        -- end
+        local this = awful.screen.focused().selected_tag
+        local other = awful.tag.find_by_name(awful.screen.focused(), tostring(k))
+        if this == other then return end
+        local thisName = this.name
+        this.name = other.name
+        other.name = thisName
+        this:swap(other)
+        -- helpers.debug_print(tag_to_obj(this), "this")
+        -- helpers.debug_print(tag_to_obj(other), "other")
       end,
-      { description = ": Toggle focused client on tag #" .. k, group = "tag" })
+      { description = ": Swap focused tag with the specified by name", group = "tag" })
   )
 end
 
