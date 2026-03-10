@@ -8,7 +8,7 @@ alias la='ls -lAh'
 alias grep='grep --color=auto'
 alias pacinstall='doas pacman -Syu'
 alias pacsearch='pacman -Ss'
-alias pacnamesearch="pacman -Sl | cut -d' ' -f2- | rg"
+# alias pacnamesearch="pacman -Sl | cut -d' ' -f2- | rg"
 alias yaynamesearch="yay -Sl | cut -d' ' -f2- | rg"
 alias yay="yay --aur"
 alias paccacheclear="paccache -rk1; paccache -ruk0; yay -Sc"
@@ -44,3 +44,4 @@ alias npm='echo "Use pnpm!!!"'
 alias pcalc='pcalc --colors'
 alias less='less -FIRX'
 alias aft-mtp-unmount='fusermount -u'
+alias screen-filter='xrandr --output eDP --brightness'

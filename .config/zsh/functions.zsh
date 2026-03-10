@@ -248,3 +248,7 @@ open-terminal-in-cwd() {
   nohup kitty >/dev/null 2>/dev/null &!
 }
 zle -N open-terminal-in-cwd
+
+pacnamesearch() {
+  pacman -Ss "$1" | rg "^\S+\b$1\b" -A 1
+}
