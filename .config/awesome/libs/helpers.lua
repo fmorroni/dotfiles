@@ -9,7 +9,40 @@ function helpers.debug_print(object, title)
     timeout = 0,
     max_height = 1000,
     ontop = true,
-    position = 'top_left' })
+    position = 'top_left'
+  })
+end
+
+-- Write debug info to a file (useful for large objects)
+function helpers.debug_to_file(object, opts)
+  opts = opts or {}
+
+  local path = opts.path or "/tmp/awesome_debug.log"
+  local title = opts.title or "debug"
+  local append = opts.append ~= false
+
+  local mode = append and "a" or "w"
+  local f, err = io.open(path, mode)
+
+  if not f then
+    naughty.notify({
+      title = "debug_to_file error",
+      text = err
+    })
+    return
+  end
+
+  local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+
+  f:write(string.format(
+    "\n[%s] %s\n%s\n",
+    timestamp,
+    title,
+    inspect(object)
+  ))
+
+  f:close()
+  return path
 end
 
 -- Pass as callback to spawn.easy_async
