@@ -6,12 +6,12 @@
 
 --]]
 
-local helpers = require("lain.helpers")
-local shell   = require("awful.util").shell
-local wibox   = require("wibox")
-local string  = string
-local naughty = require("naughty")
-local focused = require("awful.screen").focused
+local helpers    = require("lain.helpers")
+local shell      = require("awful.util").shell
+local wibox      = require("wibox")
+local string     = string
+local naughty    = require("naughty")
+local focused    = require("awful.screen").focused
 
 -- ALSA volume
 -- lain.widget.alsa
@@ -55,19 +55,29 @@ local function factory(args)
   end
 
   -- local inspect = require('libs.inspect')
-  function alsa.show(seconds, scr)
+  function alsa.show(seconds, screen)
     alsa.hide()
-    alsa.update()
-    alsa.sinks_update(function()
-      alsa.notification_preset.screen = alsa.followtag and focused() or scr or 1
-      alsa.notification = naughty.notify {
-        preset  = alsa.notification_preset,
-        timeout = type(seconds) == "number" and seconds or 5
-      }
+    alsa.update(seconds, screen)
+  end
+
+  function alsa.update(seconds, screen)
+    alsa.update_volume_level()
+    alsa.sinks_update(function(notification_text)
+      alsa.notification_preset.screen = alsa.followtag and focused() or screen or 1
+      if not alsa.notification then
+        alsa.notification = naughty.notify {
+          preset  = alsa.notification_preset,
+          timeout = type(seconds) == "number" and seconds or 5,
+          text    = notification_text,
+        }
+      else
+        alsa.notification.textbox:set_text(notification_text)
+        alsa.notification.timer:again()
+      end
     end)
   end
 
-  function alsa.update()
+  function alsa.update_volume_level()
     helpers.async(format_cmd, function(mixer)
       local l, s = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
       l = tonumber(l)
@@ -87,7 +97,7 @@ local function factory(args)
       helpers.async(ScriptsDir .. "sink_info",
         function(sink_info)
           local i = 1
-          alsa.notification_preset.text = ''
+          local noti_text = ''
           for line in sink_info:gmatch("[^\n]+") do
             local idx, name, description = line:match("([^,]+),([^,]+),([^,]+)")
             local default = (name == default_sink_name)
@@ -98,32 +108,32 @@ local function factory(args)
             end
             i = i + 1
             local sink_str = string.format("%s\t%s", (default) and "(•)" or "", description)
-            alsa.notification_preset.text = alsa.notification_preset.text .. sink_str .. "\n"
+            noti_text = noti_text .. sink_str .. "\n"
           end
-          if callback then callback() end
+          if callback then callback(noti_text) end
         end)
     end)
   end
 
-  local function select_sink(idx, callback)
-    helpers.async("pactl set-default-sink " .. idx, callback)
+  local function select_sink(idx)
+    helpers.async("pactl set-default-sink " .. idx, function() end)
   end
 
   function alsa.select_next_sink()
     local i = (alsa.sink_selected % #alsa.sinks_info) + 1
-    select_sink(alsa.sinks_info[i].idx, function() end)
-    alsa.show(0)
+    select_sink(alsa.sinks_info[i].idx)
+    alsa.update()
   end
 
   function alsa.select_prev_sink()
     local i = (alsa.sink_selected - 2 + #alsa.sinks_info) % #alsa.sinks_info + 1
-    select_sink(alsa.sinks_info[i].idx, function() end)
-    alsa.show(0)
+    select_sink(alsa.sinks_info[i].idx)
+    alsa.update()
   end
 
   alsa.widget:connect_signal('mouse::enter', function() alsa.show() end)
   alsa.widget:connect_signal('mouse::leave', function() alsa.hide() end)
-  helpers.newtimer(string.format("alsa-%s-%s", alsa.cmd, alsa.channel), timeout, alsa.update)
+  helpers.newtimer(string.format("alsa-%s-%s", alsa.cmd, alsa.channel), timeout, alsa.update_volume_level)
 
   return alsa
 end
