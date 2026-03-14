@@ -683,4 +683,18 @@ client.connect_signal("unmanage", backham)
 -- ensure there is always a selected client during tag switching or logins
 tag.connect_signal("property::selected", backham)
 
+tag.connect_signal("request::screen", function(t)
+  for s in screen do
+    if s ~= t.screen then
+      local t2 = awful.tag.find_by_name(s, t.name)
+      if t2 then
+        t2:clients(gears.table.join(t2:clients(), t:clients()))
+      else
+        t.screen = s
+      end
+      return
+    end
+  end
+end)
+
 -- }}}
