@@ -1,4 +1,8 @@
 #!/bin/sh
 
 pactl -f json list sinks |
-  jq -r '.[] | select(.ports[]?.availability=="available") | "\(.index),\(.name),\(.description)"'
+  jq -r '
+    .[] |
+    select(any(.ports[]?; .availability == "available" or .availability == "availability unknown")) |
+    "\(.index),\(.name),\(.description)"
+  '
