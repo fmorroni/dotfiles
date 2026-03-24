@@ -27,7 +27,7 @@ local function factory(args)
   alsa.togglechannel       = args.togglechannel
   alsa.notification_preset = args.notification_preset
   alsa.sinks_info          = {}
-  alsa.sink_selected       = nil
+  alsa.sink_selected       = 0
 
   if not alsa.notification_preset then
     alsa.notification_preset = {
