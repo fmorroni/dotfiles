@@ -21,3 +21,10 @@
 	tree = log --color --oneline --graph --decorate --all
 [core]
 	hooksPath = /home/franco/.config/git/hooks
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+[merge]
+	conflictStyle = zdiff3
