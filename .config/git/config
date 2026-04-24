@@ -21,6 +21,7 @@
 	tree = log --color --oneline --graph --decorate --all
 [core]
 	hooksPath = /home/franco/.config/git/hooks
+	excludesfile = /home/franco/.gitignore.global
 	pager = delta
 [interactive]
 	diffFilter = delta --color-only
