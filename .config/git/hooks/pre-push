@@ -21,6 +21,11 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
 			echo -e "\e[31mPlease squash or autosquash before pushing.\e[0m"
 			exit 1
 		fi
+
+		if [[ "$message" == wip!* ]]; then
+			echo -e "\e[31mError - wip commit pending: \e[46m\e[31m$message\e[0m"
+			exit 1
+		fi
 	done
 done
 
