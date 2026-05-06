@@ -1,9 +1,9 @@
 return {
   {
-    -- "fmorroni/peek.nvim",
+    "fmorroni/peek.nvim",
     -- dev = true,
-    -- branch = "my-main",
-    dir = "~/repos/peek.nvim",
+    branch = "my-main",
+    -- dir = "~/repos/peek.nvim",
     ft = { "md" },
     event = { "VeryLazy" },
     build = "deno task --quiet build:fast",
