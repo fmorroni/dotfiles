@@ -1,14 +1,19 @@
 return {
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = {
-  --     diagnostics = {
-  --       float = {
-  --         border = "rounded",
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        rubocop = {
+          mason = false,
+          enabled = true,
+        },
+        solargraph = {
+          mason = false,
+          enabled = true,
+        },
+      },
+    },
+  },
   {
     "folke/noice.nvim",
     opts = {
