@@ -1,0 +1,28 @@
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+
+local map = vim.keymap.set
+local unmap = vim.keymap.del
+
+map("n", "<leader>o", 'o<ESC>0"_D', { desc = "Newline beneath" })
+map("n", "<leader>O", 'O<ESC>0"_D', { desc = "Newline above" })
+
+-- Disable tabline toggle
+unmap("n", "<leader>uA")
+-- Disable tabs
+unmap("n", "<leader><tab>l")
+unmap("n", "<leader><tab>o")
+unmap("n", "<leader><tab>f")
+unmap("n", "<leader><tab><tab>")
+unmap("n", "<leader><tab>]")
+unmap("n", "<leader><tab>d")
+unmap("n", "<leader><tab>[")
+
+map("n", "<c-p>", "<c-i>")
+map("n", "<tab>", ">>")
+map("n", "<s-tab>", "<<")
+map("v", "<tab>", ">gv")
+map("v", "<s-tab>", "<gv")
+
+map("i", ";;", "<ESC>A;<ESC>")
