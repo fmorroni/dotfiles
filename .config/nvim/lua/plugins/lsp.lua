@@ -3,6 +3,17 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        ["*"] = {
+          keys = {
+            { "gk", false },
+            {
+              "gk",
+              function() return vim.lsp.buf.signature_help() end,
+              desc = "Signature Help",
+              has = "signatureHelp",
+            },
+          },
+        },
         rubocop = {
           mason = false,
           enabled = true,
@@ -22,9 +33,8 @@ return {
       },
     },
     keys = {
-      { "<c-f>", false },
-      { "<c-b>", false },
-
+      -- { "<c-f>", false },
+      -- { "<c-b>", false },
       -- {
       --   "<a-j>",
       --   function()

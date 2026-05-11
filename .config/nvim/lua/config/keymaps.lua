@@ -8,6 +8,8 @@ local unmap = vim.keymap.del
 map("n", "<leader>o", 'o<ESC>0"_D', { desc = "Newline beneath" })
 map("n", "<leader>O", 'O<ESC>0"_D', { desc = "Newline above" })
 
+map("n", "<leader>:", "q:", { desc = "Open advanced command line" })
+
 -- Disable tabline toggle
 unmap("n", "<leader>uA")
 -- Disable tabs
@@ -26,3 +28,8 @@ map("v", "<tab>", ">gv")
 map("v", "<s-tab>", "<gv")
 
 map("i", ";;", "<ESC>A;<ESC>")
+
+map("n", "<leader>Th", function()
+  local result = vim.treesitter.get_captures_at_cursor(0)
+  vim.notify(vim.inspect(result))
+end, { desc = "Show capture groups at cursor" })

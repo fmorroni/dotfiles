@@ -27,6 +27,8 @@ return {
               ["<a-h>"] = { "preview_scroll_left", mode = { "i", "n" } },
               ["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
               ["<c-i>"] = { "toggle_ignored", mode = { "i", "n" } },
+              ["<C-n>"] = { "history_forward", mode = { "i", "n" } },
+              ["<C-p>"] = { "history_back", mode = { "i", "n" } },
             },
           },
         },
@@ -76,6 +78,9 @@ return {
       notifier = {
         width = { max = 0.9 },
       },
+    },
+    keys = {
+      { "<leader>:", false },
     },
   },
 }
