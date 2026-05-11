@@ -26,11 +26,11 @@ return {
       { "<c-b>", false },
 
       -- {
-      --   "<M-j>",
+      --   "<a-j>",
       --   function()
       --     -- BUG: This is required so that `M-j` still moves line when not in scrollable window.
       --     -- It's not working for some reason though...
-      --     if not require("noice.lsp").scroll(4) then return "<M-j>" end
+      --     if not require("noice.lsp").scroll(4) then return "<a-j>" end
       --   end,
       --   silent = true,
       --   expr = true,
@@ -38,9 +38,9 @@ return {
       --   mode = { "i", "n", "s" },
       -- },
       -- {
-      --   "<M-k>",
+      --   "<a-k>",
       --   function()
-      --     if not require("noice.lsp").scroll(-4) then return "<M-k>" end
+      --     if not require("noice.lsp").scroll(-4) then return "<a-k>" end
       --   end,
       --   silent = true,
       --   expr = true,

@@ -16,8 +16,8 @@ return {
         ["<C-k>"] = { "select_prev", "fallback_to_mappings" },
         ["<C-j>"] = { "select_next", "fallback_to_mappings" },
 
-        ["<M-k>"] = { "scroll_documentation_up", "fallback" },
-        ["<M-j>"] = { "scroll_documentation_down", "fallback" },
+        ["<a-k>"] = { "scroll_documentation_up", "fallback" },
+        ["<a-j>"] = { "scroll_documentation_down", "fallback" },
 
         ["<C-s>"] = { "show_signature", "hide_signature", "fallback" },
       },
