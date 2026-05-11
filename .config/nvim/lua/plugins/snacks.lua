@@ -24,6 +24,8 @@ return {
               ["<M-k>"] = { "preview_scroll_up", mode = { "i", "n" } },
               ["<M-l>"] = { "preview_scroll_right", mode = { "i", "n" } },
               ["<M-h>"] = { "preview_scroll_left", mode = { "i", "n" } },
+              ["<C-n>"] = { "history_forward", mode = { "i", "n" } },
+              ["<C-p>"] = { "history_back", mode = { "i", "n" } },
             },
           },
         },
@@ -44,6 +46,9 @@ return {
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
       },
+    },
+    keys = {
+      { "<leader>:", false },
     },
   },
 }
