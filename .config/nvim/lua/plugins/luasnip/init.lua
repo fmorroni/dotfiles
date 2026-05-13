@@ -1,17 +1,15 @@
--- TODO: snippets exit after reaching final node, which means you can't go back after that.
--- That seems to be fine but if it gets annoying see `https://github.com/L3MON4D3/LuaSnip/pull/1162/files`.
 return {
   {
     "L3MON4D3/LuaSnip",
-    version = "*",
     -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#config-options
     config = function()
-      require("luasnip.loaders.from_lua").load({
-        paths = { "./lua/plugins/luasnip/snippets" },
-      })
+      require("luasnip.loaders.from_lua").lazy_load({ paths = { "./lua/plugins/luasnip/snippets" } })
+
       require("luasnip").setup({
-        -- This one is cool cause if you have dynamic snippets, it updates as you type!
+        exit_roots = false,
         update_events = "TextChanged,TextChangedI",
+        region_check_events = "CursorHold",
+        delete_check_events = "TextChanged",
       })
     end,
     keys = function()
