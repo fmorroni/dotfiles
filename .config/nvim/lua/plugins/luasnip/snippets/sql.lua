@@ -6,11 +6,11 @@ M[1] = ls.s(
   "select",
   ls.fmt(
     [[
-    select {columns} from {table}
+    select {columns} from {table};
   ]],
     {
-      columns = ls.i(2, "columns"),
-      table = ls.i(1, "table"),
+      columns = ls.i(2, "<columns>"),
+      table = ls.i(1, "<table>"),
     }
   )
 )
@@ -48,7 +48,6 @@ M[3] = ls.s(
           argCount = argCount + 1
           table.insert(keys, match)
         end
-        P(keys)
         if argCount == 0 then table.insert(nodes, ls.i(1, "<values>")) end
         for j, key in ipairs(keys) do
           table.insert(nodes, ls.i(j, key))
@@ -56,6 +55,33 @@ M[3] = ls.s(
         end
         return ls.sn(1, nodes)
       end, 2),
+    }
+  )
+)
+
+M[4] = ls.s(
+  "update",
+  ls.fmt(
+    [[
+    update {table} set {columns} where {condition};
+  ]],
+    {
+      table = ls.i(1, "<table>"),
+      columns = ls.i(2, "<column = value, ...>"),
+      condition = ls.i(3, "<condition>"),
+    }
+  )
+)
+
+M[5] = ls.s(
+  "delete",
+  ls.fmt(
+    [[
+    delete from {table} where {condition};
+  ]],
+    {
+      table = ls.i(1, "<table>"),
+      condition = ls.i(2, "<condition>"),
     }
   )
 )
