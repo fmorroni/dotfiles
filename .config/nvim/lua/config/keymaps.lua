@@ -10,6 +10,9 @@ map("n", "<leader>O", 'O<ESC>0"_D', { desc = "Newline above" })
 
 map("n", "<leader>:", "q:", { desc = "Open advanced command line" })
 
+-- Better paste
+map("v", "p", "p:let @+=@0<CR>", { silent = true })
+
 -- Disable tabline toggle
 unmap("n", "<leader>uA")
 -- Disable tabs
