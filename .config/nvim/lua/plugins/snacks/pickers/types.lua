@@ -1,0 +1,2 @@
+---@class snacks.picker
+---@field git_grep_hunks fun(): snacks.Picker
