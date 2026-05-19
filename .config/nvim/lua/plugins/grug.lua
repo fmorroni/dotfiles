@@ -3,7 +3,7 @@ return {
     "MagicDuck/grug-far.nvim",
     keys = {
       {
-        "<leader>sr",
+        "<leader>srr",
         function()
           require("grug-far").open({ prefills = { paths = vim.fn.fnameescape(vim.fn.expand("%")) } })
         end,
@@ -11,7 +11,13 @@ return {
         desc = "Search and Replace current file",
       },
       {
-        "<leader>sR",
+        "<leader>srw",
+        function() require("grug-far").open({ visualSelectionUsage = "operate-within-range" }) end,
+        mode = { "x" },
+        desc = "Search and Replace current selection",
+      },
+      {
+        "<leader>sre",
         function()
           local grug = require("grug-far")
           local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
