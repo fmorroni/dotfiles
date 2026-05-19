@@ -12,6 +12,8 @@ map("n", "<leader>:", "q:", { desc = "Open advanced command line" })
 
 -- Better paste
 map("v", "p", "p:let @+=@0<CR>", { silent = true })
+-- In select mode make p insert letter p instead of pasting.
+map("s", "p", "p")
 
 -- Disable tabline toggle
 unmap("n", "<leader>uA")
