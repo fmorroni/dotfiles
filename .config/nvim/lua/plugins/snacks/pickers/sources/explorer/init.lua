@@ -5,6 +5,8 @@ return {
       keys = {
         -- Disable --
         ["<Esc>"] = false,
+        ["<c-l>"] = false,
+        ["<c-h>"] = false,
         -------------
         ["y"] = "yank_relative_cwd",
         ["Y"] = "yank_relative_home",
