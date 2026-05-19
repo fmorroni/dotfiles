@@ -10,23 +10,13 @@ return {
   },
   win = {
     input = {
-      keys = {
-        -- Disable --
-        ["<Esc>"] = false,
-        ["<c-b>"] = false,
-        ["<c-f>"] = false,
-        ["<a-i>"] = false,
-        -------------
-        ["<a-j>"] = { "preview_scroll_down", mode = { "i", "n" } },
-        ["<a-k>"] = { "preview_scroll_up", mode = { "i", "n" } },
-        ["<a-l>"] = { "preview_scroll_right", mode = { "i", "n" } },
-        ["<a-h>"] = { "preview_scroll_left", mode = { "i", "n" } },
-        ["<c-h>"] = { "toggle_hidden", mode = { "i", "n" } },
-        ["<c-i>"] = { "toggle_ignored", mode = { "i", "n" } },
-        ["<C-n>"] = { "history_forward", mode = { "i", "n" } },
-        ["<C-p>"] = { "history_back", mode = { "i", "n" } },
-        ["<a-P>"] = { "toggle_large_preview", mode = { "i", "n" } },
-      },
+      keys = require("plugins.snacks.pickers.keymaps").input_and_list,
+    },
+    list = {
+      keys = require("plugins.snacks.pickers.keymaps").input_and_list,
+    },
+    preview = {
+      keys = require("plugins.snacks.pickers.keymaps").preview,
     },
   },
   sources = {
