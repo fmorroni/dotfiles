@@ -24,8 +24,8 @@ return {
     -------------
     ["<a-p>"] = { "toggle_only_preview" },
     ["?"] = { "toggle_help_preview" },
-    ["<c-h>"] = { "focus_input" },
-    ["<c-l>"] = { "focus_input" },
+    ["<c-h>"] = { "focus_input_normal_mode" },
+    ["<c-l>"] = { "focus_input_normal_mode" },
     ["<a-m>"] = { "toggle_maximize" },
   },
 }
