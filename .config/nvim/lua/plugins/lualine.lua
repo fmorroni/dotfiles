@@ -13,10 +13,18 @@ return {
         },
       }
 
-      -- Keep inactive winbar height stable
       opts.inactive_winbar = {
         lualine_c = { "filename" },
       }
+
+      opts.options = opts.options or {}
+      opts.options.disabled_filetypes = opts.options.disabled_filetypes or {}
+      opts.options.disabled_filetypes.winbar = opts.options.disabled_filetypes.winbar or {}
+      vim.list_extend(opts.options.disabled_filetypes.winbar, {
+        "snacks_picker_list", -- Not really working
+        "snacks_dashboard",
+        "help",
+      })
     end,
   },
 }
