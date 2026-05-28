@@ -7,7 +7,7 @@ return {
         preset = "none",
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-e>"] = { "hide" },
-        ["<CR>"] = { "select_and_accept", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
         ["<Tab>"] = { "select_and_accept", "fallback" },
         ["<C-c>"] = { "cancel", "fallback" },
 
