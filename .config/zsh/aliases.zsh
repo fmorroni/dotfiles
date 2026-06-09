@@ -1,4 +1,5 @@
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias configlazy='lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias configs='config status'
 alias configtrackeddirs='config ls-tree --full-tree --name-only -r HEAD | rg -io "^[^/]+(/[^/]+)?" | sort -u'
 alias configtracked='config ls-tree -r main --name-only'
