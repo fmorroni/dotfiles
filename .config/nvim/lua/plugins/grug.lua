@@ -17,7 +17,7 @@ return {
         desc = "Search and Replace current selection",
       },
       {
-        "<leader>sR",
+        "<leader>sre",
         function()
           local grug = require("grug-far")
           local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")

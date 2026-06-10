@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+base=${1:-master}
+
+ruby_files=()
+ruby_files_output=$(branch-changed-files --committed '\.rb$' "$base")
+[[ -n "$ruby_files_output" ]] && readarray -t ruby_files <<<"$ruby_files_output"
+
+if ((${#ruby_files[@]})); then
+  echo "Running RuboCop on changed Ruby files..."
+  echo
+
+  if ! bundle exec rubocop --parallel "${ruby_files[@]}"; then
+    echo
+    echo "❌ RuboCop failed. Fix the reported offenses before pushing."
+    exit 1
+  fi
+fi
+
+if ((${#ruby_files[@]} == 0)); then
+  echo "No Ruby files changed."
+  exit 0
+fi
+
+echo
+echo "✅ RuboCop passed."

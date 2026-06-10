@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+base=${1:-master}
+
+yaml_files=()
+yaml_files_output=$(branch-changed-files --committed '\.ya?ml$' "$base")
+[[ -n "$yaml_files_output" ]] && readarray -t yaml_files <<<"$yaml_files_output"
+
+if ((${#yaml_files[@]})); then
+  echo
+  echo "Running yamllint on changed YAML files..."
+  echo
+
+  if ! yamllint "${yaml_files[@]}"; then
+    echo
+    echo "❌ yamllint failed. Fix the reported YAML issues before pushing."
+    exit 1
+  fi
+fi
+
+if ((${#yaml_files[@]} == 0)); then
+  echo "No YAML files changed."
+  exit 0
+fi
+
+echo
+echo "✅ Yamllint passed."
