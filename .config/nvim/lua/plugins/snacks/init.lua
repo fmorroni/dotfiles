@@ -25,9 +25,16 @@ return {
       notifier = {
         width = { max = 0.9 },
       },
+      dashboard = {
+        preset = {
+          keys = {},
+        },
+      },
     },
     keys = {
+      -- Disable --
       { "<leader>:", false },
+      -------------
       {
         "<leader>ghg",
         function() Snacks.picker.git_grep_hunks() end,
