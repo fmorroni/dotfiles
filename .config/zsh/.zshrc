@@ -81,3 +81,7 @@ if [ -f '/home/franco/programs/google-cloud-sdk/completion.zsh.inc' ]; then . '/
 
 # Added by `rbenv init` on Tue Jan  6 03:21:38 PM -03 2026
 eval "$(rbenv init - --no-rehash zsh)"
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
