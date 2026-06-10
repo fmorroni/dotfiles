@@ -1,12 +1,21 @@
 ---@type snacks.picker.Config
 return {
   win = {
+    input = {
+      keys = {
+        -- Disable --
+        ["<Esc>"] = false,
+        ["q"] = false,
+        ["<c-l>"] = false,
+        -------------
+      },
+    },
     list = {
       keys = {
         -- Disable --
         ["<Esc>"] = false,
+        ["q"] = false,
         ["<c-l>"] = false,
-        ["<c-h>"] = false,
         -------------
         ["y"] = "yank_relative_cwd",
         ["Y"] = "yank_relative_home",
