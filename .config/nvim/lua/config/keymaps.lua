@@ -38,3 +38,12 @@ map("n", "<leader>Th", function()
   local result = vim.treesitter.get_captures_at_cursor(0)
   vim.notify(vim.inspect(result))
 end, { desc = "Show capture groups at cursor" })
+
+-- Copy relative path with line number to clipboard
+map("n", "<leader>yp", function()
+  local path = vim.fn.expand("%")
+  local line = vim.fn.line(".")
+  local result = path .. ":" .. line
+  vim.fn.setreg("+", result)
+  vim.notify(('Yanked "%s"'):format(result, vim.log.levels.INFO))
+end, { desc = "Copy `<relative path>:<line>` to clipboard" })
