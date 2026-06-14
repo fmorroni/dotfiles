@@ -3,7 +3,7 @@ return {
   win = {
     input = {
       keys = {
-        ["<M-g>"] = { "switch_grep", mode = { "i", "n" } },
+        ["<a-g>"] = { "switch_grep", mode = { "i", "n" } },
       },
     },
   },
