@@ -3,7 +3,7 @@ return {
   win = {
     input = {
       keys = {
-        ["<M-g>"] = { "switch_files", mode = { "i", "n" } },
+        ["<a-g>"] = { "switch_files", mode = { "i", "n" } },
       },
     },
   },
