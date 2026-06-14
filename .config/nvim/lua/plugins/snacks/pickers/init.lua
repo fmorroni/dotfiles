@@ -20,6 +20,7 @@ return {
     },
   },
   sources = {
+    buffers = require("plugins.snacks.pickers.sources.buffers"),
     explorer = require("plugins.snacks.pickers.sources.explorer"),
     files = require("plugins.snacks.pickers.sources.files"),
     git_grep_hunks = require("plugins.snacks.pickers.sources.git_grep_hunks"),
