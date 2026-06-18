@@ -22,6 +22,9 @@ return {
           mason = false,
           enabled = true,
         },
+        denols = {
+          enabled = true,
+        },
       },
     },
   },
