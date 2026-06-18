@@ -14,8 +14,7 @@ vim.api.nvim_create_autocmd("User", {
   callback = function()
     require("nvim-treesitter.parsers").livecalc = {
       install_info = {
-        path = "~/projects/livecalc/tree-sitter-livecalc",
-        generate = true,
+        url = "https://github.com/fmorroni/tree-sitter-livecalc",
         queries = "queries",
       },
     }
@@ -24,7 +23,8 @@ vim.api.nvim_create_autocmd("User", {
 
 return {
   {
-    dir = "~/projects/livecalc/livecalc.nvim/",
+    "fmorroni/livecalc.nvim",
+    branch = "livecalc-dsl",
     ft = "livecalc",
     opts = {},
   },
