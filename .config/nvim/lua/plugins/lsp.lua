@@ -14,6 +14,9 @@ return {
             },
           },
         },
+        denols = {
+          enabled = true,
+        },
       },
     },
   },
