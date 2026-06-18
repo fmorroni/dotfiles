@@ -1,0 +1,70 @@
+#!/bin/sh
+
+TITLE="Reminder"
+MESSAGE=""
+ICON="/usr/share/icons/Adwaita/symbolic/status/alarm-symbolic.svg"
+
+usage() {
+  echo "Usage: $0 HH:MM [-t title] [-m message]"
+  exit 1
+}
+
+TIME=""
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -t | --title)
+    TITLE="$2"
+    shift 2
+    ;;
+  -m | --message)
+    MESSAGE="$2"
+    shift 2
+    ;;
+  -h | --help)
+    usage
+    ;;
+  *)
+    if [ -z "$TIME" ]; then
+      TIME="$1"
+      shift
+    else
+      usage
+    fi
+    ;;
+  esac
+done
+
+[ -n "$TIME" ] || usage
+
+TARGET_TS=$(date -d "$TIME" +%s 2>/dev/null) || {
+  echo "Invalid time: $TIME"
+  exit 1
+}
+
+NOW=$(date +%s)
+
+if [ "$TARGET_TS" -le "$NOW" ]; then
+  TARGET_TS=$(date -d "tomorrow $TIME" +%s)
+fi
+
+SCHEDULED=$(date -d "@$TARGET_TS" '+%d/%m/%Y at %H:%M')
+DIFF=$((TARGET_TS - NOW))
+
+echo "Notification set for $SCHEDULED"
+
+sleep "$DIFF"
+
+SOUND="/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"
+
+if [ -f "$SOUND" ]; then
+  paplay "$SOUND" &
+fi
+
+notify-send \
+  -u critical \
+  -t 0 \
+  -a "Reminder" \
+  -i "$ICON" \
+  "$TITLE" \
+  "${MESSAGE:-It\'s $TIME}"
