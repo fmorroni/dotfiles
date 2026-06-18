@@ -1,15 +1,19 @@
 return {
   {
-    "iamcco/markdown-preview.nvim",
-    config = function()
-      vim.cmd([[
-				function OpenMarkdownPreview (url)
-					execute "silent ! brave --new-window --incognito " . a:url
-				endfunction
-				let g:mkdp_browserfunc = 'OpenMarkdownPreview'
-
-        do FileType
-			]])
+    "fmorroni/markdown-preview.nvim",
+    build = "cd app && deno task build",
+    name = "md-preview",
+    ft = { "markdown" },
+    ---@type MarkdownPreview.Config
+    opts = {
+      browser = { "brave", "--incognito", "--new-window" },
+      port = 9999,
+    },
+    keys = function()
+      local mdp = require("md-preview")
+      return {
+        { "<leader>cp", mdp.open, desc = "Open markdown preview" },
+      }
     end,
     dependencies = {
       {
@@ -23,12 +27,12 @@ return {
             affix = "<\n  %s\n>", -- Multi lines affix
           },
         },
-        keys = function()
-          return {
-            { "<leader>v", "<CMD>PasteImg<CR>", ft = "markdown", desc = "Paste image from clipboard" },
-          }
-        end,
+        keys = { "<leader>v", "<CMD>PasteImg<CR>", ft = "markdown", desc = "Paste image from clipboard" },
       },
     },
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    enabled = false,
   },
 }
