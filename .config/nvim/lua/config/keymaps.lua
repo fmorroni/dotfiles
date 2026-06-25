@@ -39,11 +39,37 @@ map("n", "<leader>Th", function()
   vim.notify(vim.inspect(result))
 end, { desc = "Show capture groups at cursor" })
 
--- Copy relative path with line number to clipboard
-map("n", "<leader>yp", function()
-  local path = vim.fn.expand("%")
+local yank_paht_line = function(expand_str)
+  local path = vim.fn.expand(expand_str)
   local line = vim.fn.line(".")
   local result = path .. ":" .. line
   vim.fn.setreg("+", result)
   vim.notify(('Yanked "%s"'):format(result, vim.log.levels.INFO))
-end, { desc = "Copy `<relative path>:<line>` to clipboard" })
+end
+
+-- Copy path with line number to clipboard
+map(
+  "n",
+  "<leader>yp",
+  function() yank_paht_line("%:.") end,
+  { desc = "Copy `<relative path>:<line>` to clipboard" }
+)
+map(
+  "n",
+  "<leader>Yp",
+  function() yank_paht_line("%") end,
+  { desc = "Copy `<absolute path>:<line>` to clipboard" }
+)
+
+---- Disable ----
+
+-- Disable tabline toggle
+unmap("n", "<leader>uA")
+-- Disable tabs
+unmap("n", "<leader><tab>l")
+unmap("n", "<leader><tab>o")
+unmap("n", "<leader><tab>f")
+unmap("n", "<leader><tab><tab>")
+unmap("n", "<leader><tab>]")
+unmap("n", "<leader><tab>d")
+unmap("n", "<leader><tab>[")
