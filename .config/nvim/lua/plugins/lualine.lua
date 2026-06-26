@@ -2,6 +2,15 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
+      -- Insert project name at start of `b` section.
+      table.insert(opts.sections.lualine_b, 1, {
+        function()
+          local root = vim.fs.root(0, ".git") or vim.fn.getcwd()
+          return vim.fs.basename(root)
+        end,
+        icon = "󰉋",
+      })
+
       -- Remove breadcrumbs component from statusline
       local breadcrumbs = table.remove(opts.sections.lualine_c)
 
