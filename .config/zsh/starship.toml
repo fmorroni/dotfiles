@@ -7,7 +7,9 @@ format = """
 ${custom.yazi}\
 [](fg:#8da6e6 bg:#769ff0)\
 $directory\
-[](fg:#769ff0 bg:#394260)\
+[](fg:#769ff0 bg:#556a9a)\
+$hostname\
+[](fg:#556a9a bg:#394260)\
 $git_branch\
 $git_status\
 [](fg:#394260 bg:#212736)\
@@ -44,6 +46,11 @@ truncation_symbol = "…/"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
+
+[hostname]
+ssh_only = true
+format = "[  $hostname ]($style)"
+style = "bg:#556a9a fg:#9bb4f2"
 
 [git_branch]
 symbol = ""
