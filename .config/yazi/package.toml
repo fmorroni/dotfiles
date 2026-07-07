@@ -8,5 +8,10 @@ use = "KKV9/compress"
 rev = "46a6b9f"
 hash = "771af2becc575a3f43d0542de823969d"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "8cd50c6"
+hash = "5b1c276b75cae91cbbdbe7863f39a540"
+
 [flavor]
 deps = []

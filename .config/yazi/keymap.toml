@@ -182,6 +182,10 @@ keymap = [
   { on = ["c", "a", "u"], run = "plugin compress -phl", desc = "Archive selected files (password+header+level)" },
 ]
 
+prepend_keymap = [
+  { on = ["c", "m"], run = "plugin chmod", desc = "Chmod on selected files" }
+]
+
 [tasks]
 keymap = [
   { on = "<Esc>", run = "close", desc = "Close task manager" },
