@@ -7,6 +7,7 @@ return {
         typescriptreact = { "prettierd" },
         typescript = { "prettierd" },
         javascript = { "prettierd" },
+        http = { "kulala-fmt" },
       },
     },
   },
