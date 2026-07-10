@@ -1,3 +1,4 @@
+---@type LazyPluginSpec[]
 return {
   {
     "neovim/nvim-lspconfig",
@@ -28,30 +29,8 @@ return {
       },
     },
     keys = {
-      -- { "<c-f>", false },
-      -- { "<c-b>", false },
-      -- {
-      --   "<M-j>",
-      --   function()
-      --     -- BUG: This is required so that `M-j` still moves line when not in scrollable window.
-      --     -- It's not working for some reason though...
-      --     if not require("noice.lsp").scroll(4) then return "<M-j>" end
-      --   end,
-      --   silent = true,
-      --   expr = true,
-      --   desc = "Scroll Forward",
-      --   mode = { "i", "n", "s" },
-      -- },
-      -- {
-      --   "<M-k>",
-      --   function()
-      --     if not require("noice.lsp").scroll(-4) then return "<M-k>" end
-      --   end,
-      --   silent = true,
-      --   expr = true,
-      --   desc = "Scroll Backward",
-      --   mode = { "i", "n", "s" },
-      -- },
+      { "<c-f>", false },
+      { "<c-b>", false },
     },
   },
 }
