@@ -50,6 +50,41 @@ map(
   { desc = "Copy `<absolute path>:<line>` to clipboard" }
 )
 
+-- From: /home/franco/.local/share/nvim/lazy/LazyVim/lua/lazyvim/config/keymaps.lua:25
+-- Move Lines
+map("n", "<Plug>(my-move-down)", "<cmd>execute 'move .+' . v:count1<cr>==")
+map("i", "<Plug>(my-move-down)", "<esc><cmd>m .+1<cr>==gi")
+map("v", "<Plug>(my-move-down)", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv")
+map("n", "<Plug>(my-move-up)", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==")
+map("i", "<Plug>(my-move-up)", "<esc><cmd>m .-2<cr>==gi")
+map("v", "<Plug>(my-move-up)", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv")
+
+-- Scroll LSP docs, otherwise move lines
+map({ "n", "i", "v", "s" }, "<A-j>", function()
+  if require("noice.lsp").scroll(4) then
+    return ""
+  end
+  return "<Plug>(my-move-down)"
+end, {
+  expr = true,
+  remap = true,
+  silent = true,
+  desc = "Scroll docs / Move Down",
+})
+
+map({ "n", "i", "v", "s" }, "<A-k>", function()
+  if require("noice.lsp").scroll(-4) then
+    return ""
+  end
+  return "<Plug>(my-move-up)"
+end, {
+  expr = true,
+  remap = true,
+  silent = true,
+  desc = "Scroll docs / Move Up",
+})
+
+
 ---- Disable ----
 
 -- Disable tabline toggle
