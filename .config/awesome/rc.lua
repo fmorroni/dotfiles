@@ -637,6 +637,17 @@ awful.rules.rules = {
     },
     properties = { floating = true, ontop = true }
   },
+
+  -- Flameshot: floating, fullscreen, no border
+  {
+    rule = { class = "flameshot" },
+    properties = {
+      floating = true,
+      fullscreen = true,
+      border_width = 0,
+      ontop = true,
+    }
+  },
 }
 
 -- Make all new floating windows stay on top (for toggled floating)
