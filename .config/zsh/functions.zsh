@@ -252,3 +252,9 @@ zle -N open-terminal-in-cwd
 pacnamesearch() {
   pacman -Ss "$1" | rg "^\S+\b$1\b" -A 1
 }
+
+autoload -Uz add-zsh-hook
+set_cwd_title() {
+  print -Pn "\e]2;%~\a"
+}
+add-zsh-hook precmd set_cwd_title
