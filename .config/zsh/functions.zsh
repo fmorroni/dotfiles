@@ -248,3 +248,9 @@ open-terminal-in-cwd() {
   nohup kitty >/dev/null 2>/dev/null &!
 }
 zle -N open-terminal-in-cwd
+
+autoload -Uz add-zsh-hook
+set_cwd_title() {
+  print -Pn "\e]2;%~\a"
+}
+add-zsh-hook precmd set_cwd_title
