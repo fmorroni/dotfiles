@@ -12,6 +12,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
   group = group_cdpwd,
   callback = function()
     local arg = vim.fn.argv(0)
+    ---@cast arg string
 
     if arg == "" then return end
 
