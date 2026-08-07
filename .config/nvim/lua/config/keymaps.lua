@@ -84,6 +84,16 @@ end, {
   desc = "Scroll docs / Move Up",
 })
 
+-- Add undo break-points
+map("i", ",", ",<c-g>u")
+map("i", ".", ".<c-g>u")
+map("i", ";", ";<c-g>u")
+map("i", "(", "(<c-g>u")
+map("i", "[", "[<c-g>u")
+map("i", "=", "=<c-g>u")
+map("i", "\"", "\"<c-g>u")
+map("i", "<space>", "<space><c-g>u")
+map("i", "<CR>", "<CR><c-g>u")
 
 ---- Disable ----
 
