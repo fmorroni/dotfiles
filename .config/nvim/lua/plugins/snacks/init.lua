@@ -1,7 +1,7 @@
 return {
-  -- lazy.nvim
   {
-    "folke/snacks.nvim",
+    -- dir = "~/repos/snacks.nvim/",
+    "fmorroni/snacks.nvim",
     ---@type snacks.Config
     opts = {
       -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md#%EF%B8%8F-config
