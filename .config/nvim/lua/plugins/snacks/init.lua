@@ -1,5 +1,3 @@
-require("plugins/snacks/explorer_move_file_patch")
-
 return {
   -- lazy.nvim
   {

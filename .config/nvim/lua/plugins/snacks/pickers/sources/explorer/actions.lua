@@ -1,5 +1,7 @@
+local move_file_patch = require("plugins.snacks.pickers.sources.explorer.explorer_move_file_patch")
+
 ---@type table<string, snacks.picker.Action.spec> actions used by keymaps
-return {
+return vim.tbl_extend("force", move_file_patch, {
   yank_relative_cwd = function(_, item)
     local path = vim.fn.fnamemodify(item.file, ":.")
     vim.fn.setreg("+", path)
@@ -47,4 +49,4 @@ return {
       actions.update(picker, { target = to })
     end)
   end,
-}
+})
