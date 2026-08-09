@@ -27,4 +27,9 @@ return {
     grep = require("plugins.snacks.pickers.sources.grep"),
     git_log_file = require("plugins.snacks.pickers.sources.git_log_files"),
   },
+  previewers = {
+    file = {
+      use_real_buffer = false,
+    },
+  },
 }
