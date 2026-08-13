@@ -3,7 +3,6 @@ return {
     -- Disable --
     ["<Esc>"] = false,
     ["<c-b>"] = false,
-    ["<c-f>"] = false,
     ["<a-i>"] = false,
     ["<c-n>"] = false,
     -------------
@@ -18,6 +17,7 @@ return {
     ["<a-p>"] = { "toggle_only_preview", mode = { "i", "n" } },
     ["<a-P>"] = { "toggle_preview", mode = { "i", "n" } },
     ["<c-l>"] = { "focus_preview", mode = { "i", "n" } },
+    ["<c-f>"] = { "print_file_name", mode = { "i", "n" } },
   },
   preview = {
     -- Disable --
@@ -30,5 +30,6 @@ return {
     ["<a-m>"] = { "toggle_maximize" },
     ["<c-j>"] = { "list_down" },
     ["<c-k>"] = { "list_up" },
+    ["<c-CR>"] = { "confirm" },
   },
 }
