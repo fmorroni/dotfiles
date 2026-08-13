@@ -43,4 +43,5 @@ return {
   end,
   toggle_help_preview = function(picker) picker.preview.win:toggle_help() end,
   focus_input_normal_mode = function(picker) focus_normal_mode(picker, "input") end,
+  print_file_name = function(_, item) vim.notify(item.file, "info") end,
 }
