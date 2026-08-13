@@ -40,6 +40,7 @@ return {
         function() Snacks.picker.git_grep_hunks() end,
         desc = "Git grep hunks",
       },
+      { "<leader>gD", function() Snacks.picker.resume("git_diff_origin") end },
     },
   },
 }

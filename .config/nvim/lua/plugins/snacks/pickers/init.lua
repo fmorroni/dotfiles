@@ -26,6 +26,7 @@ return {
     git_grep_hunks = require("plugins.snacks.pickers.sources.git_grep_hunks"),
     grep = require("plugins.snacks.pickers.sources.grep"),
     git_log_file = require("plugins.snacks.pickers.sources.git_log_files"),
+    git_diff_origin = require("plugins.snacks.pickers.sources.git_diff_origin"),
   },
   previewers = {
     file = {
