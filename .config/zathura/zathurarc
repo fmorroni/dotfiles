@@ -16,6 +16,7 @@ map [normal] = zoom in
 map [fullscreen] = zoom in
 set selection-clipboard clipboard
 
+set font 'monospace normal 16'
 
 ## Mappings:  map [mode] <binding> <shortcut function> <argument>
 
