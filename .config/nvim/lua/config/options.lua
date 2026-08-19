@@ -9,3 +9,4 @@ vim.g.lazygit_floating_window_scaling_factor = 1
 vim.g.autoformat = false
 
 vim.opt.title = true
+vim.opt.titlestring = "%{fnamemodify(getcwd(), ':~')} - Nvim"
