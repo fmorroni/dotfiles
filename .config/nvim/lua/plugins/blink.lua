@@ -37,6 +37,11 @@ return {
           },
         },
       },
+      sources = {
+        providers = {
+          lsp = { fallbacks = {} },
+        },
+      },
     },
   },
 }
