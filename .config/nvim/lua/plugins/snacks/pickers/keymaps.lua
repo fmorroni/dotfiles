@@ -18,6 +18,7 @@ return {
     ["<a-P>"] = { "toggle_preview", mode = { "i", "n" } },
     ["<c-l>"] = { "focus_preview", mode = { "i", "n" } },
     ["<c-f>"] = { "print_file_name", mode = { "i", "n" } },
+    ["<a-g>"] = { "grep_list", mode = { "i", "n" } },
   },
   preview = {
     -- Disable --
