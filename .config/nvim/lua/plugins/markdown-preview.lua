@@ -6,7 +6,7 @@ return {
     ft = "markdown",
     ---@type MarkdownPreview.Config
     opts = {
-      browser = { "brave", "--new-window", "--incognito" },
+      browser = { "brave", "--app=http://localhost:9999" },
       port = 9999,
     },
     keys = function()
