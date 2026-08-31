@@ -45,33 +45,16 @@ return {
   focus_input_normal_mode = function(picker) focus_normal_mode(picker, "input") end,
   print_file_name = function(_, item) vim.notify(item.file, "info") end,
   grep_list = function(picker)
-        local items = picker:selected()
-    if #items == 0 then
-      items = picker:items()
-    end
+    local picked = picker:selected({ fallback = false })
+    local items = #picked > 0 and picked or picker:items()
 
-    local paths, seen = {}, {}
-    for _, item in ipairs(items) do
-      local path = Snacks.picker.util.path(item)
-      if path and not seen[path] then
-        seen[path] = true
-        paths[#paths + 1] = path
-      end
-    end
+     -- `Snacks.picker.grep()` toggles off an already-open grep picker,
+     -- so close before opening.
+     for _, p in ipairs(Snacks.picker.get({ source = "grep" })) do
+       p:close()
+     end
 
-    if #paths == 0 then
-      return Snacks.notify.warn("No files in the current list")
-    end
-
-    -- `Snacks.picker.grep()` toggles off an already-open grep picker,
-    -- so close before opening.
-    for _, p in ipairs(Snacks.picker.get({ source = "grep" })) do
-      p:close()
-    end
-
-    Snacks.picker.grep({
-      dirs = paths,
-      title = ("Grep (%d files)"):format(#paths),
-    })
+    local glob = vim.iter(items):map(function(item) return item.file end):totable()
+    Snacks.picker.grep({ glob = glob, title = ("Grep list (%d selected)"):format(#glob) })
   end,
 }
