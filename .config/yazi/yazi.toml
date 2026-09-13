@@ -1,5 +1,6 @@
-# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
-# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+# A TOML linter such as Tombi can use this schema to validate your config.
+# If you encounter any problems, please file an issue at https://github.com/yazi-rs/schemas.
+
 #:schema https://yazi-rs.github.io/schemas/yazi.json
 
 [mgr]
@@ -32,8 +33,14 @@ ueberzug_offset = [0, 0, 0, 0]
 diff = [
   { run = "${EDITOR} -d %s", desc = "File diff", block = true, for = "unix" },
 ]
+download = [
+  { run = "ya emit download --open %S", desc = "Download and open" },
+  { run = "ya emit download %S", desc = "Download" },
+]
 edit = [
-  { run = "${EDITOR:=vi} %s", desc = "$Editor", block = true, for = "unix" },
+  { run = "${EDITOR:=vi} %s", desc = "$EDITOR", for = "unix", block = true },
+  { run = "code %s", desc = "code", for = "windows", orphan = true },
+  { run = "code -w %s", desc = "code (block)", for = "windows", block = true },
 ]
 extract = [
   { run = "ya pub extract --list %s", desc = "Extract here" },
@@ -50,18 +57,30 @@ lorien = [
 open = [
   { run = "xdg-open %s1", desc = "Open", for = "unix" },
   { run = "open %s", desc = "Open", for = "macos" },
+  { run = 'start "" %s1', desc = "Open", for = "windows", orphan = true },
+  { run = "termux-open %s1", desc = "Open", for = "android" },
 ]
 pdfOpener = [
   { run = "zathura %s", orphan = true, desc = "Open pdf in zathura", for = "unix" },
 ]
 play = [
   { run = "mpv --force-window %s", orphan = true, for = "unix" },
+  { run = "open %s", desc = "Play", for = "macos" },
+  { run = 'start "" %s1', desc = "Play", for = "windows", orphan = true },
+  { run = "termux-open %s1", desc = "Play", for = "android" },
   { run = "mediainfo %s1; echo 'Press enter to exit'; read _", block = true, desc = "Show media info", for = "unix" },
+  { run = "mediainfo %s1 & pause", block = true, desc = "Show media info", for = "windows" },
 ]
 reveal = [
   { run = "xdg-open %d1", desc = "Reveal", for = "unix" },
   { run = "open -R %s1", desc = "Reveal", for = "macos" },
-  { run = '''clear; exiftool %s1; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+  { run = "explorer /select,%s1", desc = "Reveal", for = "windows", orphan = true },
+  { run = "termux-open %d1", desc = "Reveal", for = "android" },
+  { run = "clear; exiftool %s1; echo 'Press enter to exit'; read _", desc = "Show EXIF", for = "unix", block = true },
+]
+trash = [
+  { run = "ya pub trash-restore --list %S", desc = "Restore selected files" },
+  { run = "ya pub trash-empty --list %S", desc = "Empty trash bin" },
 ]
 xournal = [
   { run = "xournalpp %s", orphan = true, desc = "Open in Xournal++", for = "unix" },
@@ -72,31 +91,35 @@ xournal = [
 
 [open]
 rules = [
-  { url = "*/", use = ["edit", "open", "reveal"] },
+  # Folder
+  { mime = "folder/*", use = ["edit", "open", "reveal"] },
+  # Text
+  { mime = "text/html", use = ["edit", "open", "reveal", "diff"] },
+  { mime = "text/*", use = ["edit", "reveal", "diff"] },
+  # Image
+  { mime = "image/gif", use = "play" },
+  { mime = "image/*", use = ["imageViewer", "open", "reveal"] },
+  # Media
+  { mime = "{audio,video}/*", use = ["play", "reveal"] },
+  # Code
+  { mime = "application/{json,ndjson,javascript,wine-extension-ini}", use = ["edit", "reveal", "diff"] },
+  # Archive
+  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = ["extract", "reveal"] },
+  # PDF
+  { mime = "application/pdf", use = ["pdfOpener", "xournal"] },
+  # Empty file
+  { mime = "inode/empty", use = ["edit", "reveal"] },
+  # Virtual file system
+  { mime = "vfs/{absent,stale}", use = "download" },
+  # Trash
+  { mime = "trash/**", use = ["open", "trash"] },
+  # Fallback
+  { url = "*", use = ["open", "reveal"] },
+  # Extras
   { url = "*.log", use = ["logRead", "edit"] },
   { url = "*.lorien", use = "lorien" },
   { url = "*.xopp", use = "xournal" },
   { url = "*.3mf", use = "3d-print" },
-
-  { mime = "text/html", use = ["edit", "open", "reveal", "diff"] },
-  { mime = "text/*", use = ["edit", "reveal", "diff"] },
-  { mime = "image/gif", use = "play" },
-  { mime = "image/*", use = ["imageViewer", "open", "reveal"] },
-  { mime = "{audio,video}/*", use = ["play", "reveal"] },
-
-  # Empty file
-  { mime = "inode/empty", use = ["edit", "reveal"] },
-
-  { mime = "application/{json,ndjson}", use = ["edit", "reveal", "diff"] },
-  { mime = "*/javascript", use = ["edit", "reveal"] },
-
-  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = [
-    "extract",
-    "reveal"
-  ] },
-  { mime = "application/pdf", use = ["pdfOpener", "xournal"] },
-
-  { mime = "*", use = ["open", "reveal"] },
 ]
 
 [tasks]
@@ -115,13 +138,14 @@ fetchers = [
   # MIME-type
   { url = "*/", run = "mime.dir", prio = "high", group = "mime" },
   { url = "local://*", run = "mime.local", prio = "high", group = "mime" },
+  { url = "trash://*", run = "mime.trash", prio = "high", group = "mime" },
   { url = "remote://*", run = "mime.remote", prio = "high", group = "mime" },
 ]
 spotters = [
   # Multi-file
   { mime = "multi/*", run = "multi" },
   # Folder
-  { url = "*/", run = "folder" },
+  { mime = "folder/*", run = "folder" },
   # Code
   { mime = "text/*", run = "code" },
   { mime = "application/{mbox,javascript,wine-extension-ini}", run = "code" },
@@ -133,10 +157,13 @@ spotters = [
   { mime = "video/*", run = "video" },
   # Virtual file system
   { mime = "vfs/*", run = "vfs" },
+  # Trash
+  { mime = "trash/**", run = "trash" },
   # Error
   { mime = "null/*", run = "null" },
   # Fallback
   { url = "*", run = "file" },
+  { url = "*/", run = "file" },
 ]
 preloaders = [
   # Image
@@ -150,9 +177,11 @@ preloaders = [
   # Font
   { mime = "font/*", run = "font" },
   { mime = "application/ms-opentype", run = "font" },
+  # Trash
+  { mime = "trash/**", run = "trash" },
 ]
 previewers = [
-  { url = "*/", run = "folder" },
+  { mime = "folder/*", run = "folder" },
   # Code
   { mime = "text/*", run = "code" },
   { mime = "application/{mbox,javascript,wine-extension-ini}", run = "code" },
@@ -181,6 +210,8 @@ previewers = [
   { mime = "inode/empty", run = "empty" },
   # Virtual file system
   { mime = "vfs/*", run = "vfs" },
+  # Trash
+  { mime = "trash/**", run = "trash" },
   # Error
   { mime = "null/*", run = "null" },
   # Fallback
