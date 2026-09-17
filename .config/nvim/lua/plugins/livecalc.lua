@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd("User", {
 return {
   {
     "fmorroni/livecalc.nvim",
-    branch = "livecalc-dsl",
+    branch = "typed-params",
     ft = "livecalc",
     opts = {},
   },
