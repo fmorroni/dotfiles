@@ -59,6 +59,20 @@ map("n", "<Plug>(my-move-up)", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==")
 map("i", "<Plug>(my-move-up)", "<esc><cmd>m .-2<cr>==gi")
 map("v", "<Plug>(my-move-up)", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv")
 
+-- Persistence
+
+map("n", "<leader>qw", function() require("persistence").save() end, { desc = "Save current session" })
+
+map("n", "<leader>qD", function()
+  vim.fn.delete(require("persistence").current())
+  require("persistence").stop()
+  vim.notify(
+    "Session cleared and persistence stopped.\n"
+      .. 'Save manually, restart with `require("persistence").start()` or reset neovim to keep track of session again',
+    vim.log.levels.WARN
+  )
+end, { desc = "Delete current session" })
+
 -- Scroll LSP docs, otherwise move lines
 map({ "n", "i", "v", "s" }, "<A-j>", function()
   if require("noice.lsp").scroll(4) then
