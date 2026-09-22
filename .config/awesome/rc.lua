@@ -408,6 +408,69 @@ local globalkeys = mytable.join(
 	awful.key({ modkey }, "Return", function()
 		awful.spawn(terminal)
 	end, { description = ": Open a terminal", group = "launcher" }),
+	awful.key({ modkey, shiftKey }, "p", function()
+		-- NOTE: it's done in this fashion because `awful.spawn` is async and I want the editor windows
+		-- to open in a specific order.
+
+		local projects = {
+			"~/dev/api/",
+			"~/dev/api-fr/",
+			"~/dev/delivery-service/",
+			"~/dev/app-web/",
+			"~/dev/app-web-v3/",
+			"~/dev/mail-dispatcher/",
+		}
+
+		local index = #projects
+
+		local function spawn_next()
+			if index == 0 then
+				return
+			end
+
+			local project = projects[index]
+			index = index - 1
+
+			awful.spawn(editor_cmd .. " " .. project, {
+				callback = function(c)
+					spawn_next()
+				end,
+			})
+		end
+
+		spawn_next()
+	end, { description = ": Edit projects", group = "awesome" }),
+	awful.key({ modkey, ctrlKey }, "p", function()
+		local projects = {
+			"~/dev/api/",
+			"~/dev/api-fr/",
+			"~/dev/delivery-service/",
+			"~/dev/app-web/",
+			"~/dev/app-web-v3/",
+			"~/dev/dash/",
+			"~/dev/garufa/",
+			"~/dev/delivery-service/",
+		}
+
+		local index = #projects
+
+		local function spawn_next()
+			if index == 0 then
+				return
+			end
+
+			local project = projects[index]
+			index = index - 1
+
+			awful.spawn({ terminal, "-d", project }, {
+				callback = function(c)
+					spawn_next()
+				end,
+			})
+		end
+
+		spawn_next()
+	end, { description = ": Open projects in terminal", group = "awesome" }),
 	awful.key({ modkey, ctrlKey }, "r", awesome.restart, { description = ": Reload awesome", group = "awesome" }),
 	awful.key({ modkey, shiftKey }, "e", function()
 		awful.spawn(editor_cmd .. " " .. awesome.conffile)
