@@ -24,6 +24,8 @@ return {
     -- Disable --
     ["<Esc>"] = false,
     -------------
+    ["<a-j>"] = { "preview_scroll_down" },
+    ["<a-k>"] = { "preview_scroll_up" },
     ["<a-p>"] = { "toggle_only_preview" },
     ["?"] = { "toggle_help_preview" },
     ["<c-h>"] = { "focus_input_normal_mode" },
