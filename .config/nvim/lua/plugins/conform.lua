@@ -5,11 +5,12 @@ return {
       formatters = {
         livecalc = {
           command = "topiary",
-          args = {
-            "format",
-            "--language",
-            "livecalc",
-          },
+          args = { "format", "--language", "livecalc" },
+          stdin = true,
+        },
+        nickel = {
+          command = "topiary",
+          args = { "format", "--language", "nickel" },
           stdin = true,
         },
       },
@@ -20,6 +21,7 @@ return {
         javascript = { "prettierd" },
         http = { "kulala-fmt" },
         livecalc = { "livecalc" },
+        nickel = { "nickel" },
       },
     },
   },
