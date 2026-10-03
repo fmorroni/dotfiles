@@ -8,6 +8,9 @@ return {
           args = { "format", "--language", "livecalc" },
           stdin = true,
         },
+        nickel = {
+          command = "topiary",
+          args = { "format", "--language", "nickel" },
           stdin = true,
         },
       },
@@ -17,7 +20,7 @@ return {
         typescript = { "prettierd" },
         javascript = { "prettierd" },
         livecalc = { "livecalc" },
-        nickel = { "prettierd" },
+        nickel = { "nickel" },
       },
     },
   },
