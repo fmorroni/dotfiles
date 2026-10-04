@@ -91,6 +91,12 @@ xournal = [
 
 [open]
 rules = [
+  # Custom extension rules. These need to go on top because the first rule match is
+  # the one used.
+  { url = "*.log", use = ["logRead", "edit"] },
+  { url = "*.lorien", use = "lorien" },
+  { url = "*.xopp", use = "xournal" },
+  { url = "*.3mf", use = "3d-print" },
   # Folder
   { mime = "folder/*", use = ["edit", "open", "reveal"] },
   # Text
@@ -115,11 +121,6 @@ rules = [
   { mime = "trash/**", use = ["open", "trash"] },
   # Fallback
   { url = "*", use = ["open", "reveal"] },
-  # Extras
-  { url = "*.log", use = ["logRead", "edit"] },
-  { url = "*.lorien", use = "lorien" },
-  { url = "*.xopp", use = "xournal" },
-  { url = "*.3mf", use = "3d-print" },
 ]
 
 [tasks]
