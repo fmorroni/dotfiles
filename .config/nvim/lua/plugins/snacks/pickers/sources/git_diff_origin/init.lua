@@ -4,5 +4,5 @@ return vim.tbl_deep_extend("force", require("snacks.picker.config.sources").git_
   sort = { fields = { "file", "idx" } },
   base = "origin",
   group = true,
-  title = "  Git Diff (base)",
+  title = "  Git Diff (origin)",
 })

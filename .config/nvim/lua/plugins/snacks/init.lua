@@ -40,7 +40,21 @@ return {
         function() Snacks.picker.git_grep_hunks() end,
         desc = "Git grep hunks",
       },
-      { "<leader>gD", function() Snacks.picker.resume("git_diff_origin") end, desc = "Git Diff (origin)" },
+      {
+        "<leader>gD",
+        function() Snacks.picker.resume({ source = "git_diff_origin" }) end,
+        desc = "Git Diff (origin)",
+      },
+      {
+        "<leader>gd",
+        function() Snacks.picker.resume({ source = "git_diff_latest_commit" }) end,
+        desc = "Git Diff (HEAD~1)",
+      },
+      {
+        "<leader>gi",
+        function() Snacks.picker.resume({ source = "git_diff_index" }) end,
+        desc = "Git Diff (index)",
+      },
     },
   },
 }
