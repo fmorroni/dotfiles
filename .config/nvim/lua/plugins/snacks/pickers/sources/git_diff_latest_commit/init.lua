@@ -2,7 +2,7 @@
 
 return vim.tbl_deep_extend("force", require("snacks.picker.config.sources").git_diff, {
   sort = { fields = { "file", "idx" } },
-  base = "origin",
+  base = "HEAD~1",
   group = true,
-  title = "  Git Diff (origin)",
+  title = "  Git Diff (HEAD~1)",
 })
