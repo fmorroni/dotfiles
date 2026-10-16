@@ -178,6 +178,29 @@ lain.layout.cascade.tile.extra_padding = 5
 lain.layout.cascade.tile.nmaster = 5
 lain.layout.cascade.tile.ncol = 2
 
+-- NOTE: it's done in this fashion because `awful.spawn` is async and I want the editor windows
+-- to open in a specific order.
+local openTerminalInOrder = function(dirs)
+	local index = #dirs
+
+	local function spawn_next()
+		if index == 0 then
+			return
+		end
+
+		local dir = dirs[index]
+		index = index - 1
+
+		awful.spawn({ terminal, "-d", dir }, {
+			callback = function()
+				spawn_next()
+			end,
+		})
+	end
+
+	spawn_next()
+end
+
 -- Mouse button support for switching workspaces
 awful.util.taglist_buttons = mytable.join(
 	awful.button({}, 1, function(t)
@@ -421,9 +444,6 @@ local globalkeys = mytable.join(
 		awful.spawn(terminal)
 	end, { description = ": Open a terminal", group = "launcher" }),
 	awful.key({ modkey, shiftKey }, "p", function()
-		-- NOTE: it's done in this fashion because `awful.spawn` is async and I want the editor windows
-		-- to open in a specific order.
-
 		local projects = {
 			"~/dev/api/",
 			"~/dev/api-fr/",
@@ -433,25 +453,8 @@ local globalkeys = mytable.join(
 			"~/dev/mail-dispatcher/",
 		}
 
-		local index = #projects
-
-		local function spawn_next()
-			if index == 0 then
-				return
-			end
-
-			local project = projects[index]
-			index = index - 1
-
-			awful.spawn(editor_cmd .. " " .. project, {
-				callback = function(c)
-					spawn_next()
-				end,
-			})
-		end
-
-		spawn_next()
-	end, { description = ": Edit projects", group = "awesome" }),
+		openTerminalInOrder(projects)
+	end, { description = ": Edit projects", group = "launcher" }),
 	awful.key({ modkey, ctrlKey }, "p", function()
 		local projects = {
 			"~/dev/api/",
@@ -464,25 +467,8 @@ local globalkeys = mytable.join(
 			"~/dev/delivery-service/",
 		}
 
-		local index = #projects
-
-		local function spawn_next()
-			if index == 0 then
-				return
-			end
-
-			local project = projects[index]
-			index = index - 1
-
-			awful.spawn({ terminal, "-d", project }, {
-				callback = function(c)
-					spawn_next()
-				end,
-			})
-		end
-
-		spawn_next()
-	end, { description = ": Open projects in terminal", group = "awesome" }),
+		openTerminalInOrder(projects)
+	end, { description = ": Open projects in terminal", group = "launcher" }),
 	awful.key({ modkey, ctrlKey }, "r", awesome.restart, { description = ": Reload awesome", group = "awesome" }),
 	awful.key({ modkey, shiftKey }, "e", function()
 		awful.spawn(editor_cmd .. " " .. awesome.conffile)
