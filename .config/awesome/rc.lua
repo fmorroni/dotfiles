@@ -165,7 +165,7 @@ awful.layout.layouts = {
 	awful.layout.suit.tile.left,
 	awful.layout.suit.tile.bottom,
 	awful.layout.suit.tile.top,
-	awful.layout.suit.fair,
+	require("libs.fair"),
 }
 
 lain.layout.termfair.nmaster = 3
@@ -359,6 +359,18 @@ local globalkeys = mytable.join(
 	awful.key({ modkey, altkey }, "space", function()
 		awful.layout.inc(1)
 	end, { description = ": Select next", group = "layout" }),
+	awful.key(
+		{ modkey, altkey },
+		"j",
+		require("libs.fair").max_rows_dec,
+		{ description = ": Increase fair layout max rows", group = "layout" }
+	),
+	awful.key(
+		{ modkey, altkey },
+		"k",
+		require("libs.fair").max_rows_inc,
+		{ description = ": Decrease fair layout max rows", group = "layout" }
+	),
 	awful.key({ modkey, altkey, shiftKey }, "space", function()
 		awful.layout.inc(-1)
 	end, { description = ": Select previous", group = "layout" }),
