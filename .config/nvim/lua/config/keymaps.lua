@@ -50,6 +50,13 @@ map(
   { desc = "Copy `<absolute path>:<line>` to clipboard" }
 )
 
+-- Window resizing
+
+map("n", "<c-.>", [[<cmd>vertical resize +5<cr>]], { desc = "Increase window width" })
+map("n", "<c-,>", [[<cmd>vertical resize -5<cr>]], { desc = "Decrease window width" })
+map("n", "<c-s-.>", [[<cmd>horizontal resize +2<cr>]], { desc = "Increase window height" })
+map("n", "<c-s-,>", [[<cmd>horizontal resize -2<cr>]], { desc = "Increase window height" })
+
 -- From: /home/franco/.local/share/nvim/lazy/LazyVim/lua/lazyvim/config/keymaps.lua:25
 -- Move Lines
 map("n", "<Plug>(my-move-down)", "<cmd>execute 'move .+' . v:count1<cr>==")
