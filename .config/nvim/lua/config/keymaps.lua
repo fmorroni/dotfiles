@@ -46,7 +46,7 @@ map(
 map(
   "n",
   "<leader>Yp",
-  function() yank_paht_line("%") end,
+  function() yank_paht_line("%:p") end,
   { desc = "Copy `<absolute path>:<line>` to clipboard" }
 )
 
