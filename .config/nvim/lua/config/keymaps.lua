@@ -75,9 +75,7 @@ end, { desc = "Delete current session" })
 
 -- Scroll LSP docs, otherwise move lines
 map({ "n", "i", "v", "s" }, "<A-j>", function()
-  if require("noice.lsp").scroll(4) then
-    return ""
-  end
+  if require("noice.lsp").scroll(4) then return "" end
   return "<Plug>(my-move-down)"
 end, {
   expr = true,
@@ -87,9 +85,7 @@ end, {
 })
 
 map({ "n", "i", "v", "s" }, "<A-k>", function()
-  if require("noice.lsp").scroll(-4) then
-    return ""
-  end
+  if require("noice.lsp").scroll(-4) then return "" end
   return "<Plug>(my-move-up)"
 end, {
   expr = true,
@@ -105,7 +101,7 @@ map("i", ";", ";<c-g>u")
 map("i", "(", "(<c-g>u")
 map("i", "[", "[<c-g>u")
 map("i", "=", "=<c-g>u")
-map("i", "\"", "\"<c-g>u")
+map("i", '"', '"<c-g>u')
 map("i", "<space>", "<space><c-g>u")
 map("i", "<CR>", "<CR><c-g>u")
 
