@@ -33,6 +33,6 @@ return {
     ["<a-m>"] = { "toggle_maximize" },
     ["<c-j>"] = { "list_down" },
     ["<c-k>"] = { "list_up" },
-    ["<c-CR>"] = { "confirm" },
+    ["<c-CR>"] = { "confirm_preview_cursor" },
   },
 }
