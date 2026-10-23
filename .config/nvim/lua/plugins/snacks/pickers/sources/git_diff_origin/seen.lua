@@ -41,8 +41,12 @@ local function set(item, seen)
   if next(s[r]) == nil then s[r] = nil end
 end
 
+-- When marking a single item as seen, moves to the next item (`action.dir = -1` for previous,
+-- `0` to stay on the current one).
 ---@param picker snacks.Picker
-function M.toggle_seen(picker)
+---@param action? snacks.picker.Action|{dir?: 1|0|-1}
+function M.toggle_seen(picker, _, action)
+  local dir = action and action.dir or 1
   local items = picker:selected({ fallback = true })
   if #items == 0 then return end
   -- If any of the items is unseen, mark all as seen. Otherwise unmark all.
@@ -54,7 +58,7 @@ function M.toggle_seen(picker)
   picker.list:set_selected()
   picker.list.dirty = true
   picker.list:update({ force = true })
-  if mark and #items == 1 then picker:action("list_down") end
+  if mark and #items == 1 and dir ~= 0 then picker:action(dir == -1 and "list_up" or "list_down") end
 end
 
 ---@param picker snacks.Picker
