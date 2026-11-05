@@ -19,6 +19,15 @@ return {
         denols = {
           enabled = true,
         },
+        zigscient = {
+          enabled = true,
+          cmd = { vim.fn.exepath("zigscient") },
+          filetypes = { "zig", "zir" },
+          root_markers = { "build.zig", "build.zig.zon", ".git" },
+          settings = {
+            enable_build_on_save = false,
+          },
+        },
       },
     },
   },
