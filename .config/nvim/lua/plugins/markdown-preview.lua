@@ -1,13 +1,14 @@
 return {
   {
-    "fmorroni/markdown-preview.nvim",
+    -- "fmorroni/markdown-preview.nvim",
+    dir = "~/repos/markdown-preview.nvim/",
     build = "cd app && deno task build",
     name = "md-preview",
     ft = { "markdown" },
     ---@type MarkdownPreview.Config
     opts = {
-      browser = { "brave", "--app=http://localhost:9999" },
-      port = 9999,
+      browser = function(url) return { "brave", "--app=" .. url } end,
+      -- host = '0.0.0.0',
     },
     keys = function()
       local mdp = require("md-preview")
