@@ -42,8 +42,8 @@ return {
       },
       {
         "<leader>gD",
-        function() Snacks.picker.resume({ source = "git_diff_origin" }) end,
-        desc = "Git Diff (origin)",
+        function() Snacks.picker.resume({ source = "git_diff_upstream" }) end,
+        desc = "Git Diff (upstream)",
       },
       {
         "<leader>gd",

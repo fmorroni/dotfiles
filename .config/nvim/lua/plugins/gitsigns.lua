@@ -24,9 +24,15 @@ return {
         end, "Diff This (HEAD~1)")
 
         map("n", "<leader>ghD", function()
+          local dir = vim.fs.dirname(vim.api.nvim_buf_get_name(buffer))
+          local base, upstream = require("util.git").upstream_merge_base(dir)
+          if not base then
+            vim.notify("No merge-base with " .. upstream, vim.log.levels.WARN)
+            return
+          end
           vim.cmd.diffoff({ bang = true })
-          gs.diffthis("origin/HEAD")
-        end, "Diff This (origin)")
+          gs.diffthis(base)
+        end, "Diff This (upstream)")
       end
     end,
   },

@@ -26,7 +26,7 @@ return {
     git_grep_hunks = require("plugins.snacks.pickers.sources.git_grep_hunks"),
     grep = require("plugins.snacks.pickers.sources.grep"),
     git_log_file = require("plugins.snacks.pickers.sources.git_log_files"),
-    git_diff_origin = require("plugins.snacks.pickers.sources.git_diff_origin"),
+    git_diff_upstream = require("plugins.snacks.pickers.sources.git_diff_upstream"),
     git_diff_latest_commit = require("plugins.snacks.pickers.sources.git_diff_latest_commit"),
     git_diff_index = require("plugins.snacks.pickers.sources.git_diff_index"),
   },
