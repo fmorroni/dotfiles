@@ -17,15 +17,13 @@ return vim.tbl_deep_extend("force", require("snacks.picker.config.sources").git_
   win = {
     input = {
       keys = {
-        ["<c-j>"] = { "toggle_seen", mode = { "n", "i" }, desc = "Toggle seen (down)" },
-        ["<c-k>"] = { "toggle_seen_up", mode = { "n", "i" }, desc = "Toggle seen (up)" },
+        ["<tab>"] = { "toggle_seen_stay", mode = { "n", "i" }, desc = "Toggle seen" },
         ["<a-S>"] = { "clear_seen", mode = { "n", "i" }, desc = "Clear all seen" },
       },
     },
     list = {
       keys = {
-        ["<c-j>"] = { "toggle_seen", desc = "Toggle seen (down)" },
-        ["<c-k>"] = { "toggle_seen_up", desc = "Toggle seen (up)" },
+        ["<tab>"] = { "toggle_seen_stay", desc = "Toggle seen" },
         ["<a-S>"] = { "clear_seen", desc = "Clear all seen" },
       },
     },
